@@ -7,7 +7,7 @@ const Overview = () => {
       <p>
         Welcome to the overview of the Finance Department of the Government of
         Gilgit Baltistan. This page provides general information about our
-        department's purpose and vision.
+        department&apos;s purpose and vision.
       </p>
     </div>
   );
