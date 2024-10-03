@@ -1,13 +1,39 @@
-// components/Header.js
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
+import logo from "../../../public/logos/gbFinancelogo.svg";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Header = () => {
+  const pathname = usePathname();
+  const [isAboutMenuOpen, setIsAboutMenuOpen] = useState(false);
+
+  const aboutUsSubMenuItems = [
+    { title: "Overview", link: "/about/overview", route: "overview" },
+    { title: "Core Team", link: "/about/coreTeam", route: "coreTeam" },
+    { title: "Organogram", link: "/about/organogram", route: "organogram" },
+    { title: "Our Divisions", link: "/about/divisions", route: "divisions" },
+  ];
+
+  const toggleAboutMenu = () => {
+    setIsAboutMenuOpen(!isAboutMenuOpen);
+  };
+
+  // Use item.link instead of item.route
+  const isActive = (link) => pathname?.includes(link);
+
   return (
-    <header className="flex justify-between items-center py-4 px-8 bg-transparent text-primary">
+    <header className="flex justify-between items-center py-4 px-8  text-primary absolute top-0 w-full bg-black z-10 bg-opacity-70">
       <Link href="/" className="hover:text-primary-dark">
         <div className="flex items-center space-x-2">
-          <img src="logos/gbFinancelogo.svg" alt="Logo" className="h-10" />
+          <Image
+            height={75}
+            width={55}
+            src={logo}
+            alt="Logo"
+            className="h-10"
+          />
           <div>
             <h1 className="text-lg font-semibold">FINANCE DEPARTMENT</h1>
             <p className="text-sm">Government Of The Gilgit Baltistan</p>
@@ -15,11 +41,38 @@ const Header = () => {
         </div>
       </Link>
       <nav>
-        <ul className="flex space-x-6">
-          <li>
-            <Link href="/about" className="hover:text-primary-dark">
+        <ul className="flex space-x-6 relative">
+          <li className="relative group">
+            {/* About Us Link */}
+            <button
+              onClick={toggleAboutMenu}
+              className="hover:text-primary-dark focus:outline-none"
+            >
               About Us
-            </Link>
+            </button>
+            {/* Dropdown Menu */}
+            {isAboutMenuOpen && (
+              <ul className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-20">
+                {aboutUsSubMenuItems.map((item, i) => (
+                  <li
+                    key={i} // Added key for each item
+                    className={`border-b ${
+                      isActive(item.link) ? "bg-primary text-white" : ""
+                    }`}
+                  >
+                    <Link
+                      href={item.link}
+                      className="block px-4 py-2 hover:bg-gray-200"
+                      onClick={() => {
+                        setIsAboutMenuOpen(false);
+                      }}
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
           <li>
             <Link href="/what-we-do" className="hover:text-primary-dark">

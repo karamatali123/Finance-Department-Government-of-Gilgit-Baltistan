@@ -3,7 +3,7 @@ import React from "react";
 
 const ContactUs = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="pt-16 bg-gray-50">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-semibold text-primary">Contact Us</h2>
         <p className="mt-2 text-lg text-gray-600">
@@ -84,77 +84,6 @@ const ContactUs = () => {
             <h3 className="text-xl font-semibold">Email</h3>
             <p className="mt-2 text-gray-600">info123@gmail.com</p>
           </div>
-        </div>
-      </div>
-
-      <div className="mt-16 bg-primary py-4 text-white text-center">
-        <div className="flex justify-center space-x-6">
-          <a href="#" className="hover:underline">
-            Careers
-          </a>
-          <a href="#" className="hover:underline">
-            Tenders
-          </a>
-          <a href="#" className="hover:underline">
-            Feedback
-          </a>
-          <a href="#" className="hover:underline">
-            Contact Us
-          </a>
-          <a href="#" className="hover:underline">
-            Sitemap
-          </a>
-        </div>
-
-        <div className="mt-4 flex justify-center space-x-4">
-          <a href="#" className="text-white hover:text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M18 2C12.48 2 8 6.48 8 12C8 17.52 12.48 22 18 22C23.52 22 28 17.52 28 12C28 6.48 23.52 2 18 2ZM11.6 15.36L15.36 11.6"
-              />
-            </svg>
-          </a>
-          <a href="#" className="text-white hover:text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 4H20V20H4V4Z"
-              />
-            </svg>
-          </a>
-          <a href="#" className="text-white hover:text-gray-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M22 3C23.1046 3 24 3.89543 24 5C24 6.10457 23.1046 7 22 7C20.8954 7 20 6.10457 20 5C20 3.89543 20.8954 3 22 3ZM19 9H5C4.44771 9 4 9.44771 4 10V18C4 18.5523 4.44771 19 5 19H19C19.5523 19 20 18.5523 20 18V10C20 9.44771 19.5523 9 19 9Z"
-              />
-            </svg>
-          </a>
         </div>
       </div>
     </section>
