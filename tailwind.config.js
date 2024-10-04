@@ -15,6 +15,10 @@ module.exports = {
       backgroundImage: {
         overview: "url(/images/overviewBg.png)",
         team: "url(/images/teamBg.png)",
+        organogram: "url(/images/organogram.png)",
+      },
+      backgroundSize: {
+        full: "100% 100%",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"], // Make Inter the default sans-serif font
