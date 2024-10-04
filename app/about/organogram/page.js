@@ -1,4 +1,4 @@
-import OrganogramList from "@/app/Components/aboutUs/components/organogramLIst";
+import OrganogramList from "@/app/Components/aboutUs/components/organogramList";
 
 const Organogram = () => {
   return (
