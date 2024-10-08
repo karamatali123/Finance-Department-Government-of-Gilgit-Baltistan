@@ -1,4 +1,5 @@
 import BudgetRecourses from "@/app/Components/aboutUs/components/BudgetRecourses";
+import ExpenditureList from "@/app/Components/aboutUs/components/ExpenditureList";
 import Divider from "@/app/Components/Common/Divider";
 import React from "react";
 
@@ -18,6 +19,7 @@ const Divisions = () => {
             mentioned divisions: 
           </p>
           <BudgetRecourses />
+          <ExpenditureList />
         </div>
       </section>
     </div>
