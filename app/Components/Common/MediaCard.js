@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const MediaCard = ({ title, description, imageUrl }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col  height-[500] gap-[100px] ">
+    <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col  height-[500] gap-[100px] transform transition duration-300 hover:scale-105 hover:shadow-2xl ">
       <div className="w-full h-36 relative mb-4">
         <Image
           src={imageUrl}

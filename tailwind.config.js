@@ -16,6 +16,9 @@ module.exports = {
         overview: "url(/images/overviewBg.png)",
         team: "url(/images/teamBg.png)",
         organogram: "url(/images/organogram.png)",
+        division: "url(/images/divisionsHero.png)",
+        wedo: "url(/images/wedo.png)",
+        initiative: "url(/images/Initiative.png)",
       },
       backgroundSize: {
         full: "100% 100%",

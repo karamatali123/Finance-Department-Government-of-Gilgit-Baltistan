@@ -5,26 +5,51 @@ import logo from "../../../public/logos/gbFinancelogo.svg";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
+// Main header links with possible sub-items
+const headerLinks = [
+  {
+    title: "About Us",
+    link: "/about",
+
+    subItems: [
+      { title: "Overview", link: "/about/overview" },
+      { title: "Core Team", link: "/about/coreTeam" },
+      { title: "Organogram", link: "/about/organogram" },
+      { title: "Our Divisions", link: "/about/divisions" },
+    ],
+  },
+  { title: "What We Do", link: "/what-we-do" },
+  { title: "Initiatives", link: "/initiatives" },
+  {
+    title: "Info Desk",
+    link: "/info-desk",
+    subItems: [
+      { title: "Notifications", link: "/info-desk/notifications" },
+      { title: "Jobs", link: "/info-desk/jobs" },
+      { title: "Downloads", link: "/info-desk/downloads" },
+      { title: "Right to information", link: "/info-desk/jobs" },
+    ],
+  },
+  { title: "Media Room", link: "/media-room" },
+  { title: "Annual Budget", link: "/annual-budget" },
+];
+
 const Header = () => {
   const pathname = usePathname();
-  const [isAboutMenuOpen, setIsAboutMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const aboutUsSubMenuItems = [
-    { title: "Overview", link: "/about/overview", route: "overview" },
-    { title: "Core Team", link: "/about/coreTeam", route: "coreTeam" },
-    { title: "Organogram", link: "/about/organogram", route: "organogram" },
-    { title: "Our Divisions", link: "/about/divisions", route: "divisions" },
-  ];
-
-  const toggleAboutMenu = () => {
-    setIsAboutMenuOpen(!isAboutMenuOpen);
+  const toggleDropdown = (index) => {
+    setActiveDropdown((prev) => (prev === index ? null : index));
   };
 
-  // Use item.link instead of item.route
+  const closeDropdown = () => {
+    setActiveDropdown(null);
+  };
+
   const isActive = (link) => pathname?.includes(link);
 
   return (
-    <header className="flex justify-between items-center py-4 px-8  text-primary absolute top-0 w-full bg-black z-10 bg-opacity-70">
+    <header className="flex justify-between items-center py-4 px-8 absolute top-0 text-primary w-full bg-black z-10 bg-opacity-70">
       <Link href="/" className="hover:text-primary-dark">
         <div className="flex items-center space-x-2">
           <Image
@@ -42,63 +67,54 @@ const Header = () => {
       </Link>
       <nav>
         <ul className="flex space-x-6 relative">
-          <li className="relative group">
-            {/* About Us Link */}
-            <button
-              onClick={toggleAboutMenu}
-              className="hover:text-primary-dark focus:outline-none"
+          {headerLinks.map((item, index) => (
+            <li
+              key={index}
+              className={`relative group p-1  ${
+                isActive(item.link)
+                  ? "border-b-[3px] font-extrabold border-primary"
+                  : " text-white"
+              }`}
             >
-              About Us
-            </button>
-            {/* Dropdown Menu */}
-            {isAboutMenuOpen && (
-              <ul className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-20">
-                {aboutUsSubMenuItems.map((item, i) => (
-                  <li
-                    key={i} // Added key for each item
-                    className={`border-b ${
-                      isActive(item.link) ? "bg-primary text-white" : ""
-                    }`}
+              {item.subItems ? (
+                <>
+                  {/* Main link with dropdown */}
+                  <button
+                    onClick={() => toggleDropdown(index)}
+                    className="hover:text-primary-dark focus:outline-none"
                   >
-                    <Link
-                      href={item.link}
-                      className="block px-4 py-2 hover:bg-gray-200"
-                      onClick={() => {
-                        setIsAboutMenuOpen(false);
-                      }}
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-          <li>
-            <Link href="/what-we-do" className="hover:text-primary-dark">
-              What We Do
-            </Link>
-          </li>
-          <li>
-            <Link href="/initiatives" className="hover:text-primary-dark">
-              Initiatives
-            </Link>
-          </li>
-          <li>
-            <Link href="/info-desk" className="hover:text-primary-dark">
-              Info Desk
-            </Link>
-          </li>
-          <li>
-            <Link href="/media-room" className="hover:text-primary-dark">
-              Media Room
-            </Link>
-          </li>
-          <li>
-            <Link href="/annual-budget" className="hover:text-primary-dark">
-              Annual Budget
-            </Link>
-          </li>
+                    {item.title}
+                  </button>
+                  {activeDropdown === index && (
+                    <ul className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-20">
+                      {item.subItems.map((subItem, subIndex) => (
+                        <li
+                          key={subIndex}
+                          className={`border-b ${
+                            isActive(subItem.link)
+                              ? "bg-primary text-white"
+                              : " text-primary"
+                          }`}
+                        >
+                          <Link
+                            href={subItem.link}
+                            className="block px-4 py-2 hover:bg-gray-200"
+                            onClick={closeDropdown}
+                          >
+                            {subItem.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              ) : (
+                <Link href={item.link} className="hover:text-primary-dark">
+                  {item.title}
+                </Link>
+              )}
+            </li>
+          ))}
         </ul>
       </nav>
       <div className="flex items-center space-x-2">
