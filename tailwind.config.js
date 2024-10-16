@@ -19,6 +19,8 @@ module.exports = {
         division: "url(/images/divisionsHero.png)",
         wedo: "url(/images/wedo.png)",
         initiative: "url(/images/Initiative.png)",
+        notifications: "url(/images/notifications.png)",
+        jobs: "url(/images/jobs.png)",
       },
       backgroundSize: {
         full: "100% 100%",

@@ -27,7 +27,10 @@ const headerLinks = [
       { title: "Notifications", link: "/info-desk/notifications" },
       { title: "Jobs", link: "/info-desk/jobs" },
       { title: "Downloads", link: "/info-desk/downloads" },
-      { title: "Right to information", link: "/info-desk/jobs" },
+      {
+        title: "Right to information",
+        link: "/info-desk/right-to-information",
+      },
     ],
   },
   { title: "Media Room", link: "/media-room" },
