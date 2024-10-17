@@ -124,7 +124,7 @@ const Header = () => {
         <input
           type="text"
           placeholder="Search"
-          className="px-3 py-1 rounded-full bg-white text-black"
+          className="px-3 py-2 rounded-full bg-transparent border text-white"
         />
         <button className="text-primary">
           <svg

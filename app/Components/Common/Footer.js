@@ -4,6 +4,8 @@ import React from "react";
 import frame from "../../../public/images/frame.png";
 import ContactUs from "../HomePage/ContactUs";
 import FooterHeader from "./FooterHeader";
+import logo from "../../../public/logos/gbFinancelogo.svg";
+
 const Footer = () => {
   return (
     <>
@@ -13,11 +15,7 @@ const Footer = () => {
           {/* Left Section - Logo and Description */}
           <div>
             <div className="mb-4">
-              <img
-                src="logos/gbFinancelogo.svg"
-                alt="Finance Department Logo"
-                className="h-12"
-              />
+              <Image height={105} width={95} src={logo} alt="Logo" />
               <h2 className="text-lg font-semibold mt-2">Finance Department</h2>
               <p className="text-gray-400 text-sm">
                 Government Of The Gilgit Baltistan

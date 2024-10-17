@@ -21,6 +21,8 @@ module.exports = {
         initiative: "url(/images/Initiative.png)",
         notifications: "url(/images/notifications.png)",
         jobs: "url(/images/jobs.png)",
+        downloads: "url(/images/downloads.png)",
+        rightTo: "url(/images/rightto.png)",
       },
       backgroundSize: {
         full: "100% 100%",
