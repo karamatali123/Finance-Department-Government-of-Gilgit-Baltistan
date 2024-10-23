@@ -1,5 +1,6 @@
 // components/InfoDesk.js
 import React from "react";
+import Divider from "../Common/Divider";
 
 const infoItems = [
   {
@@ -45,11 +46,12 @@ const InfoDesk = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-semibold text-primary">Info Desk</h2>
+        <Divider />
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {infoItems.map((item, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg p-6 text-left"
+              className="bg-white shadow-lg rounded-lg p-6 text-left transform transition duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <div className="flex items-center space-x-4">
                 <span className="text-primary text-2xl font-bold">

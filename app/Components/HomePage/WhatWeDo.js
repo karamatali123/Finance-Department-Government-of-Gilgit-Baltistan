@@ -1,5 +1,6 @@
 // components/WhatWeDo.js
 import React from "react";
+import Divider from "../Common/Divider";
 
 const WhatWeDo = () => {
   const services = [
@@ -27,6 +28,7 @@ const WhatWeDo = () => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto text-center">
         <h2 className="text-3xl font-semibold text-primary">What We Do</h2>
+        <Divider />
         <p className="mt-4 text-lg text-gray-600">
           The major services offered by Finance department can be categorized in
           the following heads:
@@ -35,7 +37,7 @@ const WhatWeDo = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-lg overflow-hidden"
+              className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <img
                 src={service.imageUrl}

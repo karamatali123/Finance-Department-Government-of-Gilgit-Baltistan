@@ -7,6 +7,7 @@ import InfoDesk from "@/app/Components/HomePage/InfoDesk";
 import ContactUs from "@/app/Components/HomePage/ContactUs";
 import WhatWeDo from "@/app/Components/HomePage/WhatWeDo";
 import AffiliatedOrganizations from "@/app/Components/HomePage/AffiliatedOrganizations";
+import LeaderShipList from "../Components/HomePage/LeaderShipList";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <FeatureCards />
 
       <WhatWeDo />
+      <LeaderShipList />
       <Initiatives />
       <AllocationChart />
       <InfoDesk />
