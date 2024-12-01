@@ -33,7 +33,7 @@ const headerLinks = [
       },
     ],
   },
-  { title: "Media Room", link: "/media-room" },
+  { title: "Media Room", link: "/mediaRoom" },
   { title: "Annual Budget", link: "/annual-budget" },
 ];
 
