@@ -50,13 +50,14 @@ const Header = () => {
   };
 
   const toggleMobileMenu = () => {
+    console.log("toggleMobileMenu", mobileMenuOpen);
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
   const isActive = (link) => pathname?.includes(link);
 
   return (
-    <header className="py-4 px-4 md:px-8 absolute top-0 w-full bg-black bg-opacity-70 z-10">
+    <header className="py-4 px-4 md:px-8 absolute top-0 w-full bg-black bg-opacity-70 z-40">
       <div className="flex flex-wrap justify-between items-center">
         {/* Logo Section - Updated for better mobile display */}
         <Link href="/" className="hover:text-primary-dark flex-shrink-0">
@@ -82,7 +83,7 @@ const Header = () => {
         {/* Mobile Menu Button - Updated for custom breakpoint */}
         <button
           className="custom:hidden text-white p-2"
-          onClick={toggleMobileMenu}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           <svg
             className="h-6 w-6"

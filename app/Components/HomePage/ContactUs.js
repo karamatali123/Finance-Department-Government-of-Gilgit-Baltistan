@@ -5,12 +5,14 @@ const ContactUs = () => {
   return (
     <section className="py-8 md:py-16 bg-gray-50">
       <div className="container mx-auto text-center px-4 md:px-8">
-        <h2 className="text-2xl md:text-3xl font-semibold text-primary">Contact Us</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-primary">
+          Contact Us
+        </h2>
         <p className="mt-2 text-base md:text-lg text-gray-600">
           Finance Department, Government of the Gilgit Baltistan
         </p>
 
-        <div className="mt-6 md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+        <div className="md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {/* Address */}
           <div className="flex flex-col items-center p-4 md:p-6 bg-white rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
             <div className="text-primary mb-3 md:mb-4">
@@ -29,7 +31,9 @@ const ContactUs = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-lg md:text-xl font-semibold">Address</h3>
+            <h3 className="text-lg md:text-xl font-semibold text-black">
+              Address
+            </h3>
             <p className="mt-2 text-sm md:text-base text-gray-600">
               Gilgit Baltistan Civil Secretariat
             </p>
@@ -53,8 +57,12 @@ const ContactUs = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-lg md:text-xl font-semibold">Phone Number</h3>
-            <p className="mt-2 text-sm md:text-base text-gray-600">000-000000000</p>
+            <h3 className="text-lg md:text-xl font-semibold text-black">
+              Phone Number
+            </h3>
+            <p className="mt-2 text-sm md:text-base text-gray-600">
+              000-000000000
+            </p>
           </div>
 
           {/* Email */}
@@ -81,8 +89,12 @@ const ContactUs = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-lg md:text-xl font-semibold">Email</h3>
-            <p className="mt-2 text-sm md:text-base text-gray-600">info123@gmail.com</p>
+            <h3 className="text-lg md:text-xl font-semibold text-black">
+              Email
+            </h3>
+            <p className="mt-2 text-sm md:text-base text-gray-600">
+              info123@gmail.com
+            </p>
           </div>
         </div>
       </div>
