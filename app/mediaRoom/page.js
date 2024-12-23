@@ -35,8 +35,9 @@ const MediaRoom = () => {
         </div>
       </section>
       <div className="w-[500px]">
-        {meda.map((itm) => (
+        {meda.map((itm, index) => (
           <MediaCard
+            key={index}
             title={itm.titlle}
             description={itm.des}
             imageUrl={itm.imgurl}
