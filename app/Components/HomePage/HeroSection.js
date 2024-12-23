@@ -4,7 +4,7 @@ import React from "react";
 const Hero = () => {
   return (
     <section
-      className="relative bg-cover bg-center h-screen flex items-center justify-center text-white"
+      className="relative bg-cover bg-center h-screen flex bg-opacity-60  items-center justify-center text-white"
       style={{
         backgroundImage: "url('/images/hero-section-bg.svg')", // Path to your image in the public folder
       }}

@@ -22,24 +22,26 @@ const organizations = [
 
 const AffiliatedOrganizations = () => {
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-green-600">
+    <section className="py-8 sm:py-16 bg-gray-50">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-green-600">
           Affiliated Organizations
         </h2>
-        <div className="mt-10 flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+        <div className="mt-6 sm:mt-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {organizations.map((org, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center justify-center"
+                className="flex flex-col items-center justify-center p-4"
               >
                 <img
                   src={org.logo}
                   alt={org.name}
-                  className="h-24 w-auto mx-auto"
+                  className="h-16 sm:h-20 md:h-24 w-auto mx-auto"
                 />
-                <p className="mt-4 text-gray-700 text-center">{org.name}</p>
+                <p className="mt-2 sm:mt-4 text-sm sm:text-base text-gray-700 text-center">
+                  {org.name}
+                </p>
               </div>
             ))}
           </div>

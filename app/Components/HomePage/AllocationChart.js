@@ -35,26 +35,31 @@ const AllocationChart = () => {
   );
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-primary">
+    <section className="py-8 md:py-16 bg-gray-50">
+      <div className="container mx-auto text-center px-2 md:px-8">
+        <h2 className="text-2xl md:text-3xl font-semibold text-primary">
           Allocation For Priority Areas
         </h2>
-        <p className="mt-2 text-lg text-gray-600">
+        <p className="mt-2 text-base md:text-lg text-gray-600">
           for the fiscal year 2022 - 2023
         </p>
 
-        <div className="mt-10 space-y-4">
+        <div className="mt-6 md:mt-10 space-y-3 md:space-y-4">
           {allocations.map((allocation, index) => (
-            <div key={index} className="flex items-center">
-              <div
-                className={`h-10 ${allocation.color} flex items-center justify-end pr-3 text-white font-semibold`}
-                style={{ width: `${(allocation.amount / maxAmount) * 100}%` }}
-              >
-                {allocation.amount.toFixed(2)}
-              </div>
-              <div className="ml-4 w-40 text-right text-gray-700">
+            <div
+              key={index}
+              className="flex flex-col sm:flex-row items-start sm:items-center"
+            >
+              <div className="w-full sm:w-40 text-left sm:text-right text-sm md:text-base text-gray-700 mb-1 sm:mb-0 sm:order-2 sm:ml-4">
                 {allocation.area}
+              </div>
+              <div className="w-full sm:flex-1 sm:order-1">
+                <div
+                  className={`h-8 md:h-10 ${allocation.color} flex items-center justify-end pr-2 md:pr-3 text-white text-sm md:text-base font-semibold`}
+                  style={{ width: `${(allocation.amount / maxAmount) * 100}%` }}
+                >
+                  {allocation.amount.toFixed(2)}
+                </div>
               </div>
             </div>
           ))}

@@ -1,10 +1,10 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 const FooterHeader = () => (
   <div
-    className="mt-16 bg-primary flex justify-between items-center  px-8  text-white"
-    style={{ height: "90px" }}
+    className=" mt-16 bg-primary flex flex-col md:flex-row justify-between items-center px-4 md:px-8 py-6 md:py-0 text-white"
+    style={{ minHeight: "90px" }}
   >
-    <div className="flex justify-start   px-5  space-x-6">
+    <div className=" container  mx-auto  text-center px-2 md:px-8 flex flex-col md:flex-row justify-start items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 mb-4 md:mb-0">
       <a href="#" className="hover:underline">
         Careers
       </a>
@@ -22,7 +22,7 @@ const FooterHeader = () => (
       </a>
     </div>
 
-    <div className="flex gap-4 ">
+    <div className="flex gap-4">
       <a href="#" className="text-white hover:text-gray-300">
         <FaFacebook size={25} />
       </a>

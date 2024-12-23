@@ -14,7 +14,6 @@ export default function HomePage() {
     <>
       <HeroSection />
       <FeatureCards />
-
       <WhatWeDo />
       <LeaderShipList />
       <Initiatives />

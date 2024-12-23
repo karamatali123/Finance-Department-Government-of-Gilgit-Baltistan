@@ -23,10 +23,16 @@ const CardSection = () => {
         {cards.map((card, index) => (
           <div
             key={index}
-            className="bg-primary rounded-lg shadow-lg text-white flex flex-col items-center justify-center p-6"
+            className="bg-primary rounded-lg shadow-lg text-white flex flex-col items-center justify-center p-4 md:p-6 transform transition duration-300 hover:scale-105"
           >
-            <img src={card.icon} alt={card.title} className="h-12 w-12 mb-4" />
-            <h3 className="text-lg font-semibold">{card.title}</h3>
+            <img
+              src={card.icon}
+              alt={card.title}
+              className="h-10 md:h-12 w-10 md:w-12 mb-3 md:mb-4"
+            />
+            <h3 className="text-base md:text-lg font-semibold text-center">
+              {card.title}
+            </h3>
           </div>
         ))}
       </div>

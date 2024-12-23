@@ -35,10 +35,12 @@ const leadership = [
 
 const LeaderShipList = () => {
   return (
-    <div className="container mx-auto text-center py-12">
-      <h2 className="text-3xl font-semibold text-primary ">Our Leadership</h2>
+    <div className="container mx-auto text-center py-8 md:py-12 px-4 md:px-8">
+      <h2 className="text-2xl md:text-3xl font-semibold text-primary">
+        Our Leadership
+      </h2>
       <Divider />
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8 pb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 pb-8 md:pb-12">
         {leadership.map((member, index) => (
           <MediaCard
             key={index}
@@ -46,7 +48,7 @@ const LeaderShipList = () => {
             title={member.name}
             description={`${member.joinDate} to ${member.toDate}`}
             cardAction=""
-            bodyCls="flex-col flex items-center py-4 "
+            bodyCls="flex-col flex items-center py-3 md:py-4"
           />
         ))}
       </div>

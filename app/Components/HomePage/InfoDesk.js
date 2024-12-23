@@ -43,25 +43,29 @@ const infoItems = [
 
 const InfoDesk = () => {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-primary">Info Desk</h2>
+    <section className="py-8 md:py-16 bg-white">
+      <div className="container mx-auto text-center px-4 md:px-8">
+        <h2 className="text-2xl md:text-3xl font-semibold text-primary">
+          Info Desk
+        </h2>
         <Divider />
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="mt-6 md:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {infoItems.map((item, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg p-6 text-left transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+              className="bg-white shadow-lg rounded-lg p-4 md:p-6 text-left transform transition duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              <div className="flex items-center space-x-4">
-                <span className="text-primary text-2xl font-bold">
+              <div className="flex items-start md:items-center space-x-3 md:space-x-4">
+                <span className="text-primary text-xl md:text-2xl font-bold">
                   {item.number}
                 </span>
                 <div>
-                  <h3 className="text-lg font-semibold text-black">
+                  <h3 className="text-base md:text-lg font-semibold text-black">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-gray-600">{item.description}</p>
+                  <p className="mt-1 md:mt-2 text-sm md:text-base text-gray-600">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             </div>

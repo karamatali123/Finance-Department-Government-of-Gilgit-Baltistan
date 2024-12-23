@@ -42,6 +42,10 @@ module.exports = {
         "5xl": ["48px", { lineHeight: "1" }], // 5X large
         "6xl": ["60px", { lineHeight: "1" }], // 6X large
       },
+      screens: {
+        xs: "475px",
+        custom: "1400px",
+      },
     },
   },
   plugins: [],
