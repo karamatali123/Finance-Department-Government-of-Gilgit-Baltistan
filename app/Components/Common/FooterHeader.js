@@ -1,7 +1,7 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 const FooterHeader = () => (
   <div
-    className=" mt-16 bg-primary flex flex-col md:flex-row justify-between items-center px-4 md:px-8 py-6 md:py-0 text-white"
+    className="bg-primary flex flex-col md:flex-row justify-between items-center px-4 md:px-8 py-6 md:py-0 text-white"
     style={{ minHeight: "90px" }}
   >
     <div className=" container  mx-auto  text-center px-2 md:px-8 flex flex-col md:flex-row justify-start items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 mb-4 md:mb-0">
