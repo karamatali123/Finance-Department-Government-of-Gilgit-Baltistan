@@ -24,25 +24,27 @@ const MediaRoom = () => {
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-bold text-green-600 ">What we do</h2>
           <Divider />
-          <label>Enter your name</label>
+          {/* <label>Enter your name</label>
           <input
             onChange={(e) => {
               setName(e.target.value);
               console.log(e.target.value, "value");
             }}
           ></input>
-          <h1>{name}</h1>
+          <h1>{name}</h1> */}
         </div>
       </section>
-      <div className="w-[500px]">
-        {meda.map((itm, index) => (
-          <MediaCard
-            key={index}
-            title={itm.titlle}
-            description={itm.des}
-            imageUrl={itm.imgurl}
-          ></MediaCard>
-        ))}
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {meda.map((itm, index) => (
+            <MediaCard
+              key={index}
+              title={itm.title}
+              description={itm.des}
+              imageUrl={itm.imgurl}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

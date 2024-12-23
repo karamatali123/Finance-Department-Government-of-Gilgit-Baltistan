@@ -11,6 +11,14 @@ module.exports = {
         foreground: "var(--foreground)",
         primary: "var(--primary)",
         grey: "var(--grey)",
+        black: "#000000",
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "#000000",
+          },
+        },
       },
       backgroundImage: {
         overview: "url(/images/overviewBg.png)",

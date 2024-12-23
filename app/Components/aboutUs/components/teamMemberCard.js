@@ -10,7 +10,7 @@ const MemberCard = ({ member }) => {
         width={74}
         className="rounded-full object-cover mb-4"
       />
-      <h3 className="text-xl font-semibold">{member.name}</h3>
+      <h3 className="text-xl font-semibold text-black">{member.name}</h3>
       <p className="text-gray-600">{member.position}</p>
     </div>
   );
