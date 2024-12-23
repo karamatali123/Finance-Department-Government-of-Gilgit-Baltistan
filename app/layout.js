@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
       <body className={`antialiased`}>
         <div className="relative">
           <Header />
-          <main>{children}</main>
+          <main className="bg-white">{children}</main>
           <Footer />
         </div>
       </body>
