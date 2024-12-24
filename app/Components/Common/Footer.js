@@ -89,7 +89,7 @@ const Footer = () => {
                     />
                   </svg>
                   <span className="text-sm sm:text-base text-gray-400">
-                    (000) 000-0000
+                    (058119) 22639
                   </span>
                 </div>
 
@@ -127,7 +127,8 @@ const Footer = () => {
                     />
                   </svg>
                   <span className="text-sm sm:text-base text-gray-400">
-                    Gilgit Baltistan Civil Secretariat.
+                    W882+W8M, opposite Chief Secretary House, Gilgit,
+                    Gilgit-Baltistan 15100
                   </span>
                 </div>
               </div>

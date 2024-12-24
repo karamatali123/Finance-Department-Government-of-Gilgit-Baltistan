@@ -35,7 +35,8 @@ const ContactUs = () => {
               Address
             </h3>
             <p className="mt-2 text-sm md:text-base text-gray-600">
-              Gilgit Baltistan Civil Secretariat
+              W882+W8M, opposite Chief Secretary House, Gilgit, Gilgit-Baltistan
+              15100
             </p>
           </div>
 
@@ -61,7 +62,7 @@ const ContactUs = () => {
               Phone Number
             </h3>
             <p className="mt-2 text-sm md:text-base text-gray-600">
-              000-000000000
+              (058119) 22639
             </p>
           </div>
 
