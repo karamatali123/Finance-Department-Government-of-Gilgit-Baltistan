@@ -14,12 +14,14 @@ export default function HomePage() {
     <>
       <HeroSection />
       <FeatureCards />
-      <WhatWeDo />
+      {/* <WhatWeDo /> */}
       <LeaderShipList />
       <Initiatives />
-      <AllocationChart />
-      <InfoDesk />
+      {/* <AllocationChart /> */}
+      {/* <InfoDesk /> */}
+      <hr />
       <AffiliatedOrganizations />
+      <hr />
       <ContactUs />
     </>
   );

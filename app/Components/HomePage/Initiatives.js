@@ -1,43 +1,24 @@
 // components/Initiatives.js
 import React from "react";
 import Divider from "../Common/Divider";
-
+import { RiSecurePaymentLine } from "react-icons/ri";
+import { MdAppRegistration } from "react-icons/md";
+import { FaStamp } from "react-icons/fa";
 const initiatives = [
   {
-    title: "Specialized Units",
-    description:
-      "Different specialized units are formed to oversee risk & debit management, tax reforms and corporate finance.",
-    icon: "/icons/specialized-units.svg", // Placeholder for icon
+    title: "GB Pay",
+    description: "Digitalization of  Government payments",
+    icon: <RiSecurePaymentLine className="text-primary text-4xl" />, // Placeholder for icon
   },
   {
-    title: "Citizens' Budget",
-    description:
-      "The Citizens' Budget of Government of the Punjab with respect to fiscal year are available here.",
-    icon: "/icons/citizens-budget-icon.svg",
+    title: "E-Registration",
+    description: "Digitalization of  Government Registration",
+    icon: <MdAppRegistration className="text-primary text-4xl" />,
   },
   {
-    title: "Pension Reforms",
-    description:
-      "Government of the Punjab, as one of its reform initiatives, has simplified the process for the grant of pension.",
-    icon: "/icons/pension-reform.svg",
-  },
-  {
-    title: "PFM Reforms Strategy",
-    description:
-      "In Punjab, there has always been a considerable focus on Public Financial Management (PFM) reforms.",
-    icon: "/icons/pfm-reforms-icon.svg",
-  },
-  {
-    title: "PRIDE Program",
-    description:
-      "The department is working on Environmental and Social Commitment Plan, Stakeholders Engagement Plan etc under this program.",
-    icon: "/icons/pride-program.svg",
-  },
-  {
-    title: "Read More",
-    description:
-      "For further information regarding initiatives taken by the department, please click here.",
-    icon: "/icons/read-more.svg",
+    title: "E-Stamping",
+    description: "Digitalization of  Government Stamping",
+    icon: <FaStamp className="text-primary text-4xl" />,
   },
 ];
 
@@ -56,11 +37,7 @@ const Initiatives = () => {
               className="flex flex-col items-center text-center p-4 md:p-0"
             >
               <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-white rounded-full shadow-md mb-3 md:mb-4 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                <img
-                  src={initiative.icon}
-                  alt={initiative.title}
-                  className="h-10 w-10 md:h-12 md:w-12"
-                />
+                {initiative.icon}
               </div>
               <h3 className="text-base md:text-lg font-semibold text-primary">
                 {initiative.title}

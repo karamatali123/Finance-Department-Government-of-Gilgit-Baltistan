@@ -1,28 +1,33 @@
 // components/AffiliatedOrganizations.js
+"use client";
 import React from "react";
 
 const organizations = [
   {
-    name: "Punjab Revenue Authority",
-    logo: "/logos/logo-pra.svg", // Add the actual path to the logo
+    name: "Treasury Offices",
+    logo: "/images/Gov.svg",
+    link: "#",
   },
   {
-    name: "Inspectorate of Treasuries & Accounts",
-    logo: "/logos/logo-ita.svg",
+    name: "KCBL – Karakoram Cooperative Bank Limited",
+    logo: "/images/kcbl.png",
+    link: "https://kcb.com.pk/",
   },
   {
-    name: "The Bank of Punjab",
-    logo: "/logos/logo-bop.svg",
+    name: "Public Procurement Regulatory Authority, Gilgit Baltistan",
+    logo: "/images/ppra.jpeg",
+    link: "https://gbppra.gov.pk/",
   },
   {
-    name: "Punjab Pension Funds",
-    logo: "/logos/logo-ppf.svg",
+    name: "Northern Areas Transport Corporation",
+    logo: "/images/natco.png",
+    link: "https://natco.gov.pk/",
   },
 ];
 
 const AffiliatedOrganizations = () => {
   return (
-    <section className="py-8 sm:py-16 bg-gray-50">
+    <section className="py-8 sm:py-16 bg-white">
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-2xl sm:text-3xl font-semibold text-green-600">
           Affiliated Organizations
@@ -32,7 +37,8 @@ const AffiliatedOrganizations = () => {
             {organizations.map((org, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center justify-center p-4"
+                onClick={() => window.open(org.link, "_blank")}
+                className="flex flex-col items-center justify-center p-4 cursor-pointer"
               >
                 <img
                   src={org.logo}

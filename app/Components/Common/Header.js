@@ -12,28 +12,29 @@ const headerLinks = [
     link: "/about",
     subItems: [
       { title: "Overview", link: "/about/overview" },
-      { title: "Core Team", link: "/about/coreTeam" },
       { title: "Organogram", link: "/about/organogram" },
       { title: "Our Divisions", link: "/about/divisions" },
     ],
   },
-  { title: "What We Do", link: "/what-we-do" },
+  // { title: "What We Do", link: "/what-we-do" },
   { title: "Initiatives", link: "/initiatives" },
-  {
-    title: "Info Desk",
-    link: "/info-desk",
-    subItems: [
-      { title: "Notifications", link: "/info-desk/notifications" },
-      { title: "Jobs", link: "/info-desk/jobs" },
-      { title: "Downloads", link: "/info-desk/downloads" },
-      {
-        title: "Right to information",
-        link: "/info-desk/right-to-information",
-      },
-    ],
-  },
-  { title: "Media Room", link: "/mediaRoom" },
   { title: "Annual Budget", link: "/annual-budget" },
+  { title: "Downloads", link: "/info-desk/downloads" },
+  // {
+  //   title: "Info Desk",
+  //   link: "/info-desk",
+  //   subItems: [
+  //     { title: "Notifications", link: "/info-desk/notifications" },
+  //     { title: "Jobs", link: "/info-desk/jobs" },
+  //     { title: "Downloads", link: "/info-desk/downloads" },
+  //     {
+  //       title: "Right to information",
+  //       link: "/info-desk/right-to-information",
+  //     },
+  //   ],
+  // },
+
+  // { title: "Media Room", link: "/mediaRoom" },
 ];
 
 const Header = () => {
@@ -188,31 +189,6 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-
-          {/* Search Section */}
-          <div className="flex items-center space-x-2 p-4 custom:p-0">
-            <input
-              type="text"
-              placeholder="Search"
-              className="px-3 py-2 rounded-full bg-transparent border text-white w-full"
-            />
-            <button className="text-primary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 20l6-8-6-8"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
     </header>

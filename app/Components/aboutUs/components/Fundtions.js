@@ -13,14 +13,14 @@ const Functions = () => {
     "Audit matters of provincial receipts and expenditure",
   ];
   return (
-    <section className="py-16 pt-0 bg-gray-50">
+    <section className="py-16 pt-0 bg-white">
       <div className="container mx-auto text-center">
         <h1 className="text-5xl font-bold text-start text-primary">
           Functions
         </h1>
 
         <div className="py-5 ">
-          <p className="text-lg text-justify ">
+          <p className="text-lg text-justify text-gray-900">
             The major functions of the department are mentioned below:
           </p>
           <ul className="list-disc pl-8 mt-3 text-start">

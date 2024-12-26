@@ -2,7 +2,7 @@ import Divider from "../../Common/Divider";
 
 const OverviewSection = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-white">
       <div className="container mx-auto text-center">
         <h1 className="text-5xl font-bold  text-center text-primary">
           Overview
@@ -10,7 +10,7 @@ const OverviewSection = () => {
         <Divider />
 
         <div className="py-5 ">
-          <p className="text-lg text-justify ">
+          <p className="text-lg text-justify text-gray-900 ">
             The Finance Department is responsible for supervision and control of
             provincial finances, preparation of provincial budget, formulation
             of Financial Rules and Civil Services Rules relating to pay,
