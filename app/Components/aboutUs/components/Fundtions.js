@@ -25,7 +25,7 @@ const Functions = () => {
           </p>
           <ul className="list-disc pl-8 mt-3 text-start">
             {financeDepartmentFunctions.map((func, index) => (
-              <li key={index} className="text-lg mt-2">
+              <li key={index} className="text-lg mt-2 text-gray-900">
                 {func}
               </li>
             ))}
