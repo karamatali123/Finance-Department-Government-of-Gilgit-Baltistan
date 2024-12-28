@@ -9,7 +9,7 @@ const MediaCard = ({
   designation,
   cardAction = (
     <button className="bg-green-500 text-white self-start font-semibold py-2 px-4 rounded-[30px] hover:bg-green-600 transition-all">
-      Read More
+      Read More 
     </button>
   ),
 }) => {
@@ -20,7 +20,7 @@ const MediaCard = ({
           src={imageUrl}
           alt={title}
           height={250}
-          className="rounded-t-lg m-auto w-[300px] h-[100%]"
+          className="rounded-t-lg m-auto h-[100%]"
         />
       </div>
       <div className={`${bodyCls}`}>

@@ -1,7 +1,7 @@
 import React from "react";
 import Divider from "../Common/Divider";
 import img1 from "../../../public/images/leadership/cmGb.jpeg";
-import img2 from "../../../public/images/leadership/leader2.png";
+import img2 from "../../../public/images/leadership/ministerFinance.jpeg";
 import img3 from "../../../public/images/leadership/CS.png";
 import img4 from "../../../public/images/leadership/Sf.jpeg";
 
@@ -10,29 +10,29 @@ import MediaCard from "../Common/MediaCard";
 const leadership = [
   {
     name: "Mr. Gulbar Khan",
-    joinDate: "Nov 25 2020",
+    // joinDate: "Nov 25 2020",
     toDate: "incumbent",
     designation: "Chief Minister",
     image: img1,
   },
   {
     name: "Abrar Ahmad Mirza",
-    joinDate: "October 26, 2023",
+    // joinDate: "October 26, 2023",
     toDate: "incumbent",
     image: img3,
     designation: "Chief Secretary",
   },
   {
-    name: "Muhammad Ismail",
-    joinDate: "July 18 2023",
+    name: "Eng. Muhammad Ismail",
+    // joinDate: "July 18 2023",
     toDate: "incumbent",
-    designation: "Finance Minister",
+    designation: "Senior Finance Minister",
     image: img2,
   },
 
   {
     name: "Mr. Aziz Ahmad Jamali",
-    joinDate: "Aug 2023",
+    // joinDate: "Aug 2023",
     toDate: "incumbent",
     designation: "Secretary Finance",
     image: img4,
@@ -52,7 +52,7 @@ const LeaderShipList = () => {
             key={index}
             imageUrl={member.image}
             title={member.name}
-            description={`${member.joinDate} to ${member.toDate}`}
+            // description={`${member.joinDate} to ${member.toDate}`}
             cardAction=""
             bodyCls="flex-col flex items-center py-3 md:py-4"
             designation={member.designation}

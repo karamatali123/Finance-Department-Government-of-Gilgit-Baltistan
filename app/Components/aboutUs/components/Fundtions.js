@@ -1,22 +1,22 @@
 const Functions = () => {
   const financeDepartmentFunctions = [
-    "Management of public funds",
-    "Framing of financial rules for guidance of departments",
-    "Supervision of accounts of provincial departments",
-    "Framing of Civil Service Rules applicable to all government servants and interpretations thereof",
-    "Floatation and administration of provincial loans",
-    "Examination and advice on matters affecting finances of the province directly or indirectly",
-    "Administration of emoluments, pensions, and allowances",
-    "Administration of public revenue",
-    "Communication of financial sanctions",
-    "Examination of all proposals for the increase or reduction of taxation",
-    "Audit matters of provincial receipts and expenditure",
+    "Financial policies, rules",
+    "Advice to Provincial Govt on Financial Matters",
+    "Budget proposals",
+    "Supplementary Grants, Re-appropriation and Releases",
+    "Consolidation of Expenditure Statements",
+    "Creation & Continuation of Posts",
+    "Internal Audit, DAC & PAC",
+    "Appropriation Accounts",
+    "Revenue Receipts",
+    "Management of Treasuries",
+    "Representation in Various Forums and Committees",
   ];
   return (
     <section className="py-16 pt-0 bg-white">
       <div className="container mx-auto text-center">
         <h1 className="text-5xl font-bold text-start text-primary">
-          Functions
+          Functions & Mandates
         </h1>
 
         <div className="py-5 ">
