@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
         <div className="relative">
           <Header />
           <main className="bg-white">{children}</main>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </body>
     </html>

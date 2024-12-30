@@ -5,7 +5,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdAppRegistration } from "react-icons/md";
 import { FaStamp } from "react-icons/fa";
 import Image from "next/image";
-import gbpay from "../../../public/logos/gbPay.png";
+import gbpay from "../../../public/images/gbPay.png";
 const initiatives = [
   {
     title: "GB Pay",

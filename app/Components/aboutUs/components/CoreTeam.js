@@ -1,7 +1,7 @@
 // components/CoreTeam.js
 import React from "react";
 import MemberCard from "./teamMemberCard";
-import profile from "../../../../public/images/profile.webp";
+import profile from "../../../../public/images/CS.png";
 import Divider from "../../Common/Divider";
 const teamMembers = [
   {

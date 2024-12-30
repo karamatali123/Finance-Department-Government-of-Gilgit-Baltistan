@@ -36,7 +36,9 @@ const Accordion = ({ title, children, isOpen, onClick }) => {
           />
         </svg>
       </button>
-      {isOpen && <div className="p-4 bg-white rounded-lg">{children}</div>}
+      {isOpen && (
+        <div className="py-4 px-4 bg-white rounded-lg">{children}</div>
+      )}
     </div>
   );
 };
@@ -51,7 +53,7 @@ const AnnualBudget = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 10000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
@@ -75,8 +77,8 @@ const AnnualBudget = () => {
 
   const renderFileTable = (files) => {
     return (
-      <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
-        <table className="min-w-full divide-y divide-gray-400 border-2">
+      <div className="overflow-x-auto bg-white rounded-lg border-2">
+        <table className="min-w-full divide-y divide-gray-400 ">
           <thead className="bg-gray-100">
             <tr>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
