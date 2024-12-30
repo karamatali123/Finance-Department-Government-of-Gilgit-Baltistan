@@ -1,8 +1,5 @@
 import Divider from "../../Common/Divider";
-import overviewImg from "../../../../public/images/organogram/overview.png";
-import expenditure from "../../../../public/images/organogram/expenditure.png";
-import detailImg from "../../../../public/images/organogram/financeSecretary.png";
-import subDetailsImg from "../../../../public/images/organogram/special.png";
+import overviewImg from "../../../../public/images/chart.png";
 import Organogram from "./organogram";
 
 const OrganogramList = () => {
@@ -10,18 +7,6 @@ const OrganogramList = () => {
     {
       title: "Overview",
       image: overviewImg,
-    },
-    {
-      title: "Detail",
-      image: detailImg,
-    },
-    {
-      title: "Sub-Detail (Budget & Resource)",
-      image: subDetailsImg,
-    },
-    {
-      title: "Sub-Detail (Expenditure & Corporate Finance)",
-      image: expenditure,
     },
   ];
   return (

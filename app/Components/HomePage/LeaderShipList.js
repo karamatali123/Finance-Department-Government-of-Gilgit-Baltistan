@@ -1,9 +1,9 @@
 import React from "react";
 import Divider from "../Common/Divider";
-import img1 from "../../../public/images/leadership/cmGb.jpeg";
-import img2 from "../../../public/images/leadership/ministerFinance.jpeg";
-import img3 from "../../../public/images/leadership/CS.png";
-import img4 from "../../../public/images/leadership/Sf.jpeg";
+import img1 from "../../../public/images/cmGb.jpeg";
+import img2 from "../../../public/images/ministerFinance.jpeg";
+import img3 from "../../../public/images/CS.png";
+import img4 from "../../../public/images/Sf.jpeg";
 
 import MediaCard from "../Common/MediaCard";
 
@@ -16,18 +16,18 @@ const leadership = [
     image: img1,
   },
   {
-    name: "Abrar Ahmad Mirza",
-    // joinDate: "October 26, 2023",
-    toDate: "incumbent",
-    image: img3,
-    designation: "Chief Secretary",
-  },
-  {
     name: "Eng. Muhammad Ismail",
     // joinDate: "July 18 2023",
     toDate: "incumbent",
     designation: "Senior Finance Minister",
     image: img2,
+  },
+  {
+    name: "Mr. Abrar Ahmad Mirza",
+    // joinDate: "October 26, 2023",
+    toDate: "incumbent",
+    image: img3,
+    designation: "Chief Secretary",
   },
 
   {

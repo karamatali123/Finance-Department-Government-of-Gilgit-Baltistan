@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { HiDownload } from "react-icons/hi"; // Using a download icon from react-icons
 import TablePagination from "../Common/TablePagination";
@@ -28,7 +29,7 @@ const NotificationsTable = ({ data = [] }) => {
               </td>
               <td className="py-5 px-6 text-left ">{item.title}</td>
               <td className="py-5 px-6 text-left ">{item.views}</td>
-              <td className="py-5 px-6 text-left ">
+              <td className="py-5 px-6 text-center ">
                 <DownloadButton fileUrl={item.url} fileName={item.fileName} />
               </td>
             </tr>
@@ -43,7 +44,7 @@ const NotificationsTable = ({ data = [] }) => {
 
 export default NotificationsTable;
 
-const DownloadButton = ({ fileUrl, fileName }) => {
+export const DownloadButton = ({ fileUrl, fileName }) => {
   const [downloading, setDownloading] = useState(false);
 
   const handleDownload = async (fileUrl, fileName) => {

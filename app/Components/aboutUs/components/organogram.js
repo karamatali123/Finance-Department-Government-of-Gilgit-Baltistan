@@ -3,14 +3,11 @@ import React from "react";
 
 const Organogram = ({ organogram }) => {
   return (
-    <div className="pt-6 ">
-      <h2 className="text-4xl font-bold text-primary text-start my-10">
-        {organogram.title}
-      </h2>
-      <Image
-        src={organogram.image}
-        height={860}
-        width={1000}
+    <div className="pt-2 ">
+      <img
+        src={organogram.image.src}
+        height={960}
+        width={1200}
         className="mx-auto"
       />
     </div>

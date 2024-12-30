@@ -3,7 +3,7 @@ import { useState } from "react";
 import Divider from "../Components/Common/Divider";
 import PageHeader from "../Components/Common/PageHeader";
 import MediaCard from "../Components/Common/MediaCard";
-import bg from "../../public/images/budget/Picture-1.png";
+import bg from "../../public/images/Picture-1.png";
 
 const MediaRoom = () => {
   const [name, setName] = useState();

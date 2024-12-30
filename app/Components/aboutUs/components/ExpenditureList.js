@@ -1,10 +1,10 @@
 import React from "react";
-import cardImage from "../../../../public/images/expenditure/Picture.png";
-import cardImage1 from "../../../../public/images/expenditure/img5.png";
-import cardImage2 from "../../../../public/images/expenditure/img.png";
-import cardImage3 from "../../../../public/images/expenditure/Picture-1.png";
-import cardImage4 from "../../../../public/images/expenditure/img3.png";
-import cardImage5 from "../../../../public/images/expenditure/img2.png";
+import cardImage from "../../../../public/images/img5.png";
+import cardImage1 from "../../../../public/images/img5.png";
+import cardImage2 from "../../../../public/images/img.png";
+import cardImage3 from "../../../../public/images/img5.png";
+import cardImage4 from "../../../../public/images/img3.png";
+import cardImage5 from "../../../../public/images/img2.png";
 
 import MediaCard from "../../Common/MediaCard";
 const resourceData = [

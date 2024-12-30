@@ -3,8 +3,8 @@ import Image from "next/image";
 const MemberCard = ({ member }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-      <Image
-        src={member.image}
+      <img
+        src={member.image.src}
         alt={member.name}
         height={74}
         width={74}

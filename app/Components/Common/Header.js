@@ -13,7 +13,7 @@ const headerLinks = [
     subItems: [
       { title: "Overview", link: "/about/overview" },
       { title: "Organogram", link: "/about/organogram" },
-      { title: "Our Divisions", link: "/about/divisions" },
+      { title: "Sections", link: "/about/sections" },
     ],
   },
   // { title: "What We Do", link: "/what-we-do" },
@@ -63,10 +63,10 @@ const Header = () => {
         {/* Logo Section - Updated for better mobile display */}
         <Link href="/" className="hover:text-primary-dark flex-shrink-0">
           <div className="flex items-center space-x-2">
-            <Image
+            <img
               height={75}
               width={55}
-              src={logo}
+              src={logo.src}
               alt="Logo"
               className="h-8 w-auto md:h-10"
             />

@@ -4,22 +4,25 @@ import Divider from "../Common/Divider";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdAppRegistration } from "react-icons/md";
 import { FaStamp } from "react-icons/fa";
+import Image from "next/image";
+import gbpay from "../../../public/logos/gbPay.png";
 const initiatives = [
   {
     title: "GB Pay",
     description: "Digitalization of  Government payments",
-    icon: <RiSecurePaymentLine className="text-primary text-4xl" />, // Placeholder for icon
+    icon: <Image src={gbpay} alt="GB Pay" width={100} height={100} />, // Placeholder for icon
   },
   {
-    title: "E-Registration",
-    description: "Digitalization of  Government Registration",
+    title: "E-Registration & E-Stamping",
+    description:
+      "Introduction of E-Stamps  & E-Registration in Gilgit-Baltistan",
     icon: <MdAppRegistration className="text-primary text-4xl" />,
   },
-  {
-    title: "E-Stamping",
-    description: "Digitalization of  Government Stamping",
-    icon: <FaStamp className="text-primary text-4xl" />,
-  },
+  // {
+  //   title: "E-Stamping",
+  //   description: "Digitalization of  Government Stamping",
+  //   icon: <FaStamp className="text-primary text-4xl" />,
+  // },
 ];
 
 const Initiatives = () => {
@@ -30,7 +33,8 @@ const Initiatives = () => {
           Initiatives
         </h2>
         <Divider />
-        <div className="mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
+
+        <div className="mt-8 md:mt-12 flex flex-wrap justify-center  gap-[100px] xs:gap-[40px]">
           {initiatives.map((initiative, index) => (
             <div
               key={index}

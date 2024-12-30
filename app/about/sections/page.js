@@ -10,14 +10,11 @@ const Divisions = () => {
       <PageHeader bgImg={"bg-division"} />
       <section className="py-12">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold text-green-600 ">Our Divisions</h2>
+          <h2 className="text-4xl font-bold text-green-600 ">Sections</h2>
           <Divider />
-          <p className="text-black text-start text-lg">
-            All functionality of the department is performed by the below
-            mentioned divisions: 
-          </p>
+
           <BudgetRecourses />
-          <ExpenditureList />
+          {/* <ExpenditureList /> */}
         </div>
       </section>
     </div>
