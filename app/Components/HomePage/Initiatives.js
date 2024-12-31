@@ -10,7 +10,7 @@ const initiatives = [
   {
     title: "GB Pay",
     description: "Digitalization of  Government payments",
-    icon: <Image src={gbpay} alt="GB Pay" width={100} height={100} />, // Placeholder for icon
+    icon: <img src={gbpay.src} alt="GB Pay" width={100} height={100} />, // Placeholder for icon
   },
   {
     title: "E-Registration & E-Stamping",
