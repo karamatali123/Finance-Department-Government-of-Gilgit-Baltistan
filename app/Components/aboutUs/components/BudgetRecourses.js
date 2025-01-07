@@ -6,6 +6,7 @@ import cardImage4 from "../../../../public/images/regulation.png";
 import cardImage5 from "../../../../public/images/audit.jpg";
 import cardImage6 from "../../../../public/images/sap.jpg";
 import MediaCard from "../../Common/MediaCard";
+import RecoursesCard from "./RecoursesCard";
 const resourceData = [
   {
     title: "Admin section",
@@ -51,7 +52,7 @@ const BudgetRecourses = () => {
     <div className="py-9">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
         {resourceData.map((resource, index) => (
-          <MediaCard
+          <RecoursesCard
             key={index}
             title={resource.title}
             description={resource.description}

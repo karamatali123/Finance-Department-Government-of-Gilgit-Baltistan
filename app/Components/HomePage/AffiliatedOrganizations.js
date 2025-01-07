@@ -1,11 +1,16 @@
 // components/AffiliatedOrganizations.js
 "use client";
 import React from "react";
-
+import SectionHeader from "./SectionHeader";
 const organizations = [
   {
-    name: "Treasury Offices",
-    logo: "/images/Gov.svg",
+    name: "Directorate of Treasury & Accounts Services",
+    logo: "/images/govLogo.png",
+    link: "#",
+  },
+  {
+    name: "GB Revenue Authority",
+    logo: "/images/govLogo.png",
     link: "#",
   },
   {
@@ -27,13 +32,18 @@ const organizations = [
 
 const AffiliatedOrganizations = () => {
   return (
-    <section className="py-8 sm:py-16 bg-white">
+    <section className="py-8 md:py-16 bg-white">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-green-600">
-          Affiliated Organizations
-        </h2>
-        <div className="mt-6 sm:mt-10">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="container mx-auto text-center  px-4 md:px-8">
+          {/* Header Section */}
+          <SectionHeader
+            primaryText="Affiliated "
+            secondaryText="Organizations"
+            description="Partnering with trusted organizations to amplify impact and achieve shared goals."
+          />
+        </div>
+        <div className="mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
             {organizations.map((org, index) => (
               <div
                 key={index}

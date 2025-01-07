@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import logo from "../../../public/logos/gbFinancelogo.svg";
+import logo from "../../../public/images/govLogo.png";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
@@ -55,27 +55,29 @@ const Header = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const isActive = (link) => pathname?.includes(link);
+  const isActive = (link) => {
+    return pathname?.includes(link);
+  };
 
   return (
-    <header className="py-4 px-4 md:px-8 absolute top-0 w-full bg-black bg-opacity-70 z-40">
+    <header className="py-4 px-4 md:px-8 absolute top-0 w-full bg-white z-40 border-b">
       <div className="flex flex-wrap justify-between items-center">
         {/* Logo Section - Updated for better mobile display */}
         <Link href="/" className="hover:text-primary-dark flex-shrink-0">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center flex-row gap-2">
             <img
-              height={75}
-              width={55}
+              height={35}
+              width={45}
               src={logo.src}
               alt="Logo"
-              className="h-8 w-auto md:h-10"
+              className=""
             />
             <div className="hidden xs:block">
-              <h1 className="text-sm md:text-lg font-semibold text-primary">
+              <h1 className="text-sm md:text-lg font-semibold text-[#02401B]">
                 FINANCE DEPARTMENT
               </h1>
-              <p className="text-xs md:text-sm text-white">
-                Government Of The Gilgit Baltistan
+              <p className="text-xs md:text-sm text-[#02401B]">
+                Government of Gilgit Baltistan
               </p>
             </div>
           </div>
@@ -83,7 +85,7 @@ const Header = () => {
 
         {/* Mobile Menu Button - Updated for custom breakpoint */}
         <button
-          className="custom:hidden text-white p-2"
+          className="custom:hidden text-black p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           <svg
@@ -112,7 +114,7 @@ const Header = () => {
 
         {/* Navigation and Search - Updated for custom breakpoint */}
         <div
-          className={`w-full custom:w-auto custom:flex custom:items-center absolute custom:relative left-0 top-full custom:top-auto bg-black custom:bg-transparent ${
+          className={`w-full custom:w-auto custom:flex custom:items-center absolute custom:relative left-0 top-full custom:top-auto bg-white custom:bg-transparent ${
             mobileMenuOpen ? "block" : "hidden"
           }`}
         >
@@ -121,10 +123,10 @@ const Header = () => {
               {headerLinks.map((item, index) => (
                 <li
                   key={index}
-                  className={`relative group p-1 whitespace-nowrap ${
+                  className={`relative  text-lg group p-1 whitespace-nowrap ${
                     isActive(item.link)
-                      ? "border-b-[3px] font-extrabold border-primary text-primary"
-                      : "text-white"
+                      ? "border-b-[3px] font-bold border-primary text-primary"
+                      : "text-black"
                   }`}
                 >
                   {item.subItems ? (
@@ -151,14 +153,18 @@ const Header = () => {
                         </svg>
                       </button>
                       {activeDropdown === index && (
-                        <ul className="custom:absolute relative left-0 mt-2 w-full custom:w-48 bg-white shadow-lg rounded-lg z-20">
+                        <ul
+                          className="custom:absolute relative left-0 mt-2 w-full custom:w-48 bg-white shadow-lg border-2 border-[gray-300] rounded-lg z-20"
+                          onBlur={closeDropdown}
+                          onMouseLeave={closeDropdown}
+                        >
                           {item.subItems.map((subItem, subIndex) => (
                             <li
                               key={subIndex}
-                              className={`border-b last:border-b-0 ${
+                              className={`border-b last:border-b-0  rounded-md ${
                                 isActive(subItem.link)
-                                  ? "bg-primary text-white"
-                                  : "text-primary hover:bg-gray-100"
+                                  ? "bg-primary text-white font-bold"
+                                  : "text-primary hover:bg-gray-100 font-normal"
                               }`}
                             >
                               <Link

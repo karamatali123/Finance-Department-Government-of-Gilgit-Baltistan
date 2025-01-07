@@ -1,3 +1,5 @@
+import SectionHeader from "../../HomePage/SectionHeader";
+
 const Functions = () => {
   const financeDepartmentFunctions = [
     "Financial policies, rules",
@@ -15,11 +17,13 @@ const Functions = () => {
   return (
     <section className="py-16 pt-0 bg-white">
       <div className="container mx-auto text-center">
-        <h1 className="text-5xl font-bold text-start text-primary">
-          Functions & Mandates
-        </h1>
+        <SectionHeader
+          primaryText={"Mandates "}
+          secondaryText={"Functions &"}
+          containerClass={"text-start mb-0"}
+        />
 
-        <div className="py-5 ">
+        <div className="py-1 ">
           <p className="text-lg text-justify text-gray-900">
             The major functions of the department are mentioned below:
           </p>

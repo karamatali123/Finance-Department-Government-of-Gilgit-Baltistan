@@ -3,7 +3,7 @@ import React from "react";
 
 const Organogram = ({ organogram }) => {
   return (
-    <div className="pt-2 ">
+    <div>
       <img
         src={organogram.image.src}
         height={960}

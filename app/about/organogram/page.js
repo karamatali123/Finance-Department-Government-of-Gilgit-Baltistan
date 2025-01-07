@@ -1,10 +1,14 @@
+import HeroSection from "@/app/Components/aboutUs/components/heroSection";
 import OrganogramList from "@/app/Components/aboutUs/components/organogramList";
-import PageHeader from "@/app/Components/Common/PageHeader";
 
 const Organogram = () => {
   return (
     <div>
-      <PageHeader bgImg={"bg-organogram"} />
+      <HeroSection
+        title={"Organogram"}
+        bdImage={"bg-organogram"}
+        subTitle={`About us/<b>Organogram</b>`}
+      />
       <OrganogramList />
     </div>
   );

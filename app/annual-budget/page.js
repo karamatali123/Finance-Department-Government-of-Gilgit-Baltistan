@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import PageHeader from "../Components/Common/PageHeader";
 import booksJson from "./booksJson.json";
-import Divider from "../Components/Common/Divider";
+import HeroSection from "../Components/aboutUs/components/heroSection";
 
 const Accordion = ({ title, children, isOpen, onClick }) => {
   return (
@@ -12,7 +11,7 @@ const Accordion = ({ title, children, isOpen, onClick }) => {
           !isOpen ? "hover:bg-gray-200" : ""
         } flex justify-between items-center ${
           isOpen ? "rounded-t-lg" : "rounded-lg"
-        } ${isOpen ? "bg-[#00aa55]" : "bg-white"}`}
+        } ${isOpen ? "bg-primary" : "bg-white"}`}
         onClick={onClick}
       >
         <span
@@ -136,8 +135,6 @@ const AnnualBudget = () => {
     );
   };
 
-  console.log(isLoading, "isLoading");
-
   return (
     <>
       {isLoading ? (
@@ -147,18 +144,14 @@ const AnnualBudget = () => {
       ) : (
         // </div>
         <div>
-          <PageHeader bgImg={"bg-initiative"} />
+          <HeroSection
+            title={"Annual Budget Documents"}
+            bdImage={"bg-annualBudget"}
+            subTitle={``}
+            description="Access comprehensive budget documents and financial reports"
+          />
           <section className="py-12 bg-gray-50">
             <div className="container mx-auto text-center px-4 md:px-8">
-              <h2 className="text-2xl md:text-3xl font-semibold text-primary">
-                Annual Budget Documents
-              </h2>
-              <Divider />
-              <p className="mt-4 text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-                Access comprehensive budget documents and financial reports for
-                the Government of Gilgit Baltistan
-              </p>
-
               <div className="max-w-6xl mx-auto">
                 {booksJson.map((mainFolder, mainIndex) => (
                   <Accordion
@@ -191,13 +184,5 @@ const AnnualBudget = () => {
     </>
   );
 };
-
-// export const getStaticProps = async () => {
-//   return {
-//     props: {
-//       initialData: booksJson.slice(0, 3),
-//     },
-//   };
-// };
 
 export default AnnualBudget;

@@ -11,10 +11,8 @@ const OrganogramList = () => {
   ];
   return (
     <div>
-      <section className="py-12">
+      <section className="py-10">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold text-green-600 ">Organogram</h2>
-          <Divider />
           <div>
             {organograms.map((organogram, index) => (
               <Organogram organogram={organogram} key={index} />

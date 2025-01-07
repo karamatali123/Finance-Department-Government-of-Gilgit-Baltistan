@@ -7,7 +7,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary: #00aa55;
+  --primary: #4a60a1;
   --grey: #979797;
 }
 
@@ -29,4 +29,37 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Custom arrows */
+.slick-prev,
+.slick-next {
+  width: 40px;
+  height: 40px;
+  background-color: #4a5568 !important;
+  border-radius: 50%;
+  z-index: 1;
+}
+.text-stroke {
+  -webkit-text-stroke: 2px #d1d5db; /* gray-300 color */
+}
+.slick-prev {
+  left: -5px;
+}
+
+.slick-next {
+  right: -5px;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: #2d3748 !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 20px;
+  line-height: 1;
+  opacity: 1;
+  color: white;
 }

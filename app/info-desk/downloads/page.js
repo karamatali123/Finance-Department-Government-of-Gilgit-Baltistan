@@ -1,4 +1,5 @@
 "use client";
+import HeroSection from "@/app/Components/aboutUs/components/heroSection";
 import Divider from "@/app/Components/Common/Divider";
 import PageHeader from "@/app/Components/Common/PageHeader";
 import NotificationsTable from "@/app/Components/infoDesk/NotificationsTable";
@@ -37,7 +38,12 @@ const Downloads = () => {
 
   return (
     <div>
-      <PageHeader bgImg={"bg-downloads"} />
+      <HeroSection
+        title={"Downloads"}
+        bdImage={"bg-downloads"}
+        subTitle={``}
+        description="Access comprehensive budget documents and financial reports for the Government of Gilgit Baltistan"
+      />
       <section className="py-12">
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-bold text-green-600 ">Downloads</h2>

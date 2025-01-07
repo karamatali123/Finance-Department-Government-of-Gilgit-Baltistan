@@ -8,10 +8,8 @@ const Overview = () => {
     <>
       <HeroSection
         title={"Overview"}
-        description={`Welcome to the overview of the Finance Department of the Government of
-      Gilgit Baltistan. This page provides general information about our
-      department's purpose and vision.`}
         bdImage={"bg-overview"}
+        subTitle={`About us/<b>Overview</b>`}
       />
 
       <OverviewSection />

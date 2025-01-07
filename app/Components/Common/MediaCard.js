@@ -14,18 +14,18 @@ const MediaCard = ({
   ),
 }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col  height-[500]  transform transition duration-300 hover:scale-105 hover:shadow-2xl ">
-      <div className="w-full h-[250px]">
+    <div className=" relative items-center rounded-lg  flex flex-col transform transition duration-300 hover:scale-105  ">
+      <div className="w-fit h-[250px]">
         <img
           src={imageUrl.src}
           alt={title}
           height={250}
-          className="rounded-t-lg m-auto h-[100%] "
+          className="rounded-lg  object-contain h-[100%] "
         />
       </div>
-      <div className={`${bodyCls}`}>
-        <h3 className="text-xl font-bold text-primary mb-2">{title}</h3>
-        <h2 className="text-sm font-bold text-primary mb-2">{designation}</h2>
+      <div className={`${bodyCls} absolute bottom-1`}>
+        <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
+        <h2 className="text-sm font-bold text-white mb-2">{designation}</h2>
         <p className="text-gray-600 mb-4 text-justify">{description}</p>
         {cardAction}
       </div>
