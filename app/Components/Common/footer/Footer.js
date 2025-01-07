@@ -9,8 +9,8 @@ const Footer = () => {
       <div className="flex flex-col md:flex-row items-start gap-8 md:gap-20 justify-start min-h-[400px] py-8 md:py-16">
         <Intro />
         <ContactUs />
-        <SocialLinks />
         <RelatedLinks />
+        <SocialLinks />
       </div>
     </div>
   );
