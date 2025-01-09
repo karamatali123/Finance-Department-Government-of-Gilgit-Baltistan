@@ -19,6 +19,7 @@ const headerLinks = [
   // { title: "What We Do", link: "/what-we-do" },
   { title: "Initiatives", link: "/initiatives" },
   { title: "Annual Budget", link: "/annual-budget" },
+  { title: "Data Analytics", link: "/data-analytics" },
   { title: "Downloads", link: "/info-desk/downloads" },
   // {
   //   title: "Info Desk",

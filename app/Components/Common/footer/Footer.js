@@ -10,7 +10,7 @@ const Footer = () => {
         <Intro />
         <ContactUs />
         <RelatedLinks />
-        <SocialLinks />
+        {/* <SocialLinks /> */}
       </div>
     </div>
   );

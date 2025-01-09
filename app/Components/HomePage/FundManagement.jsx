@@ -38,12 +38,35 @@ const FundManagement = () => {
 
       {/* Timeline Sections */}
       <div className="relative ">
-        <div className="border-r-2  relative border-primary border-dashed h-36 w-[50.5%] rounded-br-lg hidden md:block">
+        <div className="border-l-2  border-t-2 relative border-primary border-dashed h-36 w-[50.5%] rounded-br-lg hidden md:block">
           <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[-10px] right-[-10px] "></div>
         </div>
         <div className="">
           {sections.map((section, index) => (
-            <div key={section.number} className="relative">
+            <div
+              key={section.number}
+              className={` ${
+                index % 2 === 0
+                  ? "md:border-2 md:rounded-tl-lg"
+                  : "md:border-r-2"
+              } py-8 md:px-8 md:border-primary md:border-separate md:rounded-lg mr-[10px]
+              ${
+                index % 2 === 0
+                  ? "md:rounded-tr-none md:rounded-br-none"
+                  : "md:rounded-tl-none md:rounded-bl-none"
+              }  ${
+                index === 0
+                  ? "md:border-t-0 md:border-r-0"
+                  : index % 2 === 0
+                  ? "md:border-r-0"
+                  : "md:border-l-0"
+              } md:border-dashed`}
+            >
+              {index !== 0 && (
+                <div
+                  className={`self-end h-36 w-[100%] bg-transparent md:block`}
+                ></div>
+              )}
               <Link href={`about/sections`}>
                 <div
                   className={`
@@ -51,20 +74,13 @@ const FundManagement = () => {
                 flex-col 
                 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} 
                 items-center 
-                justify-center
+                justify-start
                 relative
+                gap-8
               `}
                 >
                   {/* Image Section */}
-                  <div
-                    className={`w-full md:w-5/12 md:border-2 md:border-primary md:border-separate md:rounded-lg  ${
-                      index % 2 === 0
-                        ? "md:rounded-tr-none md:rounded-br-none"
-                        : "md:rounded-tl-none md:rounded-bl-none"
-                    } py-5 md:px-5 ${
-                      index % 2 === 0 ? "md:border-r-0" : "md:border-l-0"
-                    } md:border-dashed`}
-                  >
+                  <div className={`w-full md:w-5/12`}>
                     <div className="relative rounded-lg overflow-hidden shadow-lg ">
                       <img
                         src={section.image}
@@ -72,10 +88,13 @@ const FundManagement = () => {
                         className="w-full h-64 object-cover"
                       />
                     </div>
+                    {/* {index % 2 !== 0 && ( */}
+
+                    {/* )} */}
                   </div>
 
                   {/* Content Section */}
-                  <div className="w-full md:w-5/12 space-y-4">
+                  <div className="w-full md:w-6/12">
                     <div className="text-7xl font-bold text-white hidden md:block relative">
                       <span className="text-stroke">{section.number}</span>
                     </div>
@@ -87,19 +106,6 @@ const FundManagement = () => {
                     </p>
                   </div>
                 </div>
-                {index < sections.length - 1 && (
-                  <div
-                    className={`border-r-2 border-primary relative border-dashed h-36 w-[50.5%] ${
-                      index % 2 === 0 ? "rounded-tr-lg" : "rounded-br-lg"
-                    } justify-end hidden md:block`}
-                  >
-                    <div
-                      className={`w-5 h-5 bg-primary rounded-[50%] absolute right-[-10px] ${
-                        index % 2 === 0 ? "bottom-[-10px] " : "top-[-10px] "
-                      }`}
-                    ></div>
-                  </div>
-                )}
               </Link>
             </div>
           ))}

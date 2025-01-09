@@ -6,60 +6,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SectionHeader from "./SectionHeader";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { budgetBooks } from "./BudgetBook";
+import Link from "next/link";
 
 const AnnualBudget = () => {
   const sliderRef = useRef(null);
-  const books = [
-    {
-      id: 1,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "How to Stop Worrying and Start Living",
-    },
-    {
-      id: 2,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "The Subtle Art of Not Giving a F*ck",
-    },
-    {
-      id: 3,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "The Psychology of Money",
-    },
-    {
-      id: 4,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "Principles",
-    },
-    {
-      id: 5,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "How to Stop Worrying and Start Living",
-    },
-    {
-      id: 6,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "The Subtle Art of Not Giving a F*ck",
-    },
-    {
-      id: 7,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "The Psychology of Money",
-    },
-    {
-      id: 8,
-      image:
-        "https://cdn.shopify.com/s/files/1/0565/4039/7655/files/book_cover_1.png",
-      title: "Principles",
-    },
-  ];
-
   const settings = {
     dots: false,
     infinite: true,
@@ -106,19 +57,26 @@ const AnnualBudget = () => {
 
         <div className="relative mt-8">
           <Slider ref={sliderRef} {...settings}>
-            {books.map((book) => (
-              <div key={book.id} className="px-2">
-                <div className="aspect-[3/4] relative overflow-hidden rounded-lg">
-                  <div className="relative w-full h-full">
-                    <img
-                      src={book.image}
-                      alt={book.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/40"></div>
+            {budgetBooks.map((book, index) => (
+              <Link
+                href={`/annual-budget?bookNo=${index + 1}`}
+                key={book.id}
+                className="px-2"
+                target="_blank"
+              >
+                <div key={book.id} className="px-2">
+                  <div className="aspect-[3/4] relative overflow-hidden rounded-lg">
+                    <div className="relative w-full h-full">
+                      <img
+                        src={book.image}
+                        alt={book.name}
+                        className="w-full h-full object-contain"
+                      />
+                      <div className="absolute inset-0 bg-black/40"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </Slider>
 

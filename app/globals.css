@@ -11,14 +11,14 @@
   --grey: #979797;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
     --primary: #00aa55;
     --grey: #979797;
   }
-}
+} */
 
 body {
   color: var(--foreground);

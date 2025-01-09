@@ -1,3 +1,4 @@
+"use client";
 const HeroSection = ({ title, description, bdImage, subTitle }) => {
   return (
     <>

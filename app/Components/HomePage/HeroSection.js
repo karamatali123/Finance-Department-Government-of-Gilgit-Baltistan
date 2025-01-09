@@ -25,12 +25,6 @@ const Hero = () => {
           >
             Supervision and control of provincial finances
           </a>
-          <button
-            className="w-fit h-12 flex items-center px-4 py-2  text-white justify-center bg-[#EDF2F7] bg-primary rounded-lg hover:bg-[#E2E8F0] transition-all"
-            aria-label="Previous slide"
-          >
-            Contact Us
-          </button>
         </div>
         <img
           src={image.src}

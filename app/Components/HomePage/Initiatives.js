@@ -11,6 +11,7 @@ import gov from "../../../public/images/Gov.png";
 import digital from "../../../public/images/degital.png";
 
 import SectionHeader from "./SectionHeader";
+import Link from "next/link";
 
 const initiatives = [
   {
@@ -25,7 +26,7 @@ const initiatives = [
         className="w-[60px] md:w-[100px]"
       />
     ),
-    link: "https://gbppra.gov.pk/",
+    link: "https://gbpay.gov.pk/",
   },
   {
     title: "E-Registration & E-Stamping",
@@ -69,10 +70,11 @@ const Initiatives = () => {
 
         <div className="mt-6 md:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {initiatives.map((initiative, index) => (
-            <div
+            <Link
               key={index}
+              href={initiative.link}
+              target="_blank"
               className="flex flex-col sm:flex-row gap-4 items-center text-center p-4 md:p-7 rounded-lg bg-white shadow-lg cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl"
-              onClick={() => window.open(initiative.link, "_blank")}
             >
               <div className="flex flex-col items-center sm:items-start justify-start flex-1">
                 <h3 className="text-base md:text-lg font-semibold text-primary">
@@ -83,7 +85,7 @@ const Initiatives = () => {
                 </p>
               </div>
               <div className="flex-shrink-0">{initiative.icon}</div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

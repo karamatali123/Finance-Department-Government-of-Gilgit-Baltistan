@@ -30,7 +30,7 @@ const NotificationsTable = ({ data = [] }) => {
               <td className="py-5 px-6 text-left ">{item.title}</td>
               <td className="py-5 px-6 text-left ">{item.views}</td>
               <td className="py-5 px-6 text-center ">
-                <DownloadButton fileUrl={item.url} fileName={item.fileName} />
+                {/* <DownloadButton fileUrl={item.url} fileName={item.fileName} /> */}
               </td>
             </tr>
           ))}

@@ -2,27 +2,29 @@
 "use client";
 import React from "react";
 import SectionHeader from "./SectionHeader";
+import Link from "next/link";
 const organizations = [
   {
     name: "Directorate of Treasury & Accounts Services",
-    logo: "/images/govLogo.png",
+    logo: "/images/Gov.png",
     link: "#",
   },
   {
     name: "GB Revenue Authority",
-    logo: "/images/govLogo.png",
+    logo: "/images/Gov.png",
     link: "#",
-  },
-  {
-    name: "KCBL – Karakoram Cooperative Bank Limited",
-    logo: "/images/kcbl.png",
-    link: "https://kcb.com.pk/",
   },
   {
     name: "Public Procurement Regulatory Authority, Gilgit Baltistan",
     logo: "/images/ppra.jpeg",
     link: "https://gbppra.gov.pk/",
   },
+  {
+    name: "KCBL – Karakoram Cooperative Bank Limited",
+    logo: "/images/kcbl.png",
+    link: "https://kcb.com.pk/",
+  },
+
   {
     name: "Northern Areas Transport Corporation",
     logo: "/images/natco.png",
@@ -45,9 +47,10 @@ const AffiliatedOrganizations = () => {
         <div className="mt-8">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
             {organizations.map((org, index) => (
-              <div
+              <Link
+                href={org.link}
+                target="_blank"
                 key={index}
-                onClick={() => window.open(org.link, "_blank")}
                 className="flex flex-col items-center justify-center p-4 cursor-pointer"
               >
                 <img
@@ -58,7 +61,7 @@ const AffiliatedOrganizations = () => {
                 <p className="mt-2 sm:mt-4 text-sm sm:text-base text-gray-700 text-center">
                   {org.name}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
