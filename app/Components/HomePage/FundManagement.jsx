@@ -64,7 +64,7 @@ const FundManagement = () => {
             >
               {index !== 0 && (
                 <div
-                  className={`self-end h-36 w-[100%] bg-transparent md:block`}
+                  className={`self-end h-36 w-[100%] bg-transparent hidden md:block`}
                 ></div>
               )}
               <Link href={`about/sections`}>
@@ -76,7 +76,8 @@ const FundManagement = () => {
                 items-center 
                 justify-start
                 relative
-                gap-8
+                gap-4
+                md:gap-8
               `}
                 >
                   {/* Image Section */}

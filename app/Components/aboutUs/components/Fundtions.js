@@ -15,7 +15,7 @@ const Functions = () => {
     "Representation in Various Forums and Committees",
   ];
   return (
-    <section className="py-16 pt-0 bg-white">
+    <section className="py-16 pt-0 px-[20px] bg-white">
       <div className="container mx-auto text-center">
         <SectionHeader
           primaryText={"Mandates "}
