@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image"; // Assuming you're using Next.js
 
 const RecoursesCard = ({ title = "Admin Section", description, imageUrl }) => {
   const [showMore, setShowMore] = useState(false);
@@ -8,7 +7,7 @@ const RecoursesCard = ({ title = "Admin Section", description, imageUrl }) => {
     <div className="bg-white  text-start rounded-lg shadow-md max-w-sm max-h-fit">
       {/* Title using image */}
       <div className="mb-4 h-[200px]">
-        <Image
+        <img
           src={imageUrl} // Update this path to your actual image path
           alt="Admin wooden blocks"
           width={300}

@@ -7,7 +7,7 @@ import { MdAppRegistration } from "react-icons/md";
 import { FaStamp, FaReceipt } from "react-icons/fa";
 import Image from "next/image";
 import gbpay from "../../../public/images/gbPay.png";
-import gov from "../../../public/images/Gov.png";
+import stamp from "../../../public/images/stamp.png";
 import digital from "../../../public/images/degital.png";
 
 import SectionHeader from "./SectionHeader";
@@ -34,7 +34,7 @@ const initiatives = [
       "Introduction of E-Stamps  & E-Registration in Gilgit-Baltistan",
     icon: (
       <img
-        src={gov.src}
+        src={stamp.src}
         alt="GB Pay"
         width={100}
         height={100}
