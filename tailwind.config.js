@@ -32,6 +32,8 @@ module.exports = {
         initiative: "url(/images/Initiative.png)",
         annualBudget: "url(/images/annualBg.png)",
         notifications: "url(/images/notifications.png)",
+        analytics: "url(/images/analtics.png)",
+
         jobs: "url(/images/jobs.png)",
         downloads: "url(/images/downloads.png)",
         rightTo: "url(/images/rightto.png)",

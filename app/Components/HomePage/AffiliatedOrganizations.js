@@ -7,12 +7,12 @@ const organizations = [
   {
     name: "Directorate of Treasury & Accounts Services",
     logo: "/images/Gov.png",
-    link: "#",
+    link: "/treasury",
   },
   {
     name: "GB Revenue Authority",
     logo: "/images/Gov.png",
-    link: "#",
+    link: "/revenue-authority",
   },
   {
     name: "Public Procurement Regulatory Authority, Gilgit Baltistan",

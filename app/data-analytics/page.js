@@ -13,7 +13,7 @@ const DataAnalytics = () => {
       <HeroSection
         title={"Data Analytics"}
         subTitle={``}
-        bdImage={"bg-initiative"}
+        bdImage={"bg-analytics"}
         description=""
       />
       <div className="container mx-auto px-16 py-12">
