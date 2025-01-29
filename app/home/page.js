@@ -14,8 +14,8 @@ export default function HomePage() {
   return (
     <div className="pt-[100px]">
       <HeroSection />
-      <AnnualBudget />
       <LeaderShipList />
+      <AnnualBudget />
       <FundManagement />
 
       <Initiatives />

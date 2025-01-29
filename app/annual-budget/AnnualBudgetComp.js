@@ -57,7 +57,7 @@ const AnnualBudgetComp = () => {
       ) : (
         <div>
           <HeroSection
-            title={"Annual Budget Documents"}
+            title={"Budget Documents"}
             bdImage={"bg-annualBudget"}
             subTitle={""}
             description="Access comprehensive budget documents and financial reports"

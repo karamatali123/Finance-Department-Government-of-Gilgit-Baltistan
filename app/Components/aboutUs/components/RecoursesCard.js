@@ -4,19 +4,19 @@ import React, { useState } from "react";
 const RecoursesCard = ({ title = "Admin Section", description, imageUrl }) => {
   const [showMore, setShowMore] = useState(false);
   return (
-    <div className="bg-white  text-start rounded-lg shadow-md max-w-sm max-h-fit">
+    <div className="bg-white text-start rounded-lg shadow-md max-w-sm max-h-fit transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
       {/* Title using image */}
-      <div className="mb-4 h-[200px]">
+      <div className="mb-4 h-[200px] overflow-hidden">
         <img
-          src={imageUrl} // Update this path to your actual image path
-          alt="Admin wooden blocks"
+          src={imageUrl}
+          alt="Admin wooden blocks" 
           width={300}
           height={300}
-          className="w-full h-full"
+          className="w-full h-full transition-transform duration-300 hover:scale-110"
         />
       </div>
 
-      <div className="p-4 ">
+      <div className="p-4">
         <h3 className="text-lg font-semibold text-start text-primary mb-3 max-h-[200px] overflow-y-auto">
           {title}
         </h3>
@@ -28,7 +28,7 @@ const RecoursesCard = ({ title = "Admin Section", description, imageUrl }) => {
           {description}
         </p>
         <button
-          className="text-white hover:text-white bg-primary py-2 rounded-full w-[100px] "
+          className="text-white hover:text-white bg-primary py-2 rounded-full w-[100px] transition-all duration-300 hover:bg-opacity-90 hover:scale-105"
           onClick={() => setShowMore(!showMore)}
         >
           {showMore ? "Read Less" : "Read More"}

@@ -1,15 +1,10 @@
 // components/Initiatives.js
 "use client";
 import React from "react";
-import Divider from "../Common/Divider";
-import { RiSecurePaymentLine } from "react-icons/ri";
-import { MdAppRegistration } from "react-icons/md";
-import { FaStamp, FaReceipt } from "react-icons/fa";
-import Image from "next/image";
 import gbpay from "../../../public/images/gbPay.png";
 import stamp from "../../../public/images/stamp.png";
 import digital from "../../../public/images/degital.png";
-
+import { motion } from "framer-motion";
 import SectionHeader from "./SectionHeader";
 import Link from "next/link";
 
@@ -61,35 +56,57 @@ const initiatives = [
 
 const Initiatives = () => {
   return (
-    <section className="py-6 md:py-16 bg-gray-50">
-      <div className="container mx-auto text-center px-4 md:px-8">
-        <SectionHeader
-          title="Initiatives"
-          description="Driving impactful change through innovation and collaboration."
-        />
+    <motion.section
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false }}
+      transition={{ duration: 1.8, ease: "easeOut" }}
+      className="py-8 md:py-16 bg-white"
+    >
+      <section className="py-6 md:py-16 bg-gray-50">
+        <div className="container mx-auto text-center px-4 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 1.6, delay: 0.2 }}
+          >
+            <SectionHeader
+              title="Initiatives"
+              description="Driving impactful change through innovation and collaboration."
+            />
+          </motion.div>
 
-        <div className="mt-6 md:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {initiatives.map((initiative, index) => (
-            <Link
-              key={index}
-              href={initiative.link}
-              target="_blank"
-              className="flex flex-col sm:flex-row gap-4 items-center text-center p-4 md:p-7 rounded-lg bg-white shadow-lg cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl"
-            >
-              <div className="flex flex-col items-center sm:items-start justify-start flex-1">
-                <h3 className="text-base md:text-lg font-semibold text-primary">
-                  {initiative.title}
-                </h3>
-                <p className="mt-2 text-sm md:text-base text-gray-600 text-center sm:text-left">
-                  {initiative.description}
-                </p>
-              </div>
-              <div className="flex-shrink-0">{initiative.icon}</div>
-            </Link>
-          ))}
+          <div className="mt-6 md:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {initiatives.map((initiative, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ duration: 1, delay: 0.4 * index }}
+              >
+                <Link
+                  href={initiative.link}
+                  target="_blank"
+                  className="flex flex-col sm:flex-row gap-4 items-center text-center p-4 md:p-7 min-h-[150px] rounded-lg bg-white shadow-lg cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+                >
+                  <div className="flex flex-col items-center sm:items-start justify-start flex-1">
+                    <h3 className="text-base md:text-lg font-semibold text-primary">
+                      {initiative.title}
+                    </h3>
+                    <p className="mt-2 text-sm md:text-base text-gray-600 text-center sm:text-left">
+                      {initiative.description}
+                    </p>
+                  </div>
+                  <div className="flex-shrink-0">{initiative.icon}</div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </motion.section>
   );
 };
 

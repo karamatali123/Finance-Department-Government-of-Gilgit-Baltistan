@@ -38,8 +38,8 @@ const FundManagement = () => {
 
       {/* Timeline Sections */}
       <div className="relative ">
-        <div className="border-l-2  border-t-2 relative border-primary border-dashed h-36 w-[50.5%] rounded-br-lg hidden md:block">
-          <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[-10px] right-[-10px] "></div>
+        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block flex justify-self-end relative top-[10px] bg-white">
+          <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[0px] left-[-10px] "></div>
         </div>
         <div className="">
           {sections.map((section, index) => (
@@ -49,27 +49,24 @@ const FundManagement = () => {
                 index % 2 === 0
                   ? "md:border-2 md:rounded-tl-lg"
                   : "md:border-r-2"
-              } py-8 md:px-8 md:border-primary md:border-separate md:rounded-lg mr-[10px]
+              }  py-8 md:px-8 md:border-primary md:border-separate md:rounded-lg mr-[10px]
               ${
                 index % 2 === 0
                   ? "md:rounded-tr-none md:rounded-br-none"
                   : "md:rounded-tl-none md:rounded-bl-none"
               }  ${
                 index === 0
-                  ? "md:border-t-0 md:border-r-0"
+                  ? " md:border-r-0"
                   : index % 2 === 0
                   ? "md:border-r-0"
                   : "md:border-l-0"
               } md:border-dashed`}
             >
-              {index !== 0 && (
-                <div
-                  className={`self-end h-36 w-[100%] bg-transparent hidden md:block`}
-                ></div>
-              )}
-              <Link href={`about/sections`}>
+         
+              <Link href={`about/sections`} className='relative'>
                 <div
                   className={`
+                   
                 flex 
                 flex-col 
                 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} 
@@ -81,17 +78,14 @@ const FundManagement = () => {
               `}
                 >
                   {/* Image Section */}
-                  <div className={`w-full md:w-5/12`}>
-                    <div className="relative rounded-lg overflow-hidden shadow-lg ">
-                      <img
-                        src={section.image}
-                        alt={section.title}
-                        className="w-full h-64 object-cover"
-                      />
-                    </div>
-                    {/* {index % 2 !== 0 && ( */}
-
-                    {/* )} */}
+                  <div className={``}>
+                    <div className=' flex justify-self-end relative bg-white'>
+                        <img
+                          src={section.image}
+                          alt={section.title}
+                          className="w-full h-64 object-cover"
+                        />
+                      </div>
                   </div>
 
                   {/* Content Section */}
@@ -107,9 +101,17 @@ const FundManagement = () => {
                     </p>
                   </div>
                 </div>
+                {/* {index == 1 && (
+                        <div
+                          className={` h-[320px] w-5 bg-transparent absolute top-[-32px] right-[-34px] `}
+                        >
+                        </div>
+                      )} */}
               </Link>
             </div>
           ))}
+        </div>
+        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block flex justify-self-end relative bottom-[10px] bg-white">
         </div>
       </div>
     </div>

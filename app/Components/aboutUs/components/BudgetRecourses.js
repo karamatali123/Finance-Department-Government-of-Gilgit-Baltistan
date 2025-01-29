@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import cardImage1 from "../../../../public/images/admin.webp";
 import cardImage2 from "../../../../public/images/budget.jpeg";
@@ -6,6 +7,8 @@ import cardImage4 from "../../../../public/images/regulation.png";
 import cardImage5 from "../../../../public/images/audit.jpg";
 import cardImage6 from "../../../../public/images/sap.jpg";
 import RecoursesCard from "./RecoursesCard";
+import { motion } from "framer-motion";
+
 const resourceData = [
   {
     title: "Admin section",
@@ -48,18 +51,31 @@ const resourceData = [
 
 const BudgetRecourses = () => {
   return (
-    <div className="py-9">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-9"
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
         {resourceData.map((resource, index) => (
-          <RecoursesCard
+          <motion.div
             key={index}
-            title={resource.title}
-            description={resource.description}
-            imageUrl={resource.imageUrl}
-          />
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <RecoursesCard
+              title={resource.title}
+              description={resource.description}
+              imageUrl={resource.imageUrl}
+            />
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
