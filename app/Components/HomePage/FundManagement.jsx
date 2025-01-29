@@ -38,10 +38,10 @@ const FundManagement = () => {
 
       {/* Timeline Sections */}
       <div className="relative ">
-        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block flex justify-self-end relative top-[10px] bg-white">
-          <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[0px] left-[-10px] "></div>
+        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block float-end justify-self-end  top-[0px] bg-white">
+          <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[-10px] left-[-10px] "></div>
         </div>
-        <div className="">
+        <div className="w-full">
           {sections.map((section, index) => (
             <div
               key={section.number}
@@ -62,8 +62,7 @@ const FundManagement = () => {
                   : "md:border-l-0"
               } md:border-dashed`}
             >
-         
-              <Link href={`about/sections`} className='relative'>
+              <Link href={`about/sections`} className="relative">
                 <div
                   className={`
                    
@@ -78,18 +77,18 @@ const FundManagement = () => {
               `}
                 >
                   {/* Image Section */}
-                  <div className={``}>
-                    <div className=' flex justify-self-end relative bg-white'>
-                        <img
-                          src={section.image}
-                          alt={section.title}
-                          className="w-full h-64 object-cover"
-                        />
-                      </div>
+                  <div className={`w-full`}>
+                    <div className=" flex justify-self-end relative bg-white">
+                      <img
+                        src={section.image}
+                        alt={section.title}
+                        className="w-full h-64 object-cover"
+                      />
+                    </div>
                   </div>
 
                   {/* Content Section */}
-                  <div className="w-full md:w-6/12">
+                  <div className="w-full">
                     <div className="text-7xl font-bold text-white hidden md:block relative">
                       <span className="text-stroke">{section.number}</span>
                     </div>
@@ -111,8 +110,7 @@ const FundManagement = () => {
             </div>
           ))}
         </div>
-        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block flex justify-self-end relative bottom-[10px] bg-white">
-        </div>
+        <div className="relative border-primary border-dashed h-5 w-[50.5%] float-end rounded-br-lg hidden md:block  justify-self-end   bottom-[10px] bg-white"></div>
       </div>
     </div>
   );
