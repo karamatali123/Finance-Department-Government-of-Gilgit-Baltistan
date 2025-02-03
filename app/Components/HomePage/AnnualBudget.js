@@ -15,7 +15,7 @@ const AnnualBudget = () => {
     dots: true,
     infinite: true,
     autoplay: true,
-    speed:3000,
+    speed: 3000,
     autoplaySpeed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -67,9 +67,7 @@ const AnnualBudget = () => {
                         alt={book.name}
                         className="w-full h-full object-contain"
                       />
-                   <div className="absolute inset-0 bg-black/40 hover:bg-transparent transition-colors duration-300"></div>
-
-
+                      <div className="absolute inset-0 bg-black/40 hover:bg-transparent transition-colors duration-300"></div>
                     </div>
                   </div>
                 </div>
@@ -78,11 +76,7 @@ const AnnualBudget = () => {
           </Slider>
 
           {/* Control Buttons - Centered at bottom */}
-          <div className="flex justify-center gap-2 mt-4">
-  
-
-       
-          </div>
+          <div className="flex justify-center gap-2 mt-4"></div>
         </div>
       </div>
     </section>
@@ -95,22 +89,22 @@ function SampleNextArrow(props) {
   const { onClick } = props;
   return (
     <button
-    onClick={onClick}
-    className="w-10 h-10 flex items-center justify-center bg-[#EDF2F7] bg-primary rounded-lg hover:bg-[#E2E8F0] transition-all absolute top-0 bottom-0 left-[-60px] m-auto"
-    aria-label="Previous slide"
+      onClick={onClick}
+      className="w-10 h-10 flex items-center justify-center bg-[#EDF2F7] bg-primary rounded-lg hover:bg-[#E2E8F0] transition-all absolute top-0 bottom-0 left-[-60px] m-auto"
+      aria-label="Previous slide"
     >
-    <IoIosArrowBack className="w-5 h-5 text-white " />
+      <IoIosArrowBack className="w-5 h-5 text-white " />
     </button>
   );
 }
 
 function SamplePrevArrow(props) {
-  const {  onClick } = props;
+  const { onClick } = props;
   return (
     <button
-    onClick={onClick}
-    className="w-10 h-10 flex items-center justify-center bg-primary rounded-lg hover:bg-[#E2E8F0] transition-all absolute top-0 bottom-0 right-[-60px] m-auto"
-    aria-label="Next slide"
+      onClick={onClick}
+      className="w-10 h-10 flex items-center justify-center bg-primary rounded-lg hover:bg-[#E2E8F0] transition-all absolute top-0 bottom-0 right-[-60px] m-auto"
+      aria-label="Next slide"
     >
       <IoIosArrowForward className="w-5 h-5 text-white" />
     </button>

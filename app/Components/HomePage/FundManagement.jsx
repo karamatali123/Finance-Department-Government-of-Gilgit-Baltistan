@@ -1,7 +1,10 @@
+"use client";
 import budget from "../../../public/images/budget.png";
 import image2 from "../../../public/images/finance.png";
 import image3 from "../../../public/images/aunnalBudget.png";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
 const FundManagement = () => {
   const sections = [
     {
@@ -28,18 +31,30 @@ const FundManagement = () => {
   ];
 
   return (
-    <div className="container mx-auto  py-12 px-5 ">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: false }}
+      className="container mx-auto py-12 px-5"
+    >
       {/* Header Section */}
-      <div className="text-center mb-8">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        viewport={{ once: false }}
+        transition={{ delay: 0.2 }}
+        className="text-center mb-8"
+      >
         <h2 className="text-3xl md:text-4xl text-primary font-bold mb-4">
           Sections
         </h2>
-      </div>
+      </motion.div>
 
       {/* Timeline Sections */}
-      <div className="relative ">
-        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block float-end justify-self-end  top-[0px] bg-white">
-          <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[-10px] left-[-10px] "></div>
+      <div className="relative">
+        <div className="relative border-primary border-dashed h-5 w-[50.5%] rounded-br-lg hidden md:block float-end justify-self-end top-[0px] bg-white">
+          <div className="w-5 h-5 bg-primary rounded-[50%] absolute top-[-10px] left-[-10px]"></div>
         </div>
         <div className="w-full">
           {sections.map((section, index) => (
@@ -63,56 +78,73 @@ const FundManagement = () => {
               } md:border-dashed`}
             >
               <Link href={`about/sections`} className="relative">
-                <div
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 1.2 }}
                   className={`
-                   
-                flex 
-                flex-col 
-                ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} 
-                items-center 
-                justify-start
-                relative
-                gap-4
-                md:gap-8
-              `}
+                    flex 
+                    flex-col 
+                    ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} 
+                    items-center 
+                    justify-start
+                    relative
+                    gap-4
+                    md:gap-8
+                  `}
                 >
                   {/* Image Section */}
                   <div className={`w-full`}>
-                    <div className=" flex justify-self-end relative bg-white">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 1.5, delay: index * 0.2 }}
+                      viewport={{ once: false }}
+                      className="flex justify-self-end relative bg-white"
+                    >
                       <img
                         src={section.image}
                         alt={section.title}
                         className="w-full h-64 object-cover"
                       />
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Content Section */}
-                  <div className="w-full">
+                  <motion.div
+                    className="w-full"
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1.5, delay: index * 0.2 }}
+                    viewport={{ once: false }}
+                  >
                     <div className="text-7xl font-bold text-white hidden md:block relative">
                       <span className="text-stroke">{section.number}</span>
                     </div>
-                    <h3 className="text-2xl font-semibold text-primary">
+                    <h3
+                      whileHover={{ scale: 1.02 }}
+                      className="text-2xl font-semibold text-primary"
+                    >
                       {section.title}
                     </h3>
-                    <p className="text-gray-600 text-lg">
+                    <p
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-gray-600 text-lg"
+                    >
                       {section.description}
                     </p>
-                  </div>
-                </div>
-                {/* {index == 1 && (
-                        <div
-                          className={` h-[320px] w-5 bg-transparent absolute top-[-32px] right-[-34px] `}
-                        >
-                        </div>
-                      )} */}
+                  </motion.div>
+                </motion.div>
               </Link>
             </div>
           ))}
         </div>
-        <div className="relative border-primary border-dashed h-5 w-[50.5%] float-end rounded-br-lg hidden md:block  justify-self-end   bottom-[10px] bg-white"></div>
+        <div className="relative border-primary border-dashed h-5 w-[50.5%] float-end rounded-br-lg hidden md:block justify-self-end bottom-[10px] bg-white"></div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
