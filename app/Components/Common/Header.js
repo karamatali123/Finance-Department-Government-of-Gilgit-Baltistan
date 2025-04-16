@@ -4,6 +4,7 @@ import Link from "next/link";
 import logo from "../../../public/images/govLogo.png";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
 
 // Main header links with possible sub-items
 const headerLinks = [
@@ -21,6 +22,7 @@ const headerLinks = [
   { title: "Annual Budget", link: "/annual-budget" },
   { title: "Data Analytics", link: "/data-analytics" },
   { title: "Downloads", link: "/info-desk/downloads" },
+  { title: "Jobs", link: "/jobs/jobsList" },
   // {
   //   title: "Info Desk",
   //   link: "/info-desk",
@@ -42,6 +44,7 @@ const Header = () => {
   const pathname = usePathname();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const toggleDropdown = (index) => {
     setActiveDropdown((prev) => (prev === index ? null : index));
@@ -84,34 +87,64 @@ const Header = () => {
           </div>
         </Link>
 
-        {/* Mobile Menu Button - Updated for custom breakpoint */}
-        <button
-          className="custom:hidden text-black p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {/* Navigation and Auth Button */}
+        <div className="flex items-center gap-4">
+          {/* Mobile Menu Button - Updated for custom breakpoint */}
+          <button
+            className="custom:hidden text-black p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              {mobileMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+
+          {/* Auth Button */}
+          {session ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-700">
+                Hi, {session.user?.name}
+              </span>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/auth/signin"
+              className="flex items-center gap-2 bg-white border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors"
+            >
+              <img
+                src="https://www.google.com/favicon.ico"
+                alt="Google"
+                className="w-4 h-4"
               />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+              <span>Sign in with Google</span>
+            </Link>
+          )}
+        </div>
 
         {/* Navigation and Search - Updated for custom breakpoint */}
         <div

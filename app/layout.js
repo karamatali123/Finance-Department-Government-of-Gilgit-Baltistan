@@ -5,6 +5,8 @@ import Header from "./Components/Common/Header";
 import { Inter } from "next/font/google";
 import Footer from "./Components/Common/footer/Footer";
 
+import AuthProvider from "./providers/SessionProvider";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -29,13 +31,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`font-inter`}>
-      <body className={`antialiased`}>
-        <div className="relative">
+    <html lang="en">
+      <body className={inter.className}>
+        <AuthProvider>
           <Header />
-          <main className="bg-white">{children}</main>
+          {children}
           <Footer />
-        </div>
+        </AuthProvider>
       </body>
     </html>
   );
