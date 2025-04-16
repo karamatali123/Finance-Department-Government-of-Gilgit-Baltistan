@@ -1,25 +1,13 @@
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./Components/Common/Header";
-
-import { Inter } from "next/font/google";
 import Footer from "./Components/Common/footer/Footer";
-
 import AuthProvider from "./providers/SessionProvider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
+// Configure Inter font with specific weights
 const inter = Inter({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-inter",
 });

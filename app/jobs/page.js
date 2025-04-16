@@ -110,8 +110,8 @@ export default async function JobsPage() {
                 required
               >
                 <option value="">Select Degree</option>
-                <option value="bachelors">Bachelor's Degree</option>
-                <option value="masters">Master's Degree</option>
+                <option value="bachelors">Bachelor&apos;s Degree</option>
+                <option value="masters">Master&apos;s Degree</option>
                 <option value="phd">Ph.D.</option>
                 <option value="other">Other</option>
               </select>
