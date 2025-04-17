@@ -37,6 +37,7 @@ module.exports = {
         jobs: "url(/images/jobs.png)",
         downloads: "url(/images/downloads.png)",
         rightTo: "url(/images/rightto.png)",
+        apply: "url(/images/applyJob.jpg)",
       },
       backgroundSize: {
         full: "100% 100%",

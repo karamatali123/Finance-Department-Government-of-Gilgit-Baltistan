@@ -1,129 +1,206 @@
 "use client";
+import { ADMIN_EMAIL } from "../../constants";
+import PageHeader from "../../Components/Common/PageHeader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-const DUMMY_JOBS = [
-  {
-    id: 1,
-    title: "Senior Software Engineer",
-    department: "IT Department",
-    location: "Gilgit",
-    type: "Full-time",
-    salary: "Rs. 150,000 - 200,000",
-    postedDate: "2024-03-20",
-    deadline: "2024-04-20",
-    description:
-      "We are looking for an experienced software engineer to join our team...",
-    requirements:
-      "5+ years of experience in web development, Bachelor's degree in Computer Science",
-  },
-  {
-    id: 2,
-    title: "Finance Manager",
-    department: "Finance Department",
-    location: "Skardu",
-    type: "Full-time",
-    salary: "Rs. 120,000 - 180,000",
-    postedDate: "2024-03-19",
-    deadline: "2024-04-15",
-    description:
-      "Seeking a qualified finance manager to oversee financial operations...",
-    requirements:
-      "MBA in Finance, 4+ years of experience in financial management",
-  },
-  {
-    id: 3,
-    title: "Administrative Assistant",
-    department: "Administration",
-    location: "Hunza",
-    type: "Part-time",
-    salary: "Rs. 50,000 - 70,000",
-    postedDate: "2024-03-18",
-    deadline: "2024-04-10",
-    description:
-      "Looking for an organized and efficient administrative assistant...",
-    requirements: "Bachelor's degree, 2+ years of administrative experience",
-  },
-];
+import { useEffect, useState } from "react";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
 const JobsList = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const isAdmin = session?.user?.email === ADMIN_EMAIL;
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const fetchJobs = async () => {
+    try {
+      const response = await fetch("/api/jobs");
+      if (!response.ok) {
+        console.log(response);
+      }
+      const data = await response.json();
+      setJobs(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleApply = (jobId) => {
     if (session) {
-      router.push(`/jobs`);
+      router.push(`/jobs?jobId=${jobId}`);
     } else {
       router.push("/auth/signin");
     }
   };
 
+  const handlePostNewJob = () => {
+    router.push("/jobs/postNewJob");
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
+
+  console.log(jobs, "jobs");
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6">Available Positions</h2>
-      <div className="grid gap-6">
-        {DUMMY_JOBS.map((job) => (
-          <div
-            key={job.id}
-            className="bg-white rounded-lg shadow-md p-6 border border-gray-200 hover:border-primary transition-colors"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900">
-                  {job.title}
-                </h3>
-                <p className="text-gray-600">{job.department}</p>
-              </div>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                {job.type}
-              </span>
-            </div>
+    <div>
+      <PageHeader bgImg={"bg-jobs"} />
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Available Positions</h2>
+          {isAdmin && (
+            <button
+              onClick={handlePostNewJob}
+              className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              Post New Job
+            </button>
+          )}
+        </div>
+        <div className="overflow-x-auto">
+          {jobs.length > 0 && (
+            <>
+              <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+                <thead>
+                  <tr className="bg-gray-50">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Title Position
+                    </th>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <p className="text-gray-600">
-                  <span className="font-medium">Location:</span> {job.location}
-                </p>
-                <p className="text-gray-600">
-                  <span className="font-medium">Salary:</span> {job.salary}
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-600">
-                  <span className="font-medium">Posted:</span>{" "}
-                  {new Date(job.postedDate).toLocaleDateString()}
-                </p>
-                <p className="text-gray-600">
-                  <span className="font-medium">Deadline:</span>{" "}
-                  {new Date(job.deadline).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Location
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Type
+                    </th>
 
-            <div className="mb-4">
-              <p className="text-gray-700">{job.description}</p>
-            </div>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Posted Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Last Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      No of Vacancies
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {jobs?.map((job) => (
+                    <tr
+                      key={job.id}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-6 py-4">
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {job.title}
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1 line-clamp-2">
+                            {job.description}
+                          </div>
+                        </div>
+                      </td>
 
-            <div className="mb-4">
-              <p className="text-gray-700">
-                <span className="font-medium">Requirements:</span>{" "}
-                {job.requirements}
-              </p>
-            </div>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {job.location}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                          {job.type}
+                        </span>
+                      </td>
 
-            <div className="flex justify-end">
-              <button
-                onClick={() => handleApply(job.id)}
-                className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              >
-                {session ? "Apply Now" : "Sign in to Apply"}
-              </button>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {new Date(job.postedDate).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {job.lastDate
+                          ? new Date(job.lastDate).toLocaleDateString()
+                          : "N/A"}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {job.noOfVacancies}
+                      </td>
+                      <td className="px-6 py-4 text-sm">
+                        <JobActions
+                          jobId={job.id}
+                          isAdmin={isAdmin}
+                          handleApply={handleApply}
+                          session={session}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
+
+          {!jobs.length && (
+            <div className="text-center py-8 text-gray-500">
+              No jobs available at the moment.
             </div>
-          </div>
-        ))}
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default JobsList;
+
+const JobActions = ({ jobId, isAdmin, session, handleApply }) => {
+  return (
+    <div>
+      {false ? (
+        <div className="flex gap-2">
+          <button
+            className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
+            title="Edit"
+          >
+            <FiEdit2 className="w-5 h-5" />
+          </button>
+          <button
+            className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+            title="Delete"
+          >
+            <FiTrash2 className="w-5 h-5" />
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={() => handleApply(jobId)}
+          className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 text-sm"
+        >
+          {session ? "Apply" : "Sign in"}
+        </button>
+      )}
+    </div>
+  );
+};

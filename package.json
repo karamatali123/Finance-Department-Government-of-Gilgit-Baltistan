@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@auth/core": "^0.34.2",
+    "@prisma/client": "^6.6.0",
     "chart.js": "^4.4.7",
     "chartjs-plugin-datalabels": "^2.2.0",
     "clsx": "^2.1.1",
     "contentful": "^11.3.4",
+    "formik": "^2.4.6",
     "framer-motion": "^12.0.6",
     "motion": "^12.0.6",
     "next": "14.2.11",
@@ -36,6 +38,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.11",
     "postcss": "^8.4.47",
+    "prisma": "^6.6.0",
     "tailwindcss": "^3.4.11"
   }
 }

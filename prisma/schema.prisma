@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id            String           @id @default(uuid())
+  title         String
+  company       String?
+  location      String?
+  type          String?
+  salary        String?
+  description   String?          @db.Text
+  requirements  String?          @db.Text
+  benefits      String?          @db.Text
+  postedDate    DateTime        @default(now())
+  lastDate      DateTime?
+  isActive      Boolean         @default(true)
+  noOfVacancies Int?
+  applications  JobApplication[]
+}
+
+model JobApplication {
+id            String           @id @default(uuid())
+  fullName        String
+  fatherName      String
+  domicile        String
+  email           String
+  phone           String
+  cnic            String
+  photoPath       String
+  qualifications  Json     @db.Json
+  certifications  Json     @db.Json
+  workExperience  Json     @db.Json
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  job             Job       @relation(fields: [jobId], references: [id])
+  jobId           String   
+}
