@@ -20,7 +20,7 @@ export const authOptions = {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? url : baseUrl + "/jobs";
+      return url.startsWith(baseUrl) ? url : baseUrl + "/jobs/jobsList";
     },
     async session({ session }) {
       return session;
