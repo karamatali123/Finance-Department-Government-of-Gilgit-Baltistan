@@ -1,7 +1,7 @@
-import Divider from "@/app/Components/Common/Divider";
-import PageHeader from "@/app/Components/Common/PageHeader";
-import NotificationsTable from "@/app/Components/infoDesk/NotificationsTable";
-import JobsTable from "@/app/Components/jobs/jobsTable";
+import Divider from "../../Components/Common/Divider";
+import PageHeader from "../../Components/Common/PageHeader";
+import NotificationsTable from "../../Components/infoDesk/NotificationsTable";
+import JobsTable from "../../Components/jobs/jobsTable";
 import React from "react";
 
 const Jobs = () => {

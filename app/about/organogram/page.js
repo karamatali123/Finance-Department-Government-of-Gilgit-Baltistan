@@ -1,5 +1,5 @@
-import HeroSection from "@/app/Components/aboutUs/components/heroSection";
-import OrganogramList from "@/app/Components/aboutUs/components/organogramList";
+import HeroSection from "../../Components/aboutUs/components/heroSection";
+import OrganogramList from "../../Components/aboutUs/components/organogramList";
 
 const Organogram = () => {
   return (
@@ -13,4 +13,5 @@ const Organogram = () => {
     </div>
   );
 };
+
 export default Organogram;

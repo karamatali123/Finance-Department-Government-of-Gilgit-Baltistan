@@ -2,8 +2,7 @@
 import { useState } from "react";
 // import { renderFileTable } from "./renderFiles";
 import booksJson from "./downloadsBooks.json";
-import Accordion from "@/app/Components/Common/Accordion";
-import { renderFileTable } from "@/app/annual-budget/renderFiles";
+import { renderFileTable } from "../../annual-budget/renderFiles";
 
 const DownloadsTable = () => {
   const [isLoading, setIsLoading] = useState(false);

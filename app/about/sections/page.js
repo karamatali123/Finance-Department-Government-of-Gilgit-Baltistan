@@ -1,7 +1,5 @@
-import BudgetRecourses from "@/app/Components/aboutUs/components/BudgetRecourses";
-import HeroSection from "@/app/Components/aboutUs/components/heroSection";
-import PageHeader from "@/app/Components/Common/PageHeader";
-import SectionHeader from "@/app/Components/HomePage/SectionHeader";
+import BudgetRecourses from "../../Components/aboutUs/components/BudgetRecourses";
+import HeroSection from "../../Components/aboutUs/components/heroSection";
 import React from "react";
 
 const Divisions = () => {

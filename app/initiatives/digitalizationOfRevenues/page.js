@@ -1,4 +1,4 @@
-import HeroSection from "@/app/Components/aboutUs/components/heroSection";
+import HeroSection from "../../Components/aboutUs/components/heroSection";
 
 const DigitalizationOfRevenues = () => {
   return (

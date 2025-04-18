@@ -1,6 +1,6 @@
-import revenue from "@/public/images/revenue.png";
-import expenditure from "@/public/images/expence.png";
-import balance from "@/public/images/balance.png";
+import revenue from "../../../public/images/revenue.png";
+import expenditure from "../../../public/images/expence.png";
+import balance from "../../../public/images/balance.png";
 
 const Totals = () => {
   const totals = [

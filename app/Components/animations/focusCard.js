@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/app/libs/animation";
+import { cn } from "../../libs/animation";
 import Image from "next/image";
 import React, { useState } from "react";
 export const Card = React.memo(({ card, index, hovered, setHovered }) => (

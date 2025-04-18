@@ -7,8 +7,8 @@ const Qualifications = ({
   return (
     <div>
       <h3 className="text-xl font-bold text-gray-900 my-4">Education</h3>
-      {values.qualifications.map((qualification, index, handleAdd) => (
-        <div className="my-4 flex flex-col gap-2">
+      {values.qualifications.map((qualification, index) => (
+        <div className="my-4 flex flex-col gap-2" key={index}>
           <div>
             <div className="flex items-center justify-between gap-2">
               <label

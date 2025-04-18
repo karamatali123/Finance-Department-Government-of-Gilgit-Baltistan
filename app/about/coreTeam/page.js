@@ -1,7 +1,7 @@
-import CoreTeamList from "@/app/Components/aboutUs/components/CoreTeam";
-import HeroSection from "@/app/Components/aboutUs/components/heroSection";
-import PageHeader from "@/app/Components/Common/PageHeader";
+import CoreTeamList from "../../Components/aboutUs/components/CoreTeam";
+import PageHeader from "../../Components/Common/PageHeader";
 import React from "react";
+
 
 const CoreTeam = () => {
   return (

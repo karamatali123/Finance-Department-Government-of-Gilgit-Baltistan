@@ -8,7 +8,7 @@ const Certifications = ({
     <div>
       <h3 className="text-xl font-bold text-gray-900 my-4">Certifications</h3>
       {values.certifications.map((certification, index) => (
-        <div className="my-4 flex flex-col gap-2">
+        <div className="my-4 flex flex-col gap-2" key={index}>
           <div>
             <div className="flex items-center justify-between gap-2">
               <label

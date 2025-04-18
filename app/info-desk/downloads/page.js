@@ -1,5 +1,5 @@
 "use client";
-import HeroSection from "@/app/Components/aboutUs/components/heroSection";
+import HeroSection from "../../Components/aboutUs/components/heroSection";
 import DownloadsTable from "./DownloadsTable";
 
 const Downloads = () => {

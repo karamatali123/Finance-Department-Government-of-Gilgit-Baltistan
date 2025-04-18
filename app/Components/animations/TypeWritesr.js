@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/app/libs/animation";
+import { cn } from "../../libs/animation";
 import { motion, stagger, useAnimate, useInView } from "framer-motion";
 import { useEffect } from "react";
 
