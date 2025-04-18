@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
+export async function GET(request) {
   try {
     // Get search parameters from URL
     const { searchParams } = new URL(request.url);

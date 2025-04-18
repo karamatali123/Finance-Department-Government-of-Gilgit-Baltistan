@@ -8,7 +8,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 
 const prisma = new PrismaClient();
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
     // Get files from form data
     const photo = formData.get("photo");
-    const jobId = formData.get("jobId") as string;
+    const jobId = formData.get("jobId");
 
     if (!jobId) {
       return NextResponse.json(
@@ -34,10 +34,10 @@ export async function POST(request: Request) {
     // Get personal information with error handling
     let personalInfo, qualifications, certifications, workExperience;
     try {
-      personalInfo = JSON.parse(formData.get("personalInformation") as string);
-      qualifications = formData.get("qualifications") as string;
-      certifications = formData.get("certifications") as string;
-      workExperience = formData.get("workExperience") as string;
+      personalInfo = JSON.parse(formData.get("personalInformation"));
+      qualifications = formData.get("qualifications");
+      certifications = formData.get("certifications");
+      workExperience = formData.get("workExperience");
     } catch (error) {
       console.error("Error parsing JSON data:", error);
       return NextResponse.json(
@@ -54,10 +54,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate job exists using the string ID
+    // Validate job exists
     const job = await prisma.job.findUnique({
       where: {
-        id: jobId, // Use the jobId directly as string
+        id: jobId,
       },
     });
 
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
           fullName: personalInfo.fullName,
           fatherName: personalInfo.fatherName,
           domicile: personalInfo.domicile,
-          email: session.user.email!,
+          email: session.user.email,
           phone: personalInfo.phone || "",
           cnic: personalInfo.cnic,
           photoPath: join("uploads", photoFilename),
@@ -121,7 +121,7 @@ export async function POST(request: Request) {
           workExperience: workExperience,
 
           // Job relation
-          jobId: jobId, // Use the jobId directly as string
+          jobId: jobId,
         },
       });
 
@@ -131,21 +131,20 @@ export async function POST(request: Request) {
       });
     } catch (error) {
       console.error("Error saving to database:", error);
-      if (error instanceof Error) {
-        console.error("Detailed error message:", error.message);
-        console.error("Error stack:", error.stack);
-        console.error("Data being sent:", {
-          fullName: personalInfo.fullName,
-          fatherName: personalInfo.fatherName,
-          qualifications,
-          certifications,
-          workExperience,
-        });
-      }
+      console.error("Detailed error message:", error.message);
+      console.error("Error stack:", error.stack);
+      console.error("Data being sent:", {
+        fullName: personalInfo.fullName,
+        fatherName: personalInfo.fatherName,
+        qualifications,
+        certifications,
+        workExperience,
+      });
+
       return NextResponse.json(
         {
           error: "Error saving application to database",
-          details: error instanceof Error ? error.message : "Unknown error",
+          details: error.message || "Unknown error",
         },
         { status: 500 }
       );
@@ -155,9 +154,16 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error: "Error submitting application",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: error.message || "Unknown error",
       },
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return NextResponse.json(
+    { message: "Job application API endpoint" },
+    { status: 200 }
+  );
 }
