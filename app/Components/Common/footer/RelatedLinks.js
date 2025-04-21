@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const links = [
   {
     title: "Finance Division Islamabad",
-    link: "https://finance.gov.pk/",
+    link: "https://fabs.gov.pk/",
   },
   {
     title: "Finance Department Punjab",

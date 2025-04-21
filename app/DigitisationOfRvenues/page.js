@@ -1,43 +1,12 @@
 // components/Initiatives.js
 "use client";
 import React from "react";
-import gbpay from "../../../public/images/gbPay.png";
-import stamp from "../../../public/images/stamp.png";
-import digital from "../../../public/images/degital.png";
+import digital from "../../public/images/degital.png";
 import { motion } from "framer-motion";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "../Components/HomePage/SectionHeader";
 import Link from "next/link";
 
 const initiatives = [
-  {
-    title: "GB Pay",
-    description: "Digitalization of  Government payments",
-    icon: (
-      <img
-        src={gbpay.src}
-        alt="GB Pay"
-        width={100}
-        height={100}
-        className="w-[60px] md:w-[100px]"
-      />
-    ),
-    link: "https://gbpay.gov.pk/",
-  },
-  {
-    title: "E-Registration & E-Stamping",
-    description:
-      "Introduction of E-Stamps  & E-Registration in Gilgit-Baltistan",
-    icon: (
-      <img
-        src={stamp.src}
-        alt="GB Pay"
-        width={100}
-        height={100}
-        className="w-[60px] md:w-[100px]"
-      />
-    ),
-    link: "/eStamps",
-  },
   {
     title: "Digitisation of Revenues",
     description: "Digitalization of  Government Revenues",
@@ -50,11 +19,11 @@ const initiatives = [
         className="w-[60px] md:w-[100px]"
       />
     ),
-    link: "/DigitisationOfRvenues",
+    link: "/initiatives",
   },
 ];
 
-const Initiatives = () => {
+const DigitizationOfRevenues = () => {
   return (
     <motion.section
       initial={{ opacity: 0, y: 100 }}
@@ -72,8 +41,8 @@ const Initiatives = () => {
             transition={{ duration: 1.6, delay: 0.2 }}
           >
             <SectionHeader
-              title="Initiatives"
-              description="Driving impactful change through innovation and collaboration."
+              title="E-Stamps & E-Registration"
+              description="Introduction of E-Stamps  & E-Registration in Gilgit-Baltistan"
             />
           </motion.div>
 
@@ -86,8 +55,7 @@ const Initiatives = () => {
                 viewport={{ once: false }}
                 transition={{ duration: 1, delay: 0.4 * index }}
               >
-                <Link
-                  href={initiative.link}
+                <div
                   target="_blank"
                   className="flex flex-col sm:flex-row gap-4 items-center text-center p-4 md:p-7 min-h-[150px] rounded-lg bg-white shadow-lg cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl"
                 >
@@ -100,7 +68,7 @@ const Initiatives = () => {
                     </p>
                   </div>
                   <div className="flex-shrink-0">{initiative.icon}</div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -110,4 +78,4 @@ const Initiatives = () => {
   );
 };
 
-export default Initiatives;
+export default DigitizationOfRevenues;

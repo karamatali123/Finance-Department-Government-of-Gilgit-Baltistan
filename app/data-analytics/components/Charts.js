@@ -20,6 +20,8 @@ import {
   lineData,
   chartOptions,
   doughnutOptions,
+  gbRevenueData,
+  newBarData,
 } from "./chartConfigs";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -41,7 +43,7 @@ const Charts = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-7 ">
       <div className="p-4 text-xl font-bold text-primary bg-white rounded-lg shadow-lg">
-        <h3>Revenue VS Expenditure</h3>
+        <h3>Demand vs Allocation under Regular Budget</h3>
         <div className="w-full h-[300px] md:h-[500px]  flex flex-col justify-center items-center gap-4">
           <Bar data={barData} options={chartOptions} />
         </div>
@@ -49,7 +51,7 @@ const Charts = () => {
 
       <div className="p-4 bg-white rounded-lg shadow-lg">
         <h3 className="text-xl font-bold text-primary text-left">
-          Expenditure Breakdown
+          Major Head wise summary of Regular Budget
         </h3>
         <div className="w-full h-[300px] md:h-[500px] flex flex-col items-center justify-center">
           <Pie
@@ -59,11 +61,12 @@ const Charts = () => {
               plugins: {
                 datalabels: {
                   color: "#fff",
+                  display: false,
                   font: {
                     weight: "bold",
                     size: 16,
                   },
-                  formatter: (value) => value + "%",
+                  formatter: " ",
                 },
                 legend: {
                   display: true,
@@ -85,18 +88,18 @@ const Charts = () => {
 
       <div className="p-4 bg-white rounded-lg shadow-lg">
         <h3 className="text-xl font-bold text-primary text-left">
-          Monthly Revenue Growth
+          GB Revenue Summary
         </h3>
         <div className="w-full h-[300px] md:h-[500px] flex justify-center items-center">
-          <Line data={lineData} options={chartOptions} />
+          <Bar data={gbRevenueData} options={chartOptions} />
         </div>
       </div>
       <div className="p-4 bg-white rounded-lg shadow-lg">
         <h3 className="text-xl font-bold text-primary text-left">
-          Category Comparison
+          Department wise Revenue share 2024-25
         </h3>
         <div className="w-full h-[300px] md:h-[500px] flex justify-center items-center">
-          <Doughnut
+          {/* <Doughnut
             data={categoryData}
             options={{
               maintainAspectRatio: false,
@@ -112,7 +115,9 @@ const Charts = () => {
                 },
               },
             }}
-          />{" "}
+          />{" "} */}
+
+          <Bar data={newBarData} options={chartOptions} />
         </div>
       </div>
     </div>

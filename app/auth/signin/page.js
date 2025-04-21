@@ -1,8 +1,14 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function SignIn() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+  const [email, setEmail] = useState("");
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
@@ -10,10 +16,17 @@ export default function SignIn() {
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
             Sign in to your account
           </h2>
+          {error && (
+            <div className="mt-4 p-4 text-sm text-red-700 bg-red-100 rounded-md">
+              {error === "OAuthSignin"
+                ? "Error connecting to Google. Please try again."
+                : "An error occurred during sign in."}
+            </div>
+          )}
         </div>
         <div className="mt-8">
           <button
-            onClick={() => signIn("google", { callbackUrl: "/jobs" })}
+            onClick={() => signIn("google", { callbackUrl: "/jobs/jobsList" })}
             className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             <Image
@@ -25,6 +38,29 @@ export default function SignIn() {
             Sign in with Google
           </button>
         </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            signIn("email", { email: email, callbackUrl: "/jobs/jobsList" });
+          }}
+        >
+          <input
+            type="email"
+            id="email"
+            placeholder="eg: example@gmail.com"
+            name="personalInformation.email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            required
+          />
+          <button
+            type="submit"
+            className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors"
+          >
+            Sign in with Email
+          </button>
+        </form>
       </div>
     </div>
   );

@@ -5,12 +5,16 @@ import balance from "../../../public/images/balance.png";
 const Totals = () => {
   const totals = [
     {
-      title: "Total Revenue",
-      value: "PKR 100,000",
+      title: "Regular Budget",
+      value: "PKR 68,600 million",
       icon: revenue.src,
     },
-    { title: "Total Expenditure", value: "PKR 80,000", icon: expenditure.src },
-    { title: "Net Balance", value: "PKR 20,000", icon: balance.src },
+    {
+      title: "Development Budget",
+      value: "PKR 34,500 million",
+      icon: expenditure.src,
+    },
+    { title: "Wheat Subsidy", value: "PKR 19,072 million", icon: balance.src },
   ];
 
   return (
