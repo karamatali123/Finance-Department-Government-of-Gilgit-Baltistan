@@ -12,8 +12,18 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma), // This connects NextAuth with your Prisma models
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+      httpOptions: {
+        timeout: 10000, // 10 seconds
+      },
     }),
     EmailProvider({
       async sendVerificationRequest({
@@ -57,13 +67,42 @@ export const authOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
-      // Include user ID in session
-      session.user.id = user.id;
+      if (session?.user) {
+        session.user.id = user.id;
+      }
       return session;
     },
-    async signIn({ user, account, profile, email }) {
-      // You can add custom logic here
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log("Sign-in attempt:", { user, account, profile });
+      if (account?.provider === "google") {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: profile.email },
+          include: { accounts: true },
+        });
+
+        if (existingUser) {
+          if (!existingUser.accounts.some((acc) => acc.provider === "google")) {
+            await prisma.account.create({
+              data: {
+                userId: existingUser.id,
+                type: account.type,
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                access_token: account.access_token,
+                expires_at: account.expires_at,
+                token_type: account.token_type,
+                scope: account.scope,
+                id_token: account.id_token,
+              },
+            });
+          }
+        }
+      }
       return true;
+    },
+    async redirect({ url, baseUrl }) {
+      console.log("Redirect:", { url, baseUrl });
+      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
   events: {
