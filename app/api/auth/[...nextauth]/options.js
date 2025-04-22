@@ -16,13 +16,15 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
-          prompt: "consent",
+          prompt: "select_account",
           access_type: "offline",
           response_type: "code",
         },
       },
       httpOptions: {
-        timeout: 10000,
+        timeout: 40000,
+        retry: 3,
+        keepAlive: true,
       },
     }),
     EmailProvider({
@@ -67,23 +69,29 @@ export const authOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
-      if (session?.user) {
-        session.user.id = user.id;
-      }
       return session;
     },
     async redirect({ url, baseUrl }) {
       try {
-        console.log("Redirect attempt:", { url, baseUrl });
-        // If the url is a relative url, prefix it with the base url
+        console.log("Redirect validation:", { url, baseUrl });
+
+        // Ensure redirects only go to gbfinance.gov.pk domains
+        const allowedDomains = [
+          "https://gbfinance.gov.pk",
+          "http://localhost:3000", // for development
+        ];
+
+        // If it's a relative URL, append it to the base URL
         if (url.startsWith("/")) {
           return `${baseUrl}${url}`;
         }
-        // If the url is already an absolute url that starts with the base url
-        else if (url.startsWith(baseUrl)) {
+
+        // Check if the URL is for an allowed domain
+        if (allowedDomains.some((domain) => url.startsWith(domain))) {
           return url;
         }
-        // Default to the base url
+
+        // Default to home page if URL is not allowed
         return baseUrl;
       } catch (error) {
         console.error("Redirect error:", error);
@@ -92,48 +100,60 @@ export const authOptions = {
     },
     async signIn({ user, account, profile }) {
       try {
-        console.log("Sign-in attempt:", { user, account, profile });
+        // Log the sign-in attempt details
+        console.log("Sign-in attempt for gbfinance.gov.pk:", {
+          email: user?.email,
+          provider: account?.provider,
+          emailVerified: profile?.email_verified,
+        });
 
         if (account?.provider === "google") {
-          const userPromise = prisma.user.findUnique({
-            where: { email: profile.email },
-            include: { accounts: true },
-          });
-
-          const existingUser = await Promise.race([
-            userPromise,
-            timeoutPromise,
-          ]);
-
-          if (!existingUser) {
-            return true; // Let NextAuth create the user
+          // Verify the user's email is verified by Google
+          if (!profile?.email_verified) {
+            console.error("Email not verified by Google");
+            return "/auth/error?error=EmailNotVerified";
           }
 
-          // If user exists but doesn't have a Google account linked
-          if (!existingUser.accounts.some((acc) => acc.provider === "google")) {
-            await prisma.account.create({
-              data: {
-                userId: existingUser.id,
-                type: account.type,
-                provider: account.provider,
-                providerAccountId: account.providerAccountId,
-                access_token: account.access_token,
-                expires_at: account.expires_at,
-                token_type: account.token_type,
-                scope: account.scope,
-                id_token: account.id_token,
-              },
+          try {
+            const existingUser = await prisma.user.findUnique({
+              where: { email: profile.email },
+              include: { accounts: true },
             });
+
+            if (!existingUser) {
+              return true; // Let NextAuth create the user
+            }
+
+            // If user exists but doesn't have a Google account linked
+            if (
+              !existingUser.accounts.some((acc) => acc.provider === "google")
+            ) {
+              await prisma.account.create({
+                data: {
+                  userId: existingUser.id,
+                  type: account.type,
+                  provider: account.provider,
+                  providerAccountId: account.providerAccountId,
+                  access_token: account.access_token,
+                  expires_at: account.expires_at,
+                  token_type: account.token_type,
+                  scope: account.scope,
+                  id_token: account.id_token,
+                },
+              });
+            }
+            return true;
+          } catch (dbError) {
+            console.error("Database operation failed:", dbError);
+            return "/auth/error?error=DatabaseError";
           }
-          return true;
         }
+
+        // For email provider or other providers
         return true;
       } catch (error) {
-        console.error("Sign-in error:", error);
-        if (error.message === "Initial connection timeout") {
-          return "/auth/error?error=Timeout";
-        }
-        return false;
+        console.error("Sign-in error for gbfinance.gov.pk:", error);
+        return "/auth/error?error=SignInFailed";
       }
     },
   },
@@ -174,14 +194,6 @@ export const authOptions = {
 
       console.log("Session event:", message);
     },
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
-  },
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
