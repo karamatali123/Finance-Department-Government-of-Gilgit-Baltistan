@@ -86,24 +86,24 @@ const JobsList = () => {
                 <thead>
                   <tr className="bg-gray-50">
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Title Position
+                      Title/Position
                     </th>
 
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Location
-                    </th>
+                    </th> */}
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Type
+                      Project Pay Scale (PPS)
                     </th>
 
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Posted Date
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Last Date
-                    </th>
+                    </th> */}
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      No of Vacancies
+                      No of Posts
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Action
@@ -127,23 +127,23 @@ const JobsList = () => {
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 text-sm text-gray-500">
+                      {/* <td className="px-6 py-4 text-sm text-gray-500">
                         {job.location}
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4">
                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                           {job.type}
                         </span>
                       </td>
 
-                      <td className="px-6 py-4 text-sm text-gray-500">
+                      {/* <td className="px-6 py-4 text-sm text-gray-500">
                         {new Date(job.postedDate).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {job.lastDate
                           ? new Date(job.lastDate).toLocaleDateString()
                           : "N/A"}
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {job.noOfVacancies}
                       </td>
