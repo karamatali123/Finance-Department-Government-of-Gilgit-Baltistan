@@ -239,7 +239,24 @@ const Header = () => {
                     </p>
                   </div>
                   <button
-                    onClick={() => signOut({ callbackUrl: "/" })}
+                    onClick={async () => {
+                      // Clear all caches
+                      if (typeof caches !== "undefined") {
+                        const cacheKeys = await caches.keys();
+                        await Promise.all(
+                          cacheKeys.map((key) => caches.delete(key))
+                        );
+                      }
+                      // Clear localStorage
+                      localStorage.clear();
+                      // Clear sessionStorage
+                      sessionStorage.clear();
+                      // Sign out and redirect
+                      await signOut({
+                        callbackUrl: "/",
+                        redirect: true,
+                      });
+                    }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Sign Out

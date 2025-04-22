@@ -22,7 +22,7 @@ export const authOptions = {
         },
       },
       httpOptions: {
-        timeout: 10000, // 10 seconds
+        timeout: 10000,
       },
     }),
     EmailProvider({
@@ -72,15 +72,44 @@ export const authOptions = {
       }
       return session;
     },
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log("Sign-in attempt:", { user, account, profile });
-      if (account?.provider === "google") {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: profile.email },
-          include: { accounts: true },
-        });
+    async redirect({ url, baseUrl }) {
+      try {
+        console.log("Redirect attempt:", { url, baseUrl });
+        // If the url is a relative url, prefix it with the base url
+        if (url.startsWith("/")) {
+          return `${baseUrl}${url}`;
+        }
+        // If the url is already an absolute url that starts with the base url
+        else if (url.startsWith(baseUrl)) {
+          return url;
+        }
+        // Default to the base url
+        return baseUrl;
+      } catch (error) {
+        console.error("Redirect error:", error);
+        return baseUrl;
+      }
+    },
+    async signIn({ user, account, profile }) {
+      try {
+        console.log("Sign-in attempt:", { user, account, profile });
 
-        if (existingUser) {
+        if (account?.provider === "google") {
+          const userPromise = prisma.user.findUnique({
+            where: { email: profile.email },
+            include: { accounts: true },
+          });
+
+          const existingUser = await Promise.race([
+            userPromise,
+            timeoutPromise,
+          ]);
+
+          if (!existingUser) {
+            return true; // Let NextAuth create the user
+          }
+
+          // If user exists but doesn't have a Google account linked
           if (!existingUser.accounts.some((acc) => acc.provider === "google")) {
             await prisma.account.create({
               data: {
@@ -96,13 +125,16 @@ export const authOptions = {
               },
             });
           }
+          return true;
         }
+        return true;
+      } catch (error) {
+        console.error("Sign-in error:", error);
+        if (error.message === "Initial connection timeout") {
+          return "/auth/error?error=Timeout";
+        }
+        return false;
       }
-      return true;
-    },
-    async redirect({ url, baseUrl }) {
-      console.log("Redirect:", { url, baseUrl });
-      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
   events: {
@@ -113,12 +145,60 @@ export const authOptions = {
     async createUser(message) {
       console.log("New user created:", message);
     },
+    async signOut(message) {
+      // Clean up the session and tokens with timeout
+      try {
+        const cleanupPromise = async () => {
+          if (message?.account?.provider === "google") {
+            await prisma.account.deleteMany({
+              where: {
+                userId: message.user.id,
+                provider: "google",
+              },
+            });
+          }
+        };
+
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Cleanup timeout")), 10000)
+        );
+
+        await Promise.race([cleanupPromise(), timeoutPromise]);
+        console.log("User signed out:", message);
+      } catch (error) {
+        console.error("Sign out cleanup error:", error);
+      }
+    },
+    async session(message) {
+      // Log session events for debugging
+
+      console.log("Session event:", message);
+    },
+  },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth/signin",
-    verifyRequest: "/auth/verifyRequest",
     error: "/auth/error",
+    verifyRequest: "/auth/verifyRequest",
   },
-  debug: true, // Enable debug logs
+  debug: process.env.NODE_ENV === "development",
+  logger: {
+    error: (code, ...message) => {
+      console.error(code, ...message);
+    },
+    warn: (code, ...message) => {
+      console.warn(code, ...message);
+    },
+    debug: (code, ...message) => {
+      console.debug(code, ...message);
+    },
+  },
 };
