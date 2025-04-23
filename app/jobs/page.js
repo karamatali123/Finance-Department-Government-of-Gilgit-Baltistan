@@ -14,9 +14,6 @@ export default async function JobsPage() {
     <div>
       <PageHeader bgImg={"bg-apply"} />
       <div className="py-12 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-green-600 ">
-          Welcome, {session.user?.name}
-        </h2>
         <JobApplicationForm />
       </div>
     </div>

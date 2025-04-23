@@ -9,7 +9,7 @@ const links = [
     link: "https://finance.gov.pk/",
   },
   {
-    title: "Financial Accounting and Budgeting System",
+    title: "FABS Directorate CGA Islamabad",
     link: "https://fabs.gov.pk/",
   },
   {

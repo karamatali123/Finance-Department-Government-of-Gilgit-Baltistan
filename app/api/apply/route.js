@@ -5,6 +5,7 @@ import { join } from "path";
 import { mkdir, writeFile } from "fs/promises";
 import { existsSync } from "fs";
 import { authOptions } from "../auth/[...nextauth]/options";
+import { uploadDocument } from "../../utils/documentUtils";
 
 const prisma = new PrismaClient();
 
@@ -17,11 +18,19 @@ export async function POST(request) {
 
     const formData = await request.formData();
 
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session.user.email,
+      },
+    });
+
     // Log received data for debugging
     console.log("Received formData keys:", Array.from(formData.keys()));
 
     // Get files from form data
     const photo = formData.get("photo");
+    const nocTo = formData.get("nocDocument");
+    const cv = formData.get("cvDocument");
     const jobId = formData.get("jobId");
 
     if (!jobId) {
@@ -83,24 +92,30 @@ export async function POST(request) {
     }
 
     // Generate safe filename
-    const fileExtension = photo.name.split(".").pop() || "jpg";
-    const photoFilename = `${Date.now()}-${Math.random()
+    const getFileExtension = (fileType) => {
+      const fileExtension =
+        fileType == "photo"
+          ? "jpg"
+          : fileType == "nocTo"
+            ? "jpg"
+            : fileType == "cv"
+              ? "pdf"
+              : "";
+      return fileExtension;
+    };
+    const photoFilename = `photo-${Date.now()}-${Math.random()
       .toString(36)
-      .substring(7)}.${fileExtension}`;
+      .substring(7)}.${getFileExtension("photo")}`;
+    const nocToFilename = `nocTo-${Date.now()}-${Math.random()
+      .toString(36)
+      .substring(7)}.${getFileExtension("nocTo")}`;
+    const cvFilename = `cv-${Date.now()}-${Math.random()
+      .toString(36)
+      .substring(7)}.${getFileExtension("cv")}`;
 
-    try {
-      // Save photo file
-      await writeFile(
-        join(uploadDir, photoFilename),
-        Buffer.from(await photo.arrayBuffer())
-      );
-    } catch (error) {
-      console.error("Error saving photo:", error);
-      return NextResponse.json(
-        { error: "Error saving photo" },
-        { status: 500 }
-      );
-    }
+    uploadDocument(uploadDir, photoFilename, photo, writeFile);
+    uploadDocument(uploadDir, nocToFilename, nocTo, writeFile);
+    uploadDocument(uploadDir, cvFilename, cv, writeFile);
 
     try {
       // Save to database
@@ -114,11 +129,14 @@ export async function POST(request) {
           phone: personalInfo.phone || "",
           cnic: personalInfo.cnic,
           photoPath: join("uploads", photoFilename),
+          nocPath: join("uploads", nocToFilename),
+          cvPath: join("uploads", cvFilename),
 
           // Convert arrays to JSON strings
           qualifications: qualifications,
           certifications: certifications,
           workExperience: workExperience,
+          userId: user.id,
 
           // Job relation
           jobId: jobId,

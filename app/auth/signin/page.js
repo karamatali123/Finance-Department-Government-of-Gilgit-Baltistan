@@ -5,6 +5,8 @@ import { useState } from "react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState("");
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -16,22 +18,36 @@ export default function SignIn() {
         </div>
         <div className="mt-8">
           <button
-            onClick={() => signIn("google", { callbackUrl: "/jobs/jobsList" })}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            onClick={async () => {
+              setLoading(true);
+              await signIn("google", { callbackUrl: "/jobs/jobsList" });
+              setLoading(false);
+            }}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-3 px-4 py-2 border disabled:opacity-50 disabled:cursor-not-allowed border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
-            <Image
-              src="/google-logo.svg"
-              alt="Google logo"
-              width={20}
-              height={20}
-            />
-            Sign in with Google
+            {loading ? (
+              <div className="animate-spin rounded-full h-[20px] w-[20px] border-t-2 border-b-2 border-primary"></div>
+            ) : (
+              <Image
+                src="/google-logo.svg"
+                alt="Google logo"
+                width={20}
+                height={20}
+              />
+            )}
+            {loading ? "Signing in..." : "Sign in with Google"}
           </button>
         </div>
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            signIn("email", { email: email, callbackUrl: "/jobs/jobsList" });
+            setSendingEmail(true);
+            await signIn("email", {
+              email: email,
+              callbackUrl: "/jobs/jobsList",
+            });
+            setSendingEmail(false);
           }}
         >
           <input
@@ -46,9 +62,10 @@ export default function SignIn() {
           />
           <button
             type="submit"
-            className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors"
+            className="mt-4 w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={sendingEmail}
           >
-            Sign in with Email
+            {sendingEmail ? "Signing in..." : "Sign in with Email"}
           </button>
         </form>
       </div>

@@ -1,7 +1,25 @@
 const PersonalInformation = ({ handleChange, values }) => {
+  const dist = [
+    "Astore",
+    "Diamer",
+    "Gilgit",
+    "Ghizer",
+    "Gupis-Yasin",
+    "Ghanche",
+    "Hunza",
+    "Nagar",
+    "Skardu",
+    "Kharmang",
+    "Roundu",
+    "Shigar",
+    "Skardu",
+  ];
+
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-bold text-gray-900">Personal Information</h3>
+      <h3 className="text-xl font-bold text-gray-900">
+        Personal Information/Bio Data
+      </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -50,16 +68,18 @@ const PersonalInformation = ({ handleChange, values }) => {
           >
             Domicile
           </label>
-          <input
-            type="text"
+          <select
             id="domicile"
             name="personalInformation.domicile"
             value={values.personalInformation.domicile}
             onChange={handleChange}
-            placeholder="eg: Gilgit, Skardu, etc."
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             required
-          />
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          >
+            {dist.map((dist) => (
+              <option value={dist}>{dist}</option>
+            ))}
+          </select>
         </div>
 
         <div>
@@ -111,7 +131,45 @@ const PersonalInformation = ({ handleChange, values }) => {
           <input
             type="file"
             id="photo"
+            accept=".jpg, .png, .jpeg"
             name="personalInformation.photo"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              console.log("File:", file.size);
+              if (file.size > 5206747) {
+                alert("File size must be less than 5MB");
+                e.target.value = null;
+                return;
+              }
+              if (file && file.size < 5206747) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                  handleChange({
+                    target: {
+                      name: "personalInformation.photo",
+                      value: reader.result,
+                    },
+                  });
+                };
+                reader.readAsDataURL(file);
+              }
+            }}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="photo"
+            className="block text-sm font-medium text-gray-700"
+          >
+            NOC (In case of Govt. Employee) (PDF, JPG, PNG)
+          </label>
+          <input
+            type="file"
+            id="photo"
+            accept=".pdf, .jpg, .png"
+            name="personalInformation.noc"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) {
@@ -119,7 +177,38 @@ const PersonalInformation = ({ handleChange, values }) => {
                 reader.onload = () => {
                   handleChange({
                     target: {
-                      name: "personalInformation.photo",
+                      name: "personalInformation.noc",
+                      value: reader.result,
+                    },
+                  });
+                };
+                reader.readAsDataURL(file);
+              }
+            }}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="photo"
+            className="block text-sm font-medium text-gray-700"
+          >
+            CV Of Candidate (PDF)
+          </label>
+          <input
+            type="file"
+            id="photo"
+            accept=".pdf"
+            name="personalInformation.cv"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                  handleChange({
+                    target: {
+                      name: "personalInformation.cv",
                       value: reader.result,
                     },
                   });

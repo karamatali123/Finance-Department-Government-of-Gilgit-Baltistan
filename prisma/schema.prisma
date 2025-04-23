@@ -33,13 +33,16 @@ id            String           @id @default(uuid())
   phone           String
   cnic            String
   photoPath       String
+  nocPath         String?
+  cvPath          String?  
   qualifications  Json     @db.Json
   certifications  Json     @db.Json
   workExperience  Json     @db.Json
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  job             Job       @relation(fields: [jobId], references: [id])
+  job             Job      @relation(fields: [jobId], references: [id])
   jobId           String   
+  userId          String?  
 }
 
 model Account {
