@@ -56,7 +56,7 @@ export async function POST(request) {
     }
 
     // Validate required files
-    if (!photo || !(photo instanceof File)) {
+    if (!photo) {
       return NextResponse.json(
         { error: "Valid photo file is required" },
         { status: 400 }
