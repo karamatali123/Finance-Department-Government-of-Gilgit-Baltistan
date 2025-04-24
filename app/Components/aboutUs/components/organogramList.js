@@ -1,5 +1,5 @@
 import Divider from "../../Common/Divider";
-import overviewImg from "../../../../public/images/chart.png";
+import overviewImg from "../../../../public/images/financeorgChart.png";
 import Organogram from "./organogram";
 
 const OrganogramList = () => {

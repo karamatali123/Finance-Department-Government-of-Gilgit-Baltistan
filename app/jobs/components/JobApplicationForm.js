@@ -132,7 +132,7 @@ const JobApplicationForm = () => {
   useEffect(() => {
     if (success) {
       formik.resetForm();
-      router.push("/jobs/jobsList");
+      router.push("/jobs");
     }
   }, [success]);
 

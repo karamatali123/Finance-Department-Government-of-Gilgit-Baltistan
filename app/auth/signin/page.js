@@ -14,7 +14,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/jobs/jobsList");
+      router.push("/jobs");
     }
   }, [session]);
 
@@ -30,7 +30,7 @@ export default function SignIn() {
           <button
             onClick={async () => {
               setLoading(true);
-              await signIn("google", { callbackUrl: "/jobs/jobsList" });
+              await signIn("google", { callbackUrl: "/jobs" });
               setLoading(false);
             }}
             disabled={loading}
@@ -55,7 +55,7 @@ export default function SignIn() {
             setSendingEmail(true);
             await signIn("email", {
               email: email,
-              callbackUrl: "/jobs/jobsList",
+              callbackUrl: "/jobs",
             });
             setSendingEmail(false);
           }}

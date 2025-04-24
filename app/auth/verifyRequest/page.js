@@ -12,7 +12,7 @@ const VerifyRequest = () => {
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/jobs/jobsList");
+      router.push("/jobs");
     }
   }, [session]);
   return (

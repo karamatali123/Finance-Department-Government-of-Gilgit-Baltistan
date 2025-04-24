@@ -21,7 +21,7 @@ const headerLinks = [
   { title: "Annual Budget", link: "/annual-budget" },
   { title: "Data Analytics", link: "/data-analytics" },
   { title: "Downloads", link: "/info-desk/downloads" },
-  { title: "Jobs", link: "/jobs/jobsList" },
+  { title: "Jobs", link: "/jobs" },
   // {
   //   title: "Info Desk",
   //   link: "/info-desk",

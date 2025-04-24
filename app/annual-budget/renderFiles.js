@@ -26,12 +26,7 @@ export const renderFileTable = (files) => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-center">
                 <button
-                  onClick={() =>
-                    window.open(
-                      `https://www.gbfinance.gov.pk/${file.path}`,
-                      "_blank"
-                    )
-                  }
+                  onClick={() => window.open(`/${file.path}`, "_blank")}
                   className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
                 >
                   <svg
