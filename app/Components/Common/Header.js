@@ -204,91 +204,17 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-          {/* Auth Button */}
-          {session ? (
-            <div className="relative">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex items-center gap-2"
-              >
-                <svg
-                  className="w-8 h-8 text-gray-500 rounded-full bg-gray-100 p-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </button>
-
-              {isMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
-                  <div className="px-4 py-2 border-b border-gray-200">
-                    <p className="text-sm font-medium text-gray-900">
-                      {session.user?.name}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {session.user?.email.slice(0, 20)}
-                      {session.user?.email.length > 20 && "..."}
-                    </p>
-                  </div>
-                  <button
-                    onClick={async () => {
-                      // Clear all caches
-                      if (typeof caches !== "undefined") {
-                        const cacheKeys = await caches.keys();
-                        await Promise.all(
-                          cacheKeys.map((key) => caches.delete(key))
-                        );
-                      }
-                      // Clear localStorage
-                      localStorage.clear();
-                      // Clear sessionStorage
-                      sessionStorage.clear();
-                      // Sign out and redirect
-                      await signOut({
-                        callbackUrl: "/",
-                        redirect: true,
-                      });
-                    }}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link href="/auth/signin" className="text-primary">
-              <div className="flex items-center gap-1">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-                {/* Sign In */}
-              </div>
-            </Link>
-          )}
         </div>
+        {/* <div className="flex items-center gap-4">
+          <button className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+            Login
+          </button>
+        </div> */}
       </div>
     </header>
   );
 };
 
 export default Header;
+
+//

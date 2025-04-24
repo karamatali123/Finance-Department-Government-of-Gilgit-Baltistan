@@ -2,7 +2,8 @@
 
 import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as Yup from "yup";
 import PersonalInformation from "./PersonalInformation";
 import Qualifications from "./Qualifications";
 import Certifications from "./Certifications";
@@ -11,6 +12,7 @@ import QualificationsTable from "./QualificationsTable";
 import CertificationsTable from "./CertificationsTable";
 import WorkExperienceTable from "./WorkExperienceTable";
 import { processDocumentForUpload } from "../../utils/documentUtils";
+import { useRouter } from "next/navigation";
 
 const JobApplicationForm = () => {
   const searchParams = useSearchParams();
@@ -21,6 +23,31 @@ const JobApplicationForm = () => {
   const [showQualifications, setShowQualifications] = useState(false);
   const [showCertifications, setShowCertifications] = useState(false);
   const [showWorkExperience, setShowWorkExperience] = useState(false);
+  const router = useRouter();
+
+  const validationSchema = Yup.object().shape({
+    personalInformation: Yup.object().shape({
+      fullName: Yup.string().required("Full Name is required"),
+      fatherName: Yup.string().required("Father's Name is required"),
+      domicile: Yup.string().required("Domicile is required"),
+      email: Yup.string().email("Invalid email").required("Email is required"),
+
+      cnic: Yup.string()
+        .matches(
+          /^\d{5}-\d{7}-\d{1}$/,
+          "Invalid CNIC format (e.g. 12345-1234567-1)"
+        )
+        .required("CNIC is required"),
+      photo: Yup.mixed().required("Photo is required"),
+      cv: Yup.mixed().required("CV is required"),
+    }),
+    qualifications: Yup.array().min(
+      1,
+      "At least one qualification is required"
+    ),
+    certifications: Yup.array(),
+    workExperience: Yup.array(),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -39,6 +66,7 @@ const JobApplicationForm = () => {
       certifications: [],
       workExperience: [],
     },
+    validationSchema,
     onSubmit: async (values) => {
       setError("");
       setSuccess(false);
@@ -50,22 +78,16 @@ const JobApplicationForm = () => {
         }
 
         const formData = new FormData();
-
-        // Validate and add photo file
-
-        // Add jobId
         formData.append("jobId", jobId);
         await formatImage(formData);
-
         await formatNOC(formData);
         await formatCV(formData);
 
-        // Create a copy of personalInformation without the photo
         const personalInfoCopy = { ...values.personalInformation };
         delete personalInfoCopy.photo;
         delete personalInfoCopy.noc;
         delete personalInfoCopy.cv;
-        // Add JSON data
+
         formData.append(
           "personalInformation",
           JSON.stringify(personalInfoCopy)
@@ -83,19 +105,12 @@ const JobApplicationForm = () => {
           JSON.stringify(values.workExperience)
         );
 
-        console.log("Submitting form data:", {
-          jobId,
-          hasPhoto: !!photo,
-          personalInfo: personalInfoCopy,
-        });
-
         const response = await fetch("/api/apply", {
           method: "POST",
           body: formData,
         });
 
         const data = await response.json();
-        console.log("Server response:", data);
 
         if (!response.ok) {
           throw new Error(
@@ -114,18 +129,23 @@ const JobApplicationForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (success) {
+      formik.resetForm();
+      router.push("/jobs/jobsList");
+    }
+  }, [success]);
+
+  const isApplicationValid = () => {
+    return formik.isValid && formik.dirty;
+  };
+
   const formatImage = async (formData) => {
     const photo = formik.values.personalInformation.photo;
-
-    if (!photo) {
-      throw new Error("Please select a photo");
-    }
-
-    // Handle both File objects and base64 strings
+    if (!photo) throw new Error("Please select a photo");
     if (photo instanceof File) {
       formData.append("photo", photo);
     } else if (typeof photo === "string" && photo.startsWith("data:image")) {
-      // Convert base64 to File object
       const response = await fetch(photo);
       const blob = await response.blob();
       const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
@@ -137,7 +157,7 @@ const JobApplicationForm = () => {
 
   const formatNOC = async (formData) => {
     try {
-      const nocDocument = formik.values.personalInformation.noc; // adjust this path according to your form structure
+      const nocDocument = formik.values.personalInformation.noc;
       const processedNOC = await processDocumentForUpload(nocDocument, "noc");
       formData.append("nocDocument", processedNOC);
     } catch (error) {
@@ -147,7 +167,7 @@ const JobApplicationForm = () => {
 
   const formatCV = async (formData) => {
     try {
-      const cvDocument = formik.values.personalInformation.cv; // adjust this path according to your form structure
+      const cvDocument = formik.values.personalInformation.cv;
       const processedCV = await processDocumentForUpload(cvDocument, "cv");
       formData.append("cvDocument", processedCV);
     } catch (error) {
@@ -155,13 +175,16 @@ const JobApplicationForm = () => {
     }
   };
 
-  // Handle file input
   const handleFileChange = (event) => {
     const file = event.currentTarget.files?.[0];
-    console.log("File:", file);
     if (file) {
       formik.setFieldValue("personalInformation.photo", file);
     }
+  };
+
+  const showQualificationsError = () => {
+    console.log(formik.errors, "errors");
+    return formik.errors.qualifications && !formik.errors.personalInformation;
   };
 
   return (
@@ -182,7 +205,11 @@ const JobApplicationForm = () => {
         handleChange={formik.handleChange}
         values={formik.values}
         handleFileChange={handleFileChange}
+        errors={formik.errors.personalInformation}
+        touched={formik.touched.personalInformation}
+        handleBlur={formik.handleBlur}
       />
+
       <QualificationsTable
         qualifications={formik.values.qualifications}
         handleDeleteQualification={(index) => {
@@ -192,6 +219,10 @@ const JobApplicationForm = () => {
           );
         }}
       />
+      {showQualificationsError() && (
+        <div className="text-red-500">{formik.errors.qualifications}</div>
+      )}
+
       <button
         type="button"
         onClick={() => setShowQualifications(true)}
@@ -199,6 +230,7 @@ const JobApplicationForm = () => {
       >
         Add Qualification
       </button>
+
       <CertificationsTable
         certifications={formik.values.certifications}
         handleDeleteCertification={(index) => {
@@ -208,6 +240,7 @@ const JobApplicationForm = () => {
           );
         }}
       />
+
       <button
         type="button"
         onClick={() => setShowCertifications(true)}
@@ -215,6 +248,7 @@ const JobApplicationForm = () => {
       >
         Add Certification
       </button>
+
       {showQualifications && (
         <Qualifications
           handleChange={formik.handleChange}
@@ -226,16 +260,10 @@ const JobApplicationForm = () => {
             ]);
             setShowQualifications(false);
           }}
-          handleDeleteQualification={(index) => {
-            formik.setFieldValue(
-              "qualifications",
-              formik.values.qualifications.filter((_, i) => i !== index)
-            );
-          }}
           onClose={() => setShowQualifications(false)}
-          isOpen={showQualifications}
         />
       )}
+
       {showCertifications && (
         <Certifications
           onClose={() => setShowCertifications(false)}
@@ -248,14 +276,9 @@ const JobApplicationForm = () => {
             ]);
             setShowCertifications(false);
           }}
-          handleDeleteCertification={(index) => {
-            formik.setFieldValue(
-              "certifications",
-              formik.values.certifications.filter((_, i) => i !== index)
-            );
-          }}
         />
       )}
+
       <WorkExperienceTable
         workExperience={formik.values.workExperience}
         handleDeleteWorkExperience={(index) => {
@@ -265,6 +288,7 @@ const JobApplicationForm = () => {
           );
         }}
       />
+
       <button
         type="button"
         onClick={() => setShowWorkExperience(true)}
@@ -272,6 +296,7 @@ const JobApplicationForm = () => {
       >
         Add Work Experience
       </button>
+
       {showWorkExperience && (
         <WorkExperience
           values={formik.values}
@@ -288,10 +313,8 @@ const JobApplicationForm = () => {
 
       <button
         type="submit"
-        disabled={isSubmitting}
-        className={`w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors ${
-          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-        }`}
+        disabled={isSubmitting || !formik.isValid}
+        className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? "Submitting..." : "Submit Application"}
       </button>

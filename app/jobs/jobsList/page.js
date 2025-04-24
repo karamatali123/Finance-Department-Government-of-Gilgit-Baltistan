@@ -5,7 +5,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
-
+import { FaRegEye } from "react-icons/fa6";
+import { formatDate } from "../../utils/dates";
 const JobsList = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -70,14 +71,26 @@ const JobsList = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Available Positions</h2>
-          {isAdmin && (
+
+          <div className="flex-row  flex gap-2">
+            {isAdmin && (
+              <button
+                onClick={handlePostNewJob}
+                className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              >
+                Post New Job
+              </button>
+            )}
+
             <button
-              onClick={handlePostNewJob}
-              className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              onClick={() => {
+                window.open("/JobDetails.pdf", "_blank");
+              }}
+              className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              Post New Job
+              <FaRegEye className="w-5 h-5" /> View requirements
             </button>
-          )}
+          </div>
         </div>
         <div className="overflow-x-auto">
           {jobs.length > 0 && (
@@ -96,14 +109,12 @@ const JobsList = () => {
                       Project Pay Scale (PPS)
                     </th>
 
-                    {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Posted Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Last Date
-                    </th> */}
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       No of Posts
+                    </th>
+
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Last Date
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Action
@@ -136,16 +147,11 @@ const JobsList = () => {
                         </span>
                       </td>
 
-                      {/* <td className="px-6 py-4 text-sm text-gray-500">
-                        {new Date(job.postedDate).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {job.lastDate
-                          ? new Date(job.lastDate).toLocaleDateString()
-                          : "N/A"}
-                      </td> */}
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {job.noOfVacancies}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {job.lastDate ? formatDate(job.lastDate) : "N/A"}
                       </td>
                       <td className="px-6 py-4 text-sm">
                         <JobActions

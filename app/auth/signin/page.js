@@ -1,12 +1,22 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState("");
   const [sendingEmail, setSendingEmail] = useState(false);
+  const router = useRouter();
+
+  const { data: session } = useSession();
+  console.log(session, "dataaa");
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/jobs/jobsList");
+    }
+  }, [session]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -16,7 +26,7 @@ export default function SignIn() {
             Sign in to your account
           </h2>
         </div>
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <button
             onClick={async () => {
               setLoading(true);
@@ -38,7 +48,7 @@ export default function SignIn() {
             )}
             {loading ? "Signing in..." : "Sign in with Google"}
           </button>
-        </div>
+        </div> */}
         <form
           onSubmit={async (e) => {
             e.preventDefault();

@@ -1,4 +1,12 @@
-const PersonalInformation = ({ handleChange, values }) => {
+import TextInput from "../../Components/Common/InputField";
+
+const PersonalInformation = ({
+  handleChange,
+  values,
+  errors,
+  touched,
+  handleBlur,
+}) => {
   const dist = [
     "Astore",
     "Diamer",
@@ -22,40 +30,28 @@ const PersonalInformation = ({ handleChange, values }) => {
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <TextInput
+          id="fullName"
+          name="personalInformation.fullName"
+          label="Full Name"
+          placeholder="e.g. Muhammad Ali"
+          value={values.personalInformation.fullName}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={errors?.fullName}
+          touched={touched?.fullName}
+        />
         <div>
-          <label
-            htmlFor="fullName"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Full Name
-          </label>
-          <input
-            type="text"
-            id="fullName"
-            placeholder="eg: Muhammad Ali"
-            name="personalInformation.fullName"
-            value={values.personalInformation.fullName}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="fatherName"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Father Name
-          </label>
-          <input
-            type="text"
+          <TextInput
             id="fatherName"
             name="personalInformation.fatherName"
+            label="Father Name"
+            placeholder="e.g. Ali, Ahmed, etc."
             value={values.personalInformation.fatherName}
             onChange={handleChange}
-            placeholder="eg: Ali, Ahmed, etc."
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
+            onBlur={handleBlur}
+            error={errors?.fatherName}
+            touched={touched?.fatherName}
           />
         </div>
       </div>
@@ -73,7 +69,6 @@ const PersonalInformation = ({ handleChange, values }) => {
             name="personalInformation.domicile"
             value={values.personalInformation.domicile}
             onChange={handleChange}
-            required
             className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {dist.map((dist, index) => (
@@ -85,54 +80,41 @@ const PersonalInformation = ({ handleChange, values }) => {
         </div>
 
         <div>
-          <label
-            htmlFor="cnic"
-            className="block text-sm font-medium text-gray-700"
-          >
-            CNIC Number
-          </label>
-          <input
-            type="tel"
+          <TextInput
             id="cnic"
-            placeholder="eg: 12345-1234567-1"
+            type="tel"
             name="personalInformation.cnic"
+            label="CNIC Number"
+            placeholder="e.g. 12345-1234567-1"
             value={values.personalInformation.cnic}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
+            onBlur={handleBlur}
+            error={errors?.cnic}
+            touched={touched?.cnic}
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            type="email"
+          <TextInput
             id="email"
-            placeholder="eg: example@gmail.com"
+            type="email"
             name="personalInformation.email"
+            label="Email"
+            placeholder="e.g. example@gmail.com"
             value={values.personalInformation.email}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
+            onBlur={handleBlur}
+            error={errors?.email}
+            touched={touched?.email}
           />
         </div>
         <div>
-          <label
-            htmlFor="photo"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Recent Photo
-          </label>
-          <input
+          <TextInput
             type="file"
             id="photo"
+            label="Recent Photo"
             accept=".jpg, .png, .jpeg"
             name="personalInformation.photo"
             onChange={(e) => {
@@ -156,20 +138,17 @@ const PersonalInformation = ({ handleChange, values }) => {
                 reader.readAsDataURL(file);
               }
             }}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
+            error={errors?.photo}
+            touched={touched?.photo}
+            onBlur={handleBlur}
+            // className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
-          <label
-            htmlFor="photo"
-            className="block text-sm font-medium text-gray-700"
-          >
-            NOC (In case of Govt. Employee) (PDF, JPG, PNG)
-          </label>
-          <input
+          <TextInput
             type="file"
             id="photo"
+            label="NOC (In case of Govt. Employee)"
             accept=".pdf, .jpg, .png"
             name="personalInformation.noc"
             onChange={(e) => {
@@ -187,20 +166,17 @@ const PersonalInformation = ({ handleChange, values }) => {
                 reader.readAsDataURL(file);
               }
             }}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
+            error={errors?.noc}
+            touched={touched?.noc}
+            onBlur={handleBlur}
+            // className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
-          <label
-            htmlFor="photo"
-            className="block text-sm font-medium text-gray-700"
-          >
-            CV Of Candidate (PDF)
-          </label>
-          <input
+          <TextInput
             type="file"
             id="photo"
+            label="CV Of Candidate (PDF)"
             accept=".pdf"
             name="personalInformation.cv"
             onChange={(e) => {
@@ -218,8 +194,10 @@ const PersonalInformation = ({ handleChange, values }) => {
                 reader.readAsDataURL(file);
               }
             }}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            required
+            error={errors?.cv}
+            touched={touched?.cv}
+            onBlur={handleBlur}
+            // className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>

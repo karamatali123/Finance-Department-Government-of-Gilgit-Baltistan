@@ -1,7 +1,20 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const VerifyRequest = () => {
+  const router = useRouter();
+
+  const { data: session } = useSession();
+  console.log(session, "dataaa");
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/jobs/jobsList");
+    }
+  }, [session]);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-lg text-center space-y-8">
