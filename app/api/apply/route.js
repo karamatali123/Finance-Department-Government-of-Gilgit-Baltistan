@@ -92,26 +92,33 @@ export async function POST(request) {
     }
 
     // Generate safe filename
-    const getFileExtension = (fileType) => {
-      const fileExtension =
-        fileType == "photo"
-          ? "jpg"
-          : fileType == "nocTo"
-            ? "jpg"
-            : fileType == "cv"
-              ? "pdf"
-              : "";
-      return fileExtension;
+    const getFileExtension = (file) => {
+      if (!file) return "";
+
+      // Get the original filename from the File object
+      const originalName = file.name || "";
+      const extension = originalName.split(".").pop().toLowerCase();
+
+      // Validate allowed extensions
+
+      // Return validated extension or default
+      if (extension) {
+        return extension;
+      }
+
+      console.warn(`Could not determine extension for file: ${originalName}`);
+      return "";
     };
+
     const photoFilename = `photo-${Date.now()}-${Math.random()
       .toString(36)
-      .substring(7)}.${getFileExtension("photo")}`;
+      .substring(7)}.${getFileExtension(photo)}`;
     const nocToFilename = `nocTo-${Date.now()}-${Math.random()
       .toString(36)
-      .substring(7)}.${getFileExtension("nocTo")}`;
+      .substring(7)}.${getFileExtension(nocTo)}`;
     const cvFilename = `cv-${Date.now()}-${Math.random()
       .toString(36)
-      .substring(7)}.${getFileExtension("cv")}`;
+      .substring(7)}.${getFileExtension(cv)}`;
 
     uploadDocument(uploadDir, photoFilename, photo, writeFile);
     uploadDocument(uploadDir, nocToFilename, nocTo, writeFile);

@@ -84,6 +84,14 @@ const JobsList = () => {
 
             <button
               onClick={() => {
+                window.open("https://jobs.gbfinance.gov.pk/", "_blank");
+              }}
+              className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            >
+              Apply Now
+            </button>
+            <button
+              onClick={() => {
                 window.open("/JobDetails.pdf", "_blank");
               }}
               className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -115,9 +123,6 @@ const JobsList = () => {
 
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Last Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Action
                     </th>
                   </tr>
                 </thead>
@@ -152,14 +157,6 @@ const JobsList = () => {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {job.lastDate ? formatDate(job.lastDate) : "N/A"}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <JobActions
-                          jobId={job.id}
-                          isAdmin={isAdmin}
-                          handleApply={handleApply}
-                          session={session}
-                        />
                       </td>
                     </tr>
                   ))}

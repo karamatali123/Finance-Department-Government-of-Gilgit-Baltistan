@@ -156,6 +156,7 @@ const JobApplicationForm = () => {
   };
 
   const formatNOC = async (formData) => {
+    if (!formik.values.personalInformation.noc) return;
     try {
       const nocDocument = formik.values.personalInformation.noc;
       const processedNOC = await processDocumentForUpload(nocDocument, "noc");

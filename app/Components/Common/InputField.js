@@ -13,6 +13,7 @@ const TextInput = ({
   touched,
   required = false,
   type = "text",
+  accept = "",
 }) => {
   console.log(error, "error", touched, "touched");
   return (
@@ -24,6 +25,7 @@ const TextInput = ({
         type={type}
         id={id}
         name={name}
+        accept={accept}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

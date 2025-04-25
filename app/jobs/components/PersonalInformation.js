@@ -115,11 +115,12 @@ const PersonalInformation = ({
             type="file"
             id="photo"
             label="Recent Photo"
-            accept=".jpg, .png, .jpeg"
+            accept="image/*"
             name="personalInformation.photo"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              console.log("File:", file.size);
+
+              console.log("File:", file);
               if (file.size > 5206747) {
                 alert("File size must be less than 5MB");
                 e.target.value = null;
@@ -177,7 +178,7 @@ const PersonalInformation = ({
             type="file"
             id="photo"
             label="CV Of Candidate (PDF)"
-            accept=".pdf"
+            accept="application/pdf"
             name="personalInformation.cv"
             onChange={(e) => {
               const file = e.target.files?.[0];
