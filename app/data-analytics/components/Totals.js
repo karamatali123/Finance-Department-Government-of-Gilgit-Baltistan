@@ -6,7 +6,7 @@ const Totals = () => {
   const totals = [
     {
       title: "Regular Budget",
-      value: "PKR 68,600 million",
+      value: "PKR 86,600 million",
       icon: revenue.src,
     },
     {
