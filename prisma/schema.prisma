@@ -93,9 +93,12 @@ model VerificationToken {
 model DownloadCategory {
   id          String     @id @default(cuid())
   name        String
+  parentId    String?
+  parent      DownloadCategory?  @relation("SubCategories", fields: [parentId], references: [id], onDelete: SetNull)
+  subCategories DownloadCategory[] @relation("SubCategories")
+  downloads   Download[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  downloads   Download[]
 }
 
 model Download {

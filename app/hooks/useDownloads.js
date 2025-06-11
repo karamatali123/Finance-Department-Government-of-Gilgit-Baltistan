@@ -72,17 +72,18 @@ export function useDownloads() {
   };
 
   // Add category
-  const addCategory = async (name) => {
-    console.log(name, "name");
+  const addCategory = async (name, parentId) => {
+    console.log(name, "name", parentId, "parentId");
     try {
       const res = await fetch("/api/downloads/categories", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
+        body: JSON.stringify({ name, parentId }),
       });
       if (!res.ok) throw new Error("Failed to add category");
       const data = await res.json();
       setCategories((prev) => [...prev, data]);
+      fetchDownloads();
       return data;
     } catch (err) {
       setError(err.message);

@@ -33,7 +33,7 @@ const Accordion = ({
                   onDelete();
                 }
               }}
-              className="text-red-500"
+              className={`${isOpen ? "text-white" : "text-gray-900 "}`}
             >
               <FaTrash className="w-4 h-4" />
             </button>

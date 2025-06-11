@@ -134,7 +134,6 @@ export default function AdminDashboard() {
               folders={[]}
               selectedFolder={selectedBudgetFolder}
               onFolderSelect={setSelectedBudgetFolder}
-              onAddFolder={() => {}}
             />
             <FileList
               title="Existing Budget Books"

@@ -21,41 +21,42 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const categoryId = searchParams.get("categoryId");
 
-    // Get all categories first
+    // Get all parent categories with their subcategories
     const categories = await prisma.downloadCategory.findMany({
+      where: {
+        parentId: null, // Get only parent categories
+      },
+      include: {
+        subCategories: {
+          include: {
+            downloads: true, // Include downloads for subcategories
+          },
+          orderBy: { name: "asc" },
+        },
+        downloads: true, // Include downloads for parent categories
+      },
       orderBy: { name: "asc" },
     });
 
-    // Get downloads for each category
-    const downloadsByCategory = await Promise.all(
-      categories.map(async (category) => {
-        const downloads = await prisma.download.findMany({
-          where: categoryId ? { categoryId } : { categoryId: category.id },
-          orderBy: { createdAt: "desc" },
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            fileName: true,
-            filePath: true,
-            fileSize: true,
-            fileType: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        });
-
-        return {
-          categoryName: category.name,
-          categoryId: category.id,
-          documents: downloads,
-        };
-      })
-    );
+    // Transform the data to match the expected format
+    const downloadsByCategory = categories.map((category) => ({
+      categoryName: category.name,
+      categoryId: category.id,
+      documents: category.downloads,
+      subCategories: category.subCategories.map((subCat) => ({
+        categoryName: subCat.name,
+        categoryId: subCat.id,
+        documents: subCat.downloads,
+      })),
+    }));
 
     // If a specific category is requested, filter the results
     const filteredResults = categoryId
-      ? downloadsByCategory.filter((cat) => cat.categoryId === categoryId)
+      ? downloadsByCategory.filter(
+          (cat) =>
+            cat.categoryId === categoryId ||
+            cat.subCategories.some((sub) => sub.categoryId === categoryId)
+        )
       : downloadsByCategory;
 
     return NextResponse.json(filteredResults);

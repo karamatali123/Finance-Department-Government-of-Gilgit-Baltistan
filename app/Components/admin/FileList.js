@@ -22,10 +22,12 @@ export default function FileList({
   deleteFile,
 }) {
   const [openMainFolder, setOpenMainFolder] = useState(0);
+  const [openSubFolder, setOpenSubFolder] = useState(0);
 
   const [isAddDocumentOpen, setIsAddDocumentOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addingDocument, setAddingDocument] = useState(false);
+  const [parentId, setParentId] = useState(null);
 
   const handleDownloadSubmit = async (e) => {
     setAddingDocument(true);
@@ -52,6 +54,9 @@ export default function FileList({
   const toggleMainFolder = (index) => {
     setOpenMainFolder(openMainFolder === index ? -1 : index);
   };
+  const toggleSubFolder = (index) => {
+    setOpenSubFolder(openSubFolder === index ? -1 : index);
+  };
 
   const downloadFields = [
     {
@@ -76,10 +81,13 @@ export default function FileList({
     },
   ];
 
-  const handleAddDownloadFolder = async (name) => {
+  console.log(parentId, "parentId");
+
+  const handleAddDownloadFolder = async (name, parentId) => {
+    console.log(name, "name", parentId, "parentId 123");
     try {
-      await addDownloadCategory(name);
-      toast.success("Category added successfully");
+      await addDownloadCategory(name, parentId);
+      // toast.success("Category added successfully");
     } catch (error) {
       toast.error(error.message || "Failed to add category");
     }
@@ -110,19 +118,67 @@ export default function FileList({
               showDelete={true}
               onDelete={() => handleDeleteDownloadFolder(category.categoryId)}
             >
-              <div className="border rounded-lg divide-y">
-                {renderFileTable(category.documents || [], true, deleteFile)}
-                {category?.documents?.length === 0 && (
-                  <div className="p-4 text-center text-gray-500">
-                    No documents in this category
-                  </div>
-                )}
-              </div>
+              {category?.documents?.length > 0 && (
+                <div className="border rounded-lg divide-y">
+                  renderFileTable(category.documents || [], true, deleteFile)
+                </div>
+              )}
+
+              {/* Display subcategories */}
+              {category.subCategories?.map((subCategory, subIndex) => (
+                <div key={subCategory.categoryId} className="mt-4 ">
+                  <Accordion
+                    title={subCategory.categoryName}
+                    isOpen={openSubFolder === `${mainIndex}-${subIndex}`}
+                    onClick={() => toggleSubFolder(`${mainIndex}-${subIndex}`)}
+                    className="text-gray-900"
+                    showDelete={true}
+                    onDelete={() =>
+                      handleDeleteDownloadFolder(subCategory.categoryId)
+                    }
+                  >
+                    <div className="border rounded-lg divide-y">
+                      {subCategory?.documents?.length > 0 &&
+                        renderFileTable(
+                          subCategory.documents || [],
+                          true,
+                          deleteFile
+                        )}
+                      {subCategory?.documents?.length === 0 && (
+                        <div className="p-4 text-center text-gray-500">
+                          No documents in this subcategory
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-row justify-end">
+                      <button
+                        onClick={() => {
+                          setSelectedDownloadFolder(subCategory);
+                          setIsAddDocumentOpen(true);
+                        }}
+                        className="bg-primary text-white px-4 py-2 rounded-md m-2"
+                      >
+                        Add document
+                      </button>
+                    </div>
+                  </Accordion>
+                </div>
+              ))}
+
               <div className="flex flex-row justify-end">
                 <button
                   onClick={() => {
-                    setIsAddDocumentOpen(true);
+                    setParentId(category.categoryId);
+                    setIsModalOpen(true);
+                  }}
+                  className="bg-primary text-white px-4 py-2 rounded-md m-2"
+                >
+                  Add subcategory
+                </button>
+                <button
+                  onClick={() => {
                     setSelectedDownloadFolder(category);
+                    setIsAddDocumentOpen(true);
                   }}
                   className="bg-primary text-white px-4 py-2 rounded-md m-2"
                 >
@@ -142,6 +198,7 @@ export default function FileList({
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
               onAddFolder={handleAddDownloadFolder}
+              parentId={parentId}
             />
           </div>
           {document?.length === 0 && (

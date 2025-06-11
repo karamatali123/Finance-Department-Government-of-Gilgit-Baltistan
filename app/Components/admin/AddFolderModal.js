@@ -3,7 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function AddFolderModal({ isOpen, onClose, onAddFolder }) {
+export default function AddFolderModal({
+  isOpen,
+  onClose,
+  onAddFolder,
+  parentId,
+}) {
   const modalRef = useRef(null);
   const inputRef = useRef(null);
   const [newFolderName, setNewFolderName] = useState("");
@@ -23,7 +28,6 @@ export default function AddFolderModal({ isOpen, onClose, onAddFolder }) {
       document.addEventListener("keydown", handleEscape);
       document.addEventListener("mousedown", handleClickOutside);
       document.body.style.overflow = "hidden";
-      // Focus input when modal opens
       setTimeout(() => inputRef.current?.focus(), 0);
     }
 
@@ -43,12 +47,21 @@ export default function AddFolderModal({ isOpen, onClose, onAddFolder }) {
 
     try {
       setIsSubmitting(true);
-      await onAddFolder(newFolderName.trim());
-      toast.success("Category created successfully");
+      await onAddFolder(newFolderName.trim(), parentId);
+      toast.success(
+        parentId
+          ? "Subcategory created successfully"
+          : "Category created successfully"
+      );
       setNewFolderName("");
       onClose();
     } catch (error) {
-      toast.error(error.message || "Failed to create category");
+      toast.error(
+        error.message ||
+          (parentId
+            ? "Failed to create subcategory"
+            : "Failed to create category")
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -89,7 +102,7 @@ export default function AddFolderModal({ isOpen, onClose, onAddFolder }) {
           </div>
           <form onSubmit={handleSubmit} className="mt-3">
             <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-              Add New Category
+              {parentId ? "Add New Subcategory" : "Add New Category"}
             </h3>
             <div className="mt-2">
               <input
@@ -97,7 +110,9 @@ export default function AddFolderModal({ isOpen, onClose, onAddFolder }) {
                 type="text"
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
-                placeholder="Enter category name"
+                placeholder={
+                  parentId ? "Enter subcategory name" : "Enter category name"
+                }
                 disabled={isSubmitting}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
               />
@@ -116,7 +131,11 @@ export default function AddFolderModal({ isOpen, onClose, onAddFolder }) {
                 disabled={isSubmitting}
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
               >
-                {isSubmitting ? "Adding..." : "Add Category"}
+                {isSubmitting
+                  ? "Adding..."
+                  : parentId
+                    ? "Add Subcategory"
+                    : "Add Category"}
               </button>
             </div>
           </form>
