@@ -3,7 +3,9 @@
 import { useState } from "react";
 import FileUploadForm from "../../Components/admin/FileUploadForm";
 import FileList from "../../Components/admin/FileList";
+import BudgetList from "../../Components/admin/BudgetList";
 import { useDownloads } from "../../hooks/useDownloads";
+import { useBudgets } from "../../hooks/useBudgets";
 import { toast } from "react-hot-toast";
 
 export default function AdminDashboard() {
@@ -23,6 +25,18 @@ export default function AdminDashboard() {
     fetchDownloads: refetchDownloads,
   } = useDownloads();
 
+  const {
+    documents: budgetDocuments,
+    folders: budgetFolders,
+    loading: budgetsLoading,
+    error: budgetsError,
+    uploadDocument,
+    deleteDocument,
+    addFolder: addBudgetFolder,
+    deleteFolder: deleteBudgetFolder,
+    fetchDocuments: refetchBudgetDocuments,
+  } = useBudgets();
+
   const handleBudgetBookSubmit = (e) => {
     e.preventDefault();
     // TODO: Implement budget book upload
@@ -34,12 +48,18 @@ export default function AdminDashboard() {
     console.log("Edit file:", file);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, type) => {
     if (confirm("Are you sure you want to delete this file?")) {
       try {
-        await deleteFile(id);
-        toast.success("File deleted successfully");
-        refetchDownloads();
+        if (type === "download") {
+          await deleteFile(id);
+          toast.success("File deleted successfully");
+          refetchDownloads();
+        } else {
+          await deleteDocument(id);
+          toast.success("Document deleted successfully");
+          refetchBudgetDocuments();
+        }
       } catch (error) {
         toast.error(error.message || "Failed to delete file");
       }
@@ -65,10 +85,12 @@ export default function AdminDashboard() {
     },
   ];
 
-  if (downloadsError) {
+  if (downloadsError || budgetsError) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-red-600">Error: {downloadsError}</div>
+        <div className="text-red-600">
+          Error: {downloadsError || budgetsError}
+        </div>
       </div>
     );
   }
@@ -90,14 +112,14 @@ export default function AdminDashboard() {
             Downloads
           </button>
           <button
-            onClick={() => setActiveTab("budget-books")}
+            onClick={() => setActiveTab("budgets")}
             className={`px-4 py-2 font-medium ${
-              activeTab === "budget-books"
+              activeTab === "budgets"
                 ? "border-b-2 border-blue-500 text-blue-600"
                 : "text-gray-500 hover:text-gray-700"
             }`}
           >
-            Budget Books
+            Budget Documents
           </button>
         </div>
 
@@ -111,9 +133,9 @@ export default function AdminDashboard() {
                 documents={downloads}
                 refetchDownloads={refetchDownloads}
                 onEdit={handleEdit}
-                onDelete={handleDelete}
+                onDelete={(id) => handleDelete(id, "download")}
                 uploadFile={uploadFile}
-                deleteFile={handleDelete}
+                deleteFile={(id) => handleDelete(id, "download")}
                 addDownloadCategory={addDownloadCategory}
                 deleteDownloadCategory={deleteDownloadCategory}
                 selectedDownloadFolder={selectedDownloadFolder}
@@ -124,24 +146,25 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {activeTab === "budget-books" && (
+        {activeTab === "budgets" && (
           <div className="p-6">
-            <FileUploadForm
-              title="Manage Budget Books"
-              onSubmit={handleBudgetBookSubmit}
-              fields={budgetBookFields}
-              submitText="Upload Budget Book"
-              folders={[]}
-              selectedFolder={selectedBudgetFolder}
-              onFolderSelect={setSelectedBudgetFolder}
-            />
-            <FileList
-              title="Existing Budget Books"
-              files={[]}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              folders={[]}
-            />
+            {budgetsLoading ? (
+              <div className="text-center py-4">Loading...</div>
+            ) : (
+              <BudgetList
+                title="Budget Documents"
+                documents={budgetFolders}
+                refetchDocuments={refetchBudgetDocuments}
+                onDelete={(id) => handleDelete(id, "budget")}
+                uploadDocument={uploadDocument}
+                deleteDocument={(id) => handleDelete(id, "budget")}
+                addFolder={addBudgetFolder}
+                deleteFolder={deleteBudgetFolder}
+                selectedFolder={selectedBudgetFolder}
+                setSelectedFolder={setSelectedBudgetFolder}
+                budgetFolders={budgetFolders}
+              />
+            )}
           </div>
         )}
       </div>

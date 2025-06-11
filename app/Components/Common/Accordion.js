@@ -33,13 +33,13 @@ const Accordion = ({
                   onDelete();
                 }
               }}
-              className={`${isOpen ? "text-white" : "text-gray-900 "}`}
+              className={`${isOpen ? "text-white" : "text-primary "}`}
             >
               <FaTrash className="w-4 h-4" />
             </button>
           )}
           <svg
-            className={`w-6 h-6 transition-transform text-gray-900  ${
+            className={`w-6 h-6 transition-transform text-primary  ${
               isOpen ? "text-white" : ""
             } ${isOpen ? "transform rotate-180" : ""}`}
             fill="none"

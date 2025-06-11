@@ -1,0 +1,61 @@
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../auth/[...nextauth]/options";
+import { PrismaClient } from "@prisma/client";
+import { unlink } from "fs/promises";
+import path from "path";
+import { ADMIN_EMAIL } from "../../../../constants";
+
+const prisma = new PrismaClient();
+
+// DELETE /api/budgets/documents/[id] - Delete a document
+export async function DELETE(request, { params }) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || session.user.email !== ADMIN_EMAIL) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = params;
+    if (!id) {
+      return NextResponse.json(
+        { error: "Document ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Get the document to find its file path
+    const document = await prisma.budgetDocument.findUnique({
+      where: { id },
+    });
+
+    if (!document) {
+      return NextResponse.json(
+        { error: "Document not found" },
+        { status: 404 }
+      );
+    }
+
+    // Delete the file from the filesystem
+    const filePath = path.join(process.cwd(), "public", document.filePath);
+    try {
+      await unlink(filePath);
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      // Continue with database deletion even if file deletion fails
+    }
+
+    // Delete the document from the database
+    await prisma.budgetDocument.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting budget document:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}

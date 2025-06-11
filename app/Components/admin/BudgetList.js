@@ -4,48 +4,47 @@ import { useState } from "react";
 import Accordion from "../Common/Accordion";
 import { renderFileTable } from "../../annual-budget/renderFiles";
 import FileUploadForm from "./FileUploadForm";
-import { useDownloads } from "../../hooks/useDownloads";
+import { useBudgets } from "../../hooks/useBudgets";
 import AddFolderModal from "./AddFolderModal";
 import { toast } from "react-hot-toast";
 
-export default function FileList({
+export default function BudgetList({
   title,
   documents = [],
   className = "",
-  uploadFile,
-  addDownloadCategory,
-  deleteDownloadCategory,
-  selectedDownloadFolder,
-  setSelectedDownloadFolder,
-  downloadCategories,
-  refetchDownloads,
-  deleteFile,
+  uploadDocument,
+  addFolder,
+  deleteFolder,
+  selectedFolder,
+  setSelectedFolder,
+  budgetFolders,
+  refetchDocuments,
+  deleteDocument,
 }) {
   const [openMainFolder, setOpenMainFolder] = useState(0);
   const [openSubFolder, setOpenSubFolder] = useState(0);
-
   const [isAddDocumentOpen, setIsAddDocumentOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addingDocument, setAddingDocument] = useState(false);
   const [parentId, setParentId] = useState(null);
 
-  const handleDownloadSubmit = async (e) => {
+  const handleDocumentSubmit = async (e) => {
     setAddingDocument(true);
     e.preventDefault();
     const formData = new FormData(e.target);
-    formData.append("categoryId", selectedDownloadFolder.categoryId);
+    formData.append("folderId", selectedFolder.folderId);
 
     try {
-      await uploadFile(formData);
-      toast.success("File uploaded successfully");
+      await uploadDocument(formData);
+      toast.success("Document uploaded successfully");
       e.target.reset();
-      setSelectedDownloadFolder("");
+      setSelectedFolder("");
       setAddingDocument(false);
       setIsAddDocumentOpen(false);
-      refetchDownloads();
+      refetchDocuments();
     } catch (error) {
       console.error("Upload error:", error);
-      toast.error(error.message || "Failed to upload file");
+      toast.error(error.message || "Failed to upload document");
       setAddingDocument(false);
       setIsAddDocumentOpen(false);
     }
@@ -54,15 +53,16 @@ export default function FileList({
   const toggleMainFolder = (index) => {
     setOpenMainFolder(openMainFolder === index ? -1 : index);
   };
+
   const toggleSubFolder = (index) => {
     setOpenSubFolder(openSubFolder === index ? -1 : index);
   };
 
-  const downloadFields = [
+  const documentFields = [
     {
       id: "title",
       label: "Title",
-      placeholder: "Enter download title",
+      placeholder: "Enter document title",
       required: true,
     },
     {
@@ -75,29 +75,30 @@ export default function FileList({
       label: "File",
       type: "file",
       props: {
-        accept: ".pdf,.doc,.docx",
+        accept: ".pdf,.doc,.docx,.xls,.xlsx",
         required: true,
       },
     },
   ];
 
-  const handleAddDownloadFolder = async (name, parentId) => {
+  const handleAddFolder = async (name, parentId) => {
     try {
-      await addDownloadCategory(name, parentId);
-      toast.success("Category added successfully");
+      await addFolder(name, parentId);
+      toast.success("Folder added successfully");
     } catch (error) {
-      toast.error(error.message || "Failed to add category");
+      toast.error(error.message || "Failed to add folder");
     }
   };
 
-  const handleDeleteDownloadFolder = async (id) => {
+  const handleDeleteFolder = async (id) => {
     try {
-      await deleteDownloadCategory(id);
-      toast.success("Category deleted successfully");
+      await deleteFolder(id);
+      toast.success("Folder deleted successfully");
     } catch (error) {
-      toast.error(error.message || "Failed to delete category");
+      toast.error(error.message || "Failed to delete folder");
     }
   };
+
   return (
     <div className={`mt-8 ${className}`}>
       <div className="flex items-center justify-between mb-4">
@@ -105,57 +106,49 @@ export default function FileList({
       </div>
       <div className="container mx-auto">
         <div className="max-w-full mx-auto">
-          {documents.map((category, mainIndex) => (
+          {documents.map((folder, mainIndex) => (
             <Accordion
-              key={category.categoryId}
-              title={category.categoryName}
+              key={folder.folderId}
+              title={folder.folderName}
               isOpen={openMainFolder === mainIndex}
               onClick={() => toggleMainFolder(mainIndex)}
               className="text-gray-900"
               showDelete={true}
-              onDelete={() => handleDeleteDownloadFolder(category.categoryId)}
+              onDelete={() => handleDeleteFolder(folder.folderId)}
             >
-              {category?.documents?.length > 0 && (
+              {folder?.documents?.length > 0 && (
                 <div className="border rounded-lg divide-y">
                   {renderFileTable(
-                    category.documents || [],
+                    folder.documents || [],
                     true,
-                    deleteFile,
-                    category.categoryId
+                    deleteDocument
                   )}
                 </div>
               )}
 
-              {/* Display subcategories */}
-              {category.subCategories?.map((subCategory, subIndex) => (
-                <div key={subCategory.categoryId} className="mt-4 ">
+              {/* Display subfolders */}
+              {folder.subFolders?.map((subFolder, subIndex) => (
+                <div key={subFolder.folderId} className="mt-4">
                   <Accordion
-                    title={subCategory.categoryName}
+                    title={subFolder.folderName}
                     isOpen={openSubFolder === `${mainIndex}-${subIndex}`}
                     onClick={() => toggleSubFolder(`${mainIndex}-${subIndex}`)}
                     className="text-gray-900"
                     showDelete={true}
-                    onDelete={() =>
-                      handleDeleteDownloadFolder(subCategory.categoryId)
-                    }
+                    onDelete={() => handleDeleteFolder(subFolder.folderId)}
                   >
                     <div className="border rounded-lg divide-y">
-                      {subCategory?.documents?.length > 0 &&
+                      {subFolder?.documents?.length > 0 &&
                         renderFileTable(
-                          subCategory.documents || [],
+                          subFolder.documents || [],
                           true,
-                          deleteFile
+                          deleteDocument
                         )}
-                      {subCategory?.documents?.length === 0 && (
-                        <div className="p-4 text-center text-gray-500">
-                          No documents in this subcategory
-                        </div>
-                      )}
                     </div>
                     <div className="flex flex-row justify-end">
                       <button
                         onClick={() => {
-                          setSelectedDownloadFolder(subCategory);
+                          setSelectedFolder(subFolder);
                           setIsAddDocumentOpen(true);
                         }}
                         className="bg-primary text-white px-4 py-2 rounded-md m-2"
@@ -170,16 +163,16 @@ export default function FileList({
               <div className="flex flex-row justify-end">
                 <button
                   onClick={() => {
-                    setParentId(category.categoryId);
+                    setParentId(folder.folderId);
                     setIsModalOpen(true);
                   }}
                   className="bg-primary text-white px-4 py-2 rounded-md m-2"
                 >
-                  Add subcategory
+                  Add subfolder
                 </button>
                 <button
                   onClick={() => {
-                    setSelectedDownloadFolder(category);
+                    setSelectedFolder(folder);
                     setIsAddDocumentOpen(true);
                   }}
                   className="bg-primary text-white px-4 py-2 rounded-md m-2"
@@ -194,16 +187,16 @@ export default function FileList({
               onClick={() => setIsModalOpen(true)}
               className="bg-primary text-white px-4 py-2 rounded-md m-2"
             >
-              Add category
+              Add folder
             </button>
             <AddFolderModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
-              onAddFolder={handleAddDownloadFolder}
+              onAddFolder={handleAddFolder}
               parentId={parentId}
             />
           </div>
-          {document?.length === 0 && (
+          {documents?.length === 0 && (
             <div className="border rounded-lg p-4 text-center text-gray-500">
               No documents uploaded yet
             </div>
@@ -211,12 +204,12 @@ export default function FileList({
         </div>
       </div>
       <FileUploadForm
-        title="Manage Downloads"
-        subTitle={`Add document to ${selectedDownloadFolder.categoryName}`}
-        onSubmit={handleDownloadSubmit}
-        fields={downloadFields}
-        submitText="Upload File"
-        folders={downloadCategories}
+        title="Manage Budget Documents"
+        subTitle={`Add document to ${selectedFolder.folderName}`}
+        onSubmit={handleDocumentSubmit}
+        fields={documentFields}
+        submitText="Upload Document"
+        folders={budgetFolders}
         isOpen={isAddDocumentOpen}
         onClose={() => setIsAddDocumentOpen(false)}
         isSubmitting={addingDocument}
