@@ -22,7 +22,7 @@ export async function GET(request) {
       include: {
         BudgetFolder: {
           include: {
-            parent: true,
+            BudgetFolder: true,
           },
         },
       },
@@ -46,10 +46,10 @@ export async function GET(request) {
               id: doc.BudgetFolder.id,
               name: doc.BudgetFolder.name,
               parentId: doc.BudgetFolder.parentId,
-              parent: doc.BudgetFolder.parent
+              parent: doc.BudgetFolder.BudgetFolder
                 ? {
-                    id: doc.BudgetFolder.parent.id,
-                    name: doc.BudgetFolder.parent.name,
+                    id: doc.BudgetFolder.BudgetFolder.id,
+                    name: doc.BudgetFolder.BudgetFolder.name,
                   }
                 : null,
             }
