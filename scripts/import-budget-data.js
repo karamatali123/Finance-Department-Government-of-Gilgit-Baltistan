@@ -95,6 +95,7 @@ async function processFolder(folderData) {
     data: {
       id: uuidv4(),
       name: rootFolderName,
+      updatedAt: new Date(),
     },
   });
   console.log("Created root folder in database:", rootFolder.name);
@@ -113,6 +114,7 @@ async function processFolder(folderData) {
         id: uuidv4(),
         name: subFolder.title,
         parentId: rootFolder.id,
+        updatedAt: new Date(),
       },
     });
     console.log("Created subfolder in database:", createdSubFolder.name);
