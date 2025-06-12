@@ -20,9 +20,9 @@ export async function GET(request) {
     const documents = await prisma.budgetDocument.findMany({
       where: {},
       include: {
-        BudgetFolder: {
+        folder: {
           include: {
-            BudgetFolder: true,
+            parent: true,
           },
         },
       },
@@ -41,15 +41,15 @@ export async function GET(request) {
         fileSize: doc.fileSize,
         fileType: doc.fileType,
         folderId: doc.folderId,
-        folder: doc.BudgetFolder
+        folder: doc.folder
           ? {
-              id: doc.BudgetFolder.id,
-              name: doc.BudgetFolder.name,
-              parentId: doc.BudgetFolder.parentId,
-              parent: doc.BudgetFolder.BudgetFolder
+              id: doc.folder.id,
+              name: doc.folder.name,
+              parentId: doc.folder.parentId,
+              parent: doc.folder.parent
                 ? {
-                    id: doc.BudgetFolder.BudgetFolder.id,
-                    name: doc.BudgetFolder.BudgetFolder.name,
+                    id: doc.folder.parent.id,
+                    name: doc.folder.parent.name,
                   }
                 : null,
             }
@@ -146,7 +146,7 @@ export async function POST(request) {
         createdBy: user.email,
       },
       include: {
-        BudgetFolder: true,
+        folder: true,
       },
     });
 
