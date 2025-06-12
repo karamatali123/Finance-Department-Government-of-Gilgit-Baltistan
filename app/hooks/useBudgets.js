@@ -113,10 +113,8 @@ export function useBudgets() {
 
   // Initial fetch
   useEffect(() => {
-    if (session) {
-      fetchDocuments();
-      fetchFolders();
-    }
+    fetchDocuments();
+    fetchFolders();
   }, [session]);
 
   return {
