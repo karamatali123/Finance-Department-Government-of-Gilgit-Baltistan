@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../../lib/prisma";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { ADMIN_EMAIL } from "../../../constants";
-
-const prisma = new PrismaClient();
 
 // GET /api/budgets/documents
 export async function GET(request) {

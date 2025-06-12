@@ -1,8 +1,27 @@
-const { PrismaClient } = require("@prisma/client");
 const fs = require("fs").promises;
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
+const { PrismaClient } = require("@prisma/client");
+
+console.log("Starting script...");
+console.log("Current directory:", process.cwd());
+console.log("Node version:", process.version);
 
 const prisma = new PrismaClient();
+
+// Test Prisma client immediately
+async function testPrisma() {
+  try {
+    console.log("Testing Prisma connection...");
+    await prisma.$connect();
+    const result = await prisma.$queryRaw`SELECT 1`;
+    console.log("Prisma test query result:", result);
+    return true;
+  } catch (error) {
+    console.error("Prisma test failed:", error);
+    return false;
+  }
+}
 
 // Constants
 const BUDGET_BOOKS_DIR = path.join(__dirname, "../public/Budget Books");
@@ -10,6 +29,10 @@ const JSON_FILE_PATH = path.join(
   __dirname,
   "../app/annual-budget/booksJson.json"
 );
+
+console.log("Script paths:");
+console.log("BUDGET_BOOKS_DIR:", BUDGET_BOOKS_DIR);
+console.log("JSON_FILE_PATH:", JSON_FILE_PATH);
 
 // Utility functions
 async function ensureDirectoryExists(dirPath) {
@@ -44,6 +67,10 @@ async function getFileStats(filePath) {
 }
 
 async function processFolder(folderData) {
+  if (!prisma) {
+    throw new Error("Prisma client not initialized");
+  }
+
   const rootFolderName = folderData.title;
   console.log("\nProcessing root folder:", rootFolderName);
 
@@ -63,9 +90,12 @@ async function processFolder(folderData) {
     return;
   }
 
-  // Create root folder in database
+  // Create root folder in database with manual ID
   const rootFolder = await prisma.budgetFolder.create({
-    data: { name: rootFolderName },
+    data: {
+      id: uuidv4(),
+      name: rootFolderName,
+    },
   });
   console.log("Created root folder in database:", rootFolder.name);
 
@@ -77,9 +107,10 @@ async function processFolder(folderData) {
     const subFolderPath = path.join(rootFolderPath, subFolder.title);
     await ensureDirectoryExists(subFolderPath);
 
-    // Create subfolder in database
+    // Create subfolder in database with manual ID
     const createdSubFolder = await prisma.budgetFolder.create({
       data: {
+        id: uuidv4(),
         name: subFolder.title,
         parentId: rootFolder.id,
       },
@@ -107,9 +138,10 @@ async function processFolder(folderData) {
         // Get file stats
         const { size, type } = await getFileStats(filePath);
 
-        // Create database entry
+        // Create database entry with manual ID
         await prisma.budgetDocument.create({
           data: {
+            id: uuidv4(),
             title: file.name,
             fileName: file.name,
             filePath: relativePath,
@@ -130,8 +162,12 @@ async function processFolder(folderData) {
 
 async function importBudgetData() {
   console.log("Starting budget data import...");
-  console.log("JSON file path:", JSON_FILE_PATH);
-  console.log("Budget books directory:", BUDGET_BOOKS_DIR);
+
+  // Test Prisma first
+  const prismaTest = await testPrisma();
+  if (!prismaTest) {
+    throw new Error("Prisma connection test failed");
+  }
 
   try {
     // Verify JSON file exists
@@ -164,12 +200,19 @@ async function importBudgetData() {
 }
 
 // Run with proper error handling
-importBudgetData()
-  .then(() => {
+(async () => {
+  try {
+    console.log("Script starting...");
+    await importBudgetData();
     console.log("Script completed successfully");
+    await prisma.$disconnect();
     process.exit(0);
-  })
-  .catch((error) => {
-    console.error("Script failed:", error);
+  } catch (error) {
+    console.error("Script failed with error:", error);
+    console.error("Error stack:", error.stack);
+    if (prisma) {
+      await prisma.$disconnect();
+    }
     process.exit(1);
-  });
+  }
+})();
