@@ -18,7 +18,7 @@ export async function GET() {
         parentId: null, // Get only parent folders
       },
       include: {
-        subFolders: {
+        BudgetSubFolders: {
           include: {
             documents: true,
           },
@@ -36,7 +36,7 @@ export async function GET() {
       folderName: folder.name,
       folderId: folder.id,
       documents: folder.documents,
-      subFolders: folder.subFolders.map((subFolder) => ({
+      subFolders: folder.BudgetSubFolders.map((subFolder) => ({
         folderName: subFolder.name,
         folderId: subFolder.id,
         documents: subFolder.documents,
