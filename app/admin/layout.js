@@ -23,7 +23,16 @@ export default function AdminLayout({ children }) {
   }
 
   if (!session || !isAdmin) {
-    return null;
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-400px)]">
+        <img
+          src={`https://www.expression-web-tutorials.com/images/forbidden.jpg`}
+          alt="Not Authorized"
+          width={400}
+          height={400}
+        />
+      </div>
+    );
   }
 
   return (

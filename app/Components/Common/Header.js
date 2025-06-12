@@ -3,41 +3,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import logo from "../../../public/images/govLogo.png";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
+import { ADMIN_EMAIL } from "../../constants";
 // Main header links with possible sub-items
-const headerLinks = [
-  {
-    title: "About Us",
-    link: "/about",
-    subItems: [
-      { title: "Overview", link: "/about/overview" },
-      { title: "Organogram", link: "/about/organogram" },
-      { title: "Sections", link: "/about/sections" },
-    ],
-  },
-  // { title: "What We Do", link: "/what-we-do" },
-  { title: "Initiatives", link: "/initiatives" },
-  { title: "Annual Budget", link: "/annual-budget" },
-  { title: "Data Analytics", link: "/data-analytics" },
-  { title: "Downloads", link: "/info-desk/downloads" },
-  { title: "Jobs", link: "/jobs" },
-  // {
-  //   title: "Info Desk",
-  //   link: "/info-desk",
-  //   subItems: [
-  //     { title: "Notifications", link: "/info-desk/notifications" },
-  //     { title: "Jobs", link: "/info-desk/jobs" },
-  //     { title: "Downloads", link: "/info-desk/downloads" },
-  //     {
-  //       title: "Right to information",
-  //       link: "/info-desk/right-to-information",
-  //     },
-  //   ],
-  // },
-
-  // { title: "Media Room", link: "/mediaRoom" },
-];
 
 const Header = () => {
   const pathname = usePathname();
@@ -45,8 +13,6 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
-
-  console.log(session, "session");
 
   const toggleDropdown = (index) => {
     setActiveDropdown((prev) => (prev === index ? null : index));
@@ -64,6 +30,41 @@ const Header = () => {
   const isActive = (link) => {
     return pathname?.includes(link);
   };
+  const isAdmin = session?.user?.email === ADMIN_EMAIL;
+
+  const headerLinks = [
+    {
+      title: "About Us",
+      link: "/about",
+      subItems: [
+        { title: "Overview", link: "/about/overview" },
+        { title: "Organogram", link: "/about/organogram" },
+        { title: "Sections", link: "/about/sections" },
+      ],
+    },
+    // { title: "What We Do", link: "/what-we-do" },
+    { title: "Initiatives", link: "/initiatives" },
+    { title: "Annual Budget", link: "/annual-budget" },
+    { title: "Data Analytics", link: "/data-analytics" },
+    { title: "Downloads", link: "/info-desk/downloads" },
+    { title: "Jobs", link: "/jobs" },
+    ...(isAdmin ? [{ title: "Dashboard", link: "/admin/dashboard" }] : []),
+    // {
+    //   title: "Info Desk",
+    //   link: "/info-desk",
+    //   subItems: [
+    //     { title: "Notifications", link: "/info-desk/notifications" },
+    //     { title: "Jobs", link: "/info-desk/jobs" },
+    //     { title: "Downloads", link: "/info-desk/downloads" },
+    //     {
+    //       title: "Right to information",
+    //       link: "/info-desk/right-to-information",
+    //     },
+    //   ],
+    // },
+
+    // { title: "Media Room", link: "/mediaRoom" },
+  ];
 
   return (
     <header className="py-2.5 px-4 md:px-8 absolute top-0 w-full bg-white z-40 border-b">
