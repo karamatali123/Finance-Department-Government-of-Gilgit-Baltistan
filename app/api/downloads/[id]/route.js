@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { PrismaClient } from "@prisma/client";
-import { unlink } from "fs/promises";
+import { rm } from "fs/promises";
 import path from "path";
 import { ADMIN_EMAIL } from "../../../constants";
 
@@ -38,7 +38,7 @@ export async function DELETE(request, { params }) {
     // Delete file from filesystem
     const filePath = path.join(process.cwd(), "public", download.filePath);
     try {
-      await unlink(filePath);
+      await rm(filePath, { recursive: true, force: true });
     } catch (error) {
       console.error("Error deleting file:", error);
       // Continue with database deletion even if file deletion fails
