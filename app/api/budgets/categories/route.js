@@ -10,9 +10,9 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // if (!session || session.user.email !== ADMIN_EMAIL) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
     const categories = await prisma.budgetCategory.findMany({
       where: {

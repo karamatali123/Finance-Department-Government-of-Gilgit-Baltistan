@@ -8,9 +8,9 @@ import { ADMIN_EMAIL } from "../../../constants";
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // if (!session || session.user.email !== ADMIN_EMAIL) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
     console.log("Fetching budget folders...");
     const folders = await prisma.budgetFolder.findMany({

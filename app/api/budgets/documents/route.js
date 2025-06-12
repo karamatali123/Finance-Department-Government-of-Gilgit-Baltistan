@@ -10,9 +10,9 @@ import { ADMIN_EMAIL } from "../../../constants";
 export async function GET(request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // if (!session || session.user.email !== ADMIN_EMAIL) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
     const { searchParams } = new URL(request.url);
     const folderId = searchParams.get("folderId");
