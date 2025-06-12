@@ -14,21 +14,38 @@ export async function GET() {
 
     const categories = await prisma.downloadCategory.findMany({
       where: {
-        parentId: null, // Get only parent categories
+        parentId: null,
       },
       include: {
-        subCategories: {
+        DownloadCategory: {
           include: {
-            downloads: true, // Include downloads for subcategories
+            downloads: true,
           },
-          orderBy: { name: "asc" },
+          orderBy: {
+            name: "asc",
+          },
         },
-        downloads: true, // Include downloads for parent categories
+        downloads: true,
       },
-      orderBy: { name: "asc" },
+      orderBy: {
+        name: "asc",
+      },
     });
 
-    return NextResponse.json(categories);
+    return NextResponse.json(
+      categories.map((category) => ({
+        id: category.id,
+        name: category.name,
+        parentId: category.parentId,
+        downloads: category.downloads,
+        subCategories: category.DownloadCategory.map((subCategory) => ({
+          id: subCategory.id,
+          name: subCategory.name,
+          parentId: subCategory.parentId,
+          downloads: subCategory.downloads,
+        })),
+      }))
+    );
   } catch (error) {
     console.error("Error fetching categories:", error);
     return NextResponse.json(

@@ -18,9 +18,9 @@ export async function GET(request) {
     const folderId = searchParams.get("folderId");
 
     const documents = await prisma.budgetDocument.findMany({
-      where: folderId ? { folderId } : {},
+      where: {},
       include: {
-        folder: {
+        BudgetFolder: {
           include: {
             parent: true,
           },
@@ -31,7 +31,34 @@ export async function GET(request) {
       },
     });
 
-    return NextResponse.json(documents);
+    return NextResponse.json(
+      documents.map((doc) => ({
+        id: doc.id,
+        title: doc.title,
+        description: doc.description,
+        fileName: doc.fileName,
+        filePath: doc.filePath,
+        fileSize: doc.fileSize,
+        fileType: doc.fileType,
+        folderId: doc.folderId,
+        folder: doc.BudgetFolder
+          ? {
+              id: doc.BudgetFolder.id,
+              name: doc.BudgetFolder.name,
+              parentId: doc.BudgetFolder.parentId,
+              parent: doc.BudgetFolder.parent
+                ? {
+                    id: doc.BudgetFolder.parent.id,
+                    name: doc.BudgetFolder.parent.name,
+                  }
+                : null,
+            }
+          : null,
+        createdAt: doc.createdAt,
+        updatedAt: doc.updatedAt,
+        createdBy: doc.createdBy,
+      }))
+    );
   } catch (error) {
     console.error("Error fetching budget documents:", error);
     return NextResponse.json(
@@ -119,7 +146,7 @@ export async function POST(request) {
         createdBy: user.email,
       },
       include: {
-        folder: true,
+        BudgetFolder: true,
       },
     });
 
