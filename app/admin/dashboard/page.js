@@ -26,7 +26,6 @@ export default function AdminDashboard() {
   } = useDownloads();
 
   const {
-    documents: budgetDocuments,
     folders: budgetFolders,
     loading: budgetsLoading,
     error: budgetsError,
@@ -36,12 +35,6 @@ export default function AdminDashboard() {
     deleteFolder: deleteBudgetFolder,
     fetchDocuments: refetchBudgetDocuments,
   } = useBudgets();
-
-  const handleBudgetBookSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Implement budget book upload
-    console.log("Budget book form submitted");
-  };
 
   const handleEdit = (file) => {
     // TODO: Implement edit logic
@@ -85,15 +78,15 @@ export default function AdminDashboard() {
     },
   ];
 
-  if (downloadsError || budgetsError) {
-    return (
-      <div className="container mx-auto p-6">
-        <div className="text-red-600">
-          Error: {downloadsError || budgetsError}
-        </div>
-      </div>
-    );
-  }
+  // if (downloadsError || budgetsError) {
+  //   return (
+  //     <div className="container mx-auto p-6">
+  //       <div className="text-red-600">
+  //         Error: {downloadsError || budgetsError}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container mx-auto p-6">

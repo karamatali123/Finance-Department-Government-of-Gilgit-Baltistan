@@ -66,6 +66,23 @@ export async function POST(request) {
       );
     }
 
+    // Validate file type
+    const allowedTypes = [
+      "application/pdf",
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+    ];
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json(
+        {
+          error: "Only PDF and image files (JPEG, PNG, GIF, WEBP) are allowed",
+        },
+        { status: 400 }
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 

@@ -67,7 +67,7 @@ export function useBudgets() {
       });
       if (!res.ok) throw new Error("Failed to delete document");
       setDocuments((prev) => prev.filter((d) => d.id !== id));
-      fetchDocuments();
+      fetchFolders();
     } catch (err) {
       setError(err.message);
       throw err;
