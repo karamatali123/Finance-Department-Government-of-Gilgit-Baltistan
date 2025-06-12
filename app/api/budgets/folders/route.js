@@ -29,27 +29,23 @@ export async function GET() {
       orderBy: { name: "asc" },
     });
 
-    console.log("Found folders:", folders);
-
-    // Transform the data to match the expected format
-    const transformedFolders = folders.map((folder) => ({
-      folderName: folder.name,
-      folderId: folder.id,
-      documents: folder.documents,
-      subFolders: folder.subFolders.map((subFolder) => ({
-        folderName: subFolder.name,
-        folderId: subFolder.id,
-        documents: subFolder.documents,
-      })),
-    }));
-
-    console.log("Transformed folders:", transformedFolders);
-
-    return NextResponse.json(transformedFolders);
+    console.log("Found folders:", folders.length);
+    return NextResponse.json(
+      folders.map((folder) => ({
+        folderName: folder.name,
+        folderId: folder.id,
+        documents: folder.documents,
+        subFolders: folder.subFolders.map((subFolder) => ({
+          folderName: subFolder.name,
+          folderId: subFolder.id,
+          documents: subFolder.documents,
+        })),
+      }))
+    );
   } catch (error) {
     console.error("Error fetching budget folders:", error);
     return NextResponse.json(
-      { error: "Failed to fetch folders" },
+      { error: "Failed to fetch budget folders" },
       { status: 500 }
     );
   }
