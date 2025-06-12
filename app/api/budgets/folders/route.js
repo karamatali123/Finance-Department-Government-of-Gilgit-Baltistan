@@ -18,11 +18,10 @@ export async function GET() {
         parentId: null, // Get only parent folders
       },
       include: {
-        subFolders: {
+        BudgetSubFolders: {
           include: {
             documents: true,
           },
-          orderBy: { name: "asc" },
         },
         documents: true,
       },
@@ -30,12 +29,21 @@ export async function GET() {
     });
 
     console.log("Found folders:", folders.length);
+
+    // Sort subfolders after fetching
+    const sortedFolders = folders.map((folder) => ({
+      ...folder,
+      BudgetSubFolders: folder.BudgetSubFolders.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      ),
+    }));
+
     return NextResponse.json(
-      folders.map((folder) => ({
+      sortedFolders.map((folder) => ({
         folderName: folder.name,
         folderId: folder.id,
         documents: folder.documents,
-        subFolders: folder.subFolders.map((subFolder) => ({
+        subFolders: folder.BudgetSubFolders.map((subFolder) => ({
           folderName: subFolder.name,
           folderId: subFolder.id,
           documents: subFolder.documents,

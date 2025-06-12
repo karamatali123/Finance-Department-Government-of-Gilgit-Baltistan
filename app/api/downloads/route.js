@@ -21,26 +21,35 @@ export async function GET(request) {
     // Get all parent categories with their subcategories
     const categories = await prisma.downloadCategory.findMany({
       where: {
-        parentId: null, // Get only parent categories
+        parentId: null,
       },
       include: {
-        subCategories: {
+        DownloadSubCategories: {
           include: {
-            downloads: true, // Include downloads for subcategories
+            downloads: true,
           },
-          orderBy: { name: "asc" },
         },
-        downloads: true, // Include downloads for parent categories
+        downloads: true,
       },
-      orderBy: { name: "asc" },
+      orderBy: {
+        name: "asc",
+      },
     });
 
+    // Sort subcategories after fetching
+    const sortedCategories = categories.map((category) => ({
+      ...category,
+      DownloadSubCategories: category.DownloadSubCategories.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      ),
+    }));
+
     // Transform the data to match the expected format
-    const downloadsByCategory = categories.map((category) => ({
+    const downloadsByCategory = sortedCategories.map((category) => ({
       categoryName: category.name,
       categoryId: category.id,
       documents: category.downloads,
-      subCategories: category.subCategories.map((subCat) => ({
+      subCategories: category.DownloadSubCategories.map((subCat) => ({
         categoryName: subCat.name,
         categoryId: subCat.id,
         documents: subCat.downloads,
