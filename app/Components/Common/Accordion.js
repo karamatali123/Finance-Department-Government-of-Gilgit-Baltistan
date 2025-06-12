@@ -1,6 +1,15 @@
 "use client";
 
-const Accordion = ({ title, children, isOpen, onClick }) => {
+import { FaTrash } from "react-icons/fa6";
+
+const Accordion = ({
+  title,
+  children,
+  isOpen,
+  onClick,
+  showDelete,
+  onDelete,
+}) => {
   return (
     <div className="mb-4 border rounded-lg shadow-lg ">
       <button
@@ -16,21 +25,35 @@ const Accordion = ({ title, children, isOpen, onClick }) => {
         >
           {title}
         </span>
-        <svg
-          className={`w-6 h-6 transition-transform text-gray-900  ${
-            isOpen ? "text-white" : ""
-          } ${isOpen ? "transform rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        <div className="flex flex-row gap-2">
+          {showDelete && (
+            <button
+              onClick={() => {
+                if (confirm("Are you sure you want to delete this category?")) {
+                  onDelete();
+                }
+              }}
+              className={`${isOpen ? "text-white" : "text-primary "}`}
+            >
+              <FaTrash className="w-4 h-4" />
+            </button>
+          )}
+          <svg
+            className={`w-6 h-6 transition-transform text-primary  ${
+              isOpen ? "text-white" : ""
+            } ${isOpen ? "transform rotate-180" : ""}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
       </button>
       {isOpen && (
         <div className="py-4 px-4 bg-white rounded-lg">{children}</div>

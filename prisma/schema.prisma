@@ -89,3 +89,55 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model DownloadCategory {
+  id          String     @id @default(cuid())
+  name        String
+  parentId    String?
+  parent      DownloadCategory?  @relation("DownloadSubCategories", fields: [parentId], references: [id], onDelete: SetNull)
+  subCategories DownloadCategory[] @relation("DownloadSubCategories")
+  downloads   Download[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Download {
+  id          String         @id @default(cuid())
+  title       String
+  description String?
+  fileName    String
+  filePath    String
+  fileSize    Int
+  fileType    String
+  categoryId  String?
+  category    DownloadCategory? @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  createdBy   String        // User ID who uploaded the file
+}
+
+model BudgetFolder {
+  id          String     @id @default(cuid())
+  name        String
+  parentId    String?
+  parent      BudgetFolder?  @relation("BudgetSubFolders", fields: [parentId], references: [id], onDelete: SetNull)
+  subFolders  BudgetFolder[] @relation("BudgetSubFolders")
+  documents   BudgetDocument[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model BudgetDocument {
+  id          String         @id @default(cuid())
+  title       String
+  description String?
+  fileName    String
+  filePath    String
+  fileSize    Int
+  fileType    String
+  folderId    String?
+  folder      BudgetFolder? @relation(fields: [folderId], references: [id])
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  createdBy   String        // User ID who uploaded the file
+}
