@@ -107,10 +107,8 @@ export function useDownloads() {
 
   // Initial fetch
   useEffect(() => {
-    if (session) {
-      fetchDownloads();
-      fetchCategories();
-    }
+    fetchDownloads();
+    fetchCategories();
   }, [session]);
 
   return {
