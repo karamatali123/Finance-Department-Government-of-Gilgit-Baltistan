@@ -21,9 +21,6 @@ export async function GET() {
           include: {
             downloads: true,
           },
-          orderBy: {
-            name: "asc",
-          },
         },
         downloads: true,
       },
@@ -32,8 +29,16 @@ export async function GET() {
       },
     });
 
+    // Sort subcategories after fetching
+    const sortedCategories = categories.map((category) => ({
+      ...category,
+      DownloadCategory: category.DownloadCategory.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      ),
+    }));
+
     return NextResponse.json(
-      categories.map((category) => ({
+      sortedCategories.map((category) => ({
         id: category.id,
         name: category.name,
         parentId: category.parentId,
