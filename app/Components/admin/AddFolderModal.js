@@ -48,11 +48,6 @@ export default function AddFolderModal({
     try {
       setIsSubmitting(true);
       await onAddFolder(newFolderName.trim(), parentId);
-      toast.success(
-        parentId
-          ? "Subcategory created successfully"
-          : "Category created successfully"
-      );
       setNewFolderName("");
       onClose();
     } catch (error) {
