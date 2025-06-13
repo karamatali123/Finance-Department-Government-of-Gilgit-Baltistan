@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 import { PrismaClient } from "@prisma/client";
 import { ADMIN_EMAIL } from "../../../../constants";
+import { rm } from "fs/promises";
+import path from "path";
 
 const prisma = new PrismaClient();
 
@@ -22,18 +24,28 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    // Check if category has any downloads
-    const downloadsCount = await prisma.download.count({
+    // Get all downloads in the category
+    const downloads = await prisma.download.findMany({
       where: { categoryId: id },
     });
 
-    if (downloadsCount > 0) {
-      return NextResponse.json(
-        { error: "Cannot delete category with existing downloads" },
-        { status: 400 }
-      );
+    // Delete physical files
+    for (const download of downloads) {
+      const filePath = path.join(process.cwd(), "public", download.filePath);
+      try {
+        await rm(filePath, { recursive: true, force: true });
+      } catch (error) {
+        console.error("Error deleting file:", error);
+        // Continue with database deletion even if file deletion fails
+      }
     }
 
+    // Delete all downloads in the category
+    await prisma.download.deleteMany({
+      where: { categoryId: id },
+    });
+
+    // Delete the category
     await prisma.downloadCategory.delete({
       where: { id },
     });
@@ -46,4 +58,4 @@ export async function DELETE(request, { params }) {
       { status: 500 }
     );
   }
-} 
+}
