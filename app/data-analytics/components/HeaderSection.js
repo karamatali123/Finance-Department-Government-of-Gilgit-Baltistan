@@ -5,7 +5,7 @@ const HeaderSection = () => {
         Financial <span className="text-primary">Analytics</span> Dashboard
       </h2>
       <p className="text-gray-600  text-xl">
-        Total Budget Outlay for FY 2025-26 Rs. 140,172 million
+        Total Budget Outlay for FY 2024-25 Rs. 140,172 million
       </p>
     </div>
   );
