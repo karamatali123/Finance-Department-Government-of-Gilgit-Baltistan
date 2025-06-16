@@ -10,6 +10,15 @@ const nextConfig = {
     excludeDefaultMomentLocales: false,
     serverActions: true,
   },
+  // Add static file serving
+  async rewrites() {
+    return [
+      {
+        source: "/uploads/:path*",
+        destination: "/public/uploads/:path*",
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
