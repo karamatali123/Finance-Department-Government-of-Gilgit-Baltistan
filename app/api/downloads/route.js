@@ -106,7 +106,15 @@ export async function POST(request) {
     }
 
     // Validate file type
-    const allowedTypes = [".pdf", ".doc", ".docx"];
+    const allowedTypes = [
+      ".pdf",
+      ".doc",
+      ".docx",
+      ".jpeg",
+      ".png",
+      ".gif",
+      ".webp",
+    ];
     const fileType = path.extname(file.name).toLowerCase();
     if (!allowedTypes.includes(fileType)) {
       return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
