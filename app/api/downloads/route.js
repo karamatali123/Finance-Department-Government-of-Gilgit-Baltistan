@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import prisma from "../../../lib/prisma";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import { ADMIN_EMAIL } from "../../constants";
@@ -121,6 +121,10 @@ export async function POST(request) {
       "uploads",
       "downloads"
     );
+
+    // Create directory if it doesn't exist
+    await mkdir(uploadDir, { recursive: true });
+
     const filePath = path.join(uploadDir, fileName);
 
     // Convert file to buffer and save
