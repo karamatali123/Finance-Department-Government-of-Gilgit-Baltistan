@@ -27,7 +27,11 @@ async function deleteFolderRecursively(folderId) {
   // Delete document files from filesystem
   for (const doc of documents) {
     if (doc.filePath) {
-      const filePath = path.join(process.cwd(), "public", doc.filePath);
+      const filePath = path.join(
+        process.cwd(),
+        "uploads",
+        doc.filePath.replace("/api/uploads/", "")
+      );
       try {
         await rm(filePath, { recursive: true, force: true });
       } catch (error) {

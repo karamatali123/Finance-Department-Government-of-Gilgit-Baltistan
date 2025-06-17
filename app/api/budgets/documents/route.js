@@ -139,7 +139,7 @@ export async function POST(request) {
         title,
         description,
         fileName: file.name,
-        filePath: `/uploads/budgets/${file.name}`,
+        filePath: `/api/uploads/budgets/${file.name}`,
         fileSize: buffer.length,
         fileType: file.type,
         folderId: folderId || null,

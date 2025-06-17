@@ -41,7 +41,7 @@ export async function DELETE(request, { params }) {
     const filePath = path.join(
       process.cwd(),
       "uploads",
-      document.filePath.replace("/uploads/", "")
+      document.filePath.replace("/api/uploads/", "")
     );
     try {
       await rm(filePath, { recursive: true, force: true });
