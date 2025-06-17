@@ -141,7 +141,7 @@ export async function POST(request) {
         title: title.trim(),
         description: description?.trim(),
         fileName: file.name,
-        filePath: `/uploads/downloads/${fileName}`,
+        filePath: `/api/uploads/downloads/${fileName}`,
         fileSize: buffer.length,
         fileType: fileType,
         categoryId: categoryId || null,
