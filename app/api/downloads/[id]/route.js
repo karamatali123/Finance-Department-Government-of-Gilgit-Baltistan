@@ -36,7 +36,11 @@ export async function DELETE(request, { params }) {
     }
 
     // Delete file from filesystem
-    const filePath = path.join(process.cwd(), "public", download.filePath);
+    const filePath = path.join(
+      process.cwd(),
+      "uploads",
+      download.filePath.replace("/uploads/", "")
+    );
     try {
       await rm(filePath, { recursive: true, force: true });
     } catch (error) {

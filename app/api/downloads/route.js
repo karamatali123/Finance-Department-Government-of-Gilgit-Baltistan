@@ -123,12 +123,7 @@ export async function POST(request) {
     // Generate unique filename
     const uniqueId = uuidv4();
     const fileName = `${uniqueId}${fileType}`;
-    const uploadDir = path.join(
-      process.cwd(),
-      "public",
-      "uploads",
-      "downloads"
-    );
+    const uploadDir = path.join(process.cwd(), "uploads", "downloads");
 
     // Create directory if it doesn't exist
     await mkdir(uploadDir, { recursive: true });

@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { unlink } from "fs/promises";
 import path from "path";
 import { ADMIN_EMAIL } from "../../../../constants";
+import { rm } from "fs/promises";
 
 const prisma = new PrismaClient();
 
@@ -36,10 +37,14 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    // Delete the file from the filesystem
-    const filePath = path.join(process.cwd(), "public", document.filePath);
+    // Delete file from filesystem
+    const filePath = path.join(
+      process.cwd(),
+      "uploads",
+      document.filePath.replace("/uploads/", "")
+    );
     try {
-      await unlink(filePath);
+      await rm(filePath, { recursive: true, force: true });
     } catch (error) {
       console.error("Error deleting file:", error);
       // Continue with database deletion even if file deletion fails
