@@ -73,7 +73,7 @@ const JobsList = () => {
           <h2 className="text-2xl font-bold">Available Positions</h2>
 
           <div className="flex-row  flex gap-2">
-            {isAdmin && (
+            {isAdmin && jobs.length > 0 && (
               <button
                 onClick={handlePostNewJob}
                 className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"

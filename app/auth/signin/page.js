@@ -3,6 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ADMIN_EMAIL } from "../../constants";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState("");
@@ -14,7 +15,9 @@ export default function SignIn() {
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/jobs");
+      const route =
+        session.user.email == ADMIN_EMAIL ? "/admin/dashboard" : "/jobs";
+      router.push(route);
     }
   }, [session]);
 
@@ -26,36 +29,14 @@ export default function SignIn() {
             Sign in to your account
           </h2>
         </div>
-        {/* <div className="mt-8">
-          <button
-            onClick={async () => {
-              setLoading(true);
-              await signIn("google", { callbackUrl: "/jobs" });
-              setLoading(false);
-            }}
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2 border disabled:opacity-50 disabled:cursor-not-allowed border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-          >
-            {loading ? (
-              <div className="animate-spin rounded-full h-[20px] w-[20px] border-t-2 border-b-2 border-primary"></div>
-            ) : (
-              <Image
-                src="/google-logo.svg"
-                alt="Google logo"
-                width={20}
-                height={20}
-              />
-            )}
-            {loading ? "Signing in..." : "Sign in with Google"}
-          </button>
-        </div> */}
+
         <form
           onSubmit={async (e) => {
             e.preventDefault();
             setSendingEmail(true);
             await signIn("email", {
               email: email,
-              callbackUrl: "/jobs",
+              callbackUrl: email == ADMIN_EMAIL ? "/admin/dashboard" : "/jobs",
             });
             setSendingEmail(false);
           }}

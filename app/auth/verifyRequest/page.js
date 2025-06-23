@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { ADMIN_EMAIL } from "../../constants";
 
 const VerifyRequest = () => {
   const router = useRouter();
@@ -12,7 +13,9 @@ const VerifyRequest = () => {
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/jobs");
+      const route =
+        session.user.email == ADMIN_EMAIL ? "/admin/dashboard" : "/jobs";
+      router.push(route);
     }
   }, [session]);
   return (
