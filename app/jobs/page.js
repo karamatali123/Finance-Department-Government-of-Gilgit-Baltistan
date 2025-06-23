@@ -73,7 +73,7 @@ const JobsList = () => {
           <h2 className="text-2xl font-bold">Available Positions</h2>
 
           <div className="flex-row  flex gap-2">
-            {isAdmin && jobs.length > 0 && (
+            {isAdmin && (
               <button
                 onClick={handlePostNewJob}
                 className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
@@ -82,22 +82,26 @@ const JobsList = () => {
               </button>
             )}
 
-            <button
-              onClick={() => {
-                window.open("https://jobs.gbfinance.gov.pk/", "_blank");
-              }}
-              className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            >
-              Apply Now
-            </button>
-            <button
-              onClick={() => {
-                window.open("/JobDetails.pdf", "_blank");
-              }}
-              className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            >
-              <FaRegEye className="w-5 h-5" /> View requirements
-            </button>
+            {jobs.length > 0 && (
+              <>
+                <button
+                  onClick={() => {
+                    window.open("https://jobs.gbfinance.gov.pk/", "_blank");
+                  }}
+                  className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  Apply Now
+                </button>
+                <button
+                  onClick={() => {
+                    window.open("/JobDetails.pdf", "_blank");
+                  }}
+                  className="bg-primary flex items-center flex-row gap-2 text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                >
+                  <FaRegEye className="w-5 h-5" /> View requirements
+                </button>
+              </>
+            )}
           </div>
         </div>
         <div className="overflow-x-auto">
