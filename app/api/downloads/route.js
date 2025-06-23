@@ -10,10 +10,10 @@ import { ADMIN_EMAIL } from "../../constants";
 // GET /api/downloads - Get all downloads with optional category filter
 export async function GET(request) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
     const { searchParams } = new URL(request.url);
     const categoryId = searchParams.get("categoryId");

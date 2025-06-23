@@ -7,10 +7,10 @@ import prisma from "../../../../lib/prisma";
 // GET /api/downloads/categories - Get all categories with subcategories
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session || session.user.email !== ADMIN_EMAIL) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
     const categories = await prisma.downloadCategory.findMany({
       where: {
