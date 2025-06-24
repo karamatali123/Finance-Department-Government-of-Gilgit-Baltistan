@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const PostJobForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     company: "",
@@ -63,6 +65,7 @@ const PostJobForm = () => {
       setError(error.message);
     } finally {
       setLoading(false);
+      router.push("/jobs");
     }
   };
 

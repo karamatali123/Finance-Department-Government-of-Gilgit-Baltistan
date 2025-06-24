@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { PrismaClient } from "@prisma/client";
+import { ADMIN_EMAIL } from "../../constants";
 
 const prisma = new PrismaClient();
 

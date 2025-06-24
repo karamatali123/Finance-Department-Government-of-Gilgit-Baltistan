@@ -7,11 +7,10 @@ import { useDownloads } from "../../hooks/useDownloads";
 import Accordion from "../../Components/Common/Accordion";
 
 const DownloadsTable = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [openMainFolder, setOpenMainFolder] = useState(0);
   const [openSubFolder, setOpenSubFolder] = useState(0);
 
-  const { downloads } = useDownloads();
+  const { downloads, loading } = useDownloads();
   const toggleMainFolder = (index) => {
     setOpenMainFolder(openMainFolder === index ? -1 : index);
   };
@@ -21,9 +20,9 @@ const DownloadsTable = () => {
 
   return (
     <>
-      {isLoading ? (
-        <div className="min-h-screen w-full flex items-center justify-center">
-          <h1 className="text-primary mt-10">Loading...</h1>
+      {loading ? (
+        <div className="flex justify-center items-center h-24">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
       ) : (
         <div>
