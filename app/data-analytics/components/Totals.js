@@ -6,15 +6,15 @@ const Totals = () => {
   const totals = [
     {
       title: "Regular Budget",
-      value: "PKR 86,600 million",
+      value: "PKR 88,192 million",
       icon: revenue.src,
     },
     {
       title: "Development Budget",
-      value: "PKR 34,500 million",
+      value: "PKR 37,000 million",
       icon: expenditure.src,
     },
-    { title: "Wheat Subsidy", value: "PKR 19,072 million", icon: balance.src },
+    { title: "Wheat Subsidy", value: "PKR 23,440 million", icon: balance.src },
   ];
 
   return (
