@@ -4,7 +4,7 @@ import Divider from "../Common/Divider";
 import img1 from "../../../public/images/CM.png";
 import img2 from "../../../public/images/ministerFinance.png";
 import img3 from "../../../public/images/CS.png";
-import img4 from "../../../public/images/SF.png";
+import img4 from "../../../public/images/sf.jpg";
 import { motion } from "framer-motion";
 
 import MediaCard from "../Common/MediaCard";
@@ -34,7 +34,7 @@ const leadership = [
   },
 
   {
-    name: "Mr. Aziz Ahmad Jamali",
+    name: "Mr. Najeeb Alam",
     // joinDate: "Aug 2023",
     toDate: "incumbent",
     designation: "Secretary Finance",
