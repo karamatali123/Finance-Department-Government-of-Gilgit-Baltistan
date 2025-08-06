@@ -37,7 +37,7 @@ export default function AdminDashboard() {
   } = useBudgets();
 
   const sortedBudgetFolders = budgetFolders.sort((a, b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
+    return new Date(a.createdAt) - new Date(b.createdAt); 
   });
 
   const handleEdit = (file) => {
