@@ -19,6 +19,10 @@ const nextConfig = {
       },
     ];
   },
+  // Increase body size limit for file uploads
+  experimental: {
+    serverComponentsExternalPackages: ["sharp"],
+  },
 };
 
 module.exports = nextConfig;

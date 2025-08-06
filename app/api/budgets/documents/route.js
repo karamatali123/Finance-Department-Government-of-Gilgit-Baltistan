@@ -6,6 +6,14 @@ import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { ADMIN_EMAIL } from "../../../constants";
 
+// Configure API route for larger file uploads
+export const config = {
+  api: {
+    bodyParser: false,
+    responseLimit: false,
+  },
+};
+
 // GET /api/budgets/documents
 export async function GET(request) {
   try {
@@ -72,6 +80,8 @@ export async function POST(request) {
     }
 
     console.log(session, "session 123");
+    console.log("Environment:", process.env.NODE_ENV);
+    console.log("Database URL exists:", !!process.env.DATABASE_URL);
 
     const formData = await request.formData();
     const file = formData.get("file");
@@ -82,6 +92,15 @@ export async function POST(request) {
     if (!file || !title) {
       return NextResponse.json(
         { error: "File and title are required" },
+        { status: 400 }
+      );
+    }
+
+    // Check file size (10MB limit)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+    if (file.size > maxSize) {
+      return NextResponse.json(
+        { error: "File size must be less than 10MB" },
         { status: 400 }
       );
     }
@@ -102,15 +121,20 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+    console.log("File size:", file.size, "bytes");
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    console.log("Buffer size:", buffer.length, "bytes");
 
     // Create uploads directory if it doesn't exist
     const uploadDir = join(process.cwd(), "uploads", "budgets");
+    console.log("Upload directory path:", uploadDir);
     try {
       await mkdir(uploadDir, { recursive: true });
+      console.log("Upload directory created/verified successfully");
     } catch (err) {
+      console.error("Error creating upload directory:", err);
       if (err.code !== "EEXIST") {
         throw err;
       }
@@ -118,7 +142,14 @@ export async function POST(request) {
 
     // Write the file
     const filePath = join(uploadDir, file.name);
-    await writeFile(filePath, buffer);
+    console.log("File path:", filePath);
+    try {
+      await writeFile(filePath, buffer);
+      console.log("File written successfully");
+    } catch (writeError) {
+      console.error("Error writing file:", writeError);
+      throw writeError;
+    }
 
     // Get user from database to ensure we have a valid ID
     const user = await prisma.user.findUnique({
@@ -129,6 +160,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    console.log("Creating database record...");
     const document = await prisma.budgetDocument.create({
       data: {
         title,
@@ -144,12 +176,18 @@ export async function POST(request) {
         folder: true,
       },
     });
+    console.log("Database record created successfully");
 
     return NextResponse.json(document);
   } catch (error) {
     console.error("Error uploading budget document:", error);
+    console.error("Error details:", {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    });
     return NextResponse.json(
-      { error: "Failed to upload document" },
+      { error: "Failed to upload document", details: error.message },
       { status: 500 }
     );
   }
