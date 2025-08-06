@@ -99,6 +99,14 @@ export default function BudgetList({
     }
   };
 
+  function extractStartingYear(text) {
+    const match = text.match(/\b(\d{4})-(\d{4})\b/);
+    if (match) {
+      return parseInt(match[1], 10); // return the starting year
+    }
+    return null; // return null if no year range is found
+  }
+
   return (
     <div className={`mt-8 ${className}`}>
       <div className="flex items-center justify-between mb-4">
@@ -106,82 +114,91 @@ export default function BudgetList({
       </div>
       <div className="container mx-auto">
         <div className="max-w-full mx-auto">
-          {documents.map((folder, mainIndex) => (
-            <Accordion
-              key={folder.folderId}
-              title={folder.folderName}
-              isOpen={openMainFolder === mainIndex}
-              onClick={() => toggleMainFolder(mainIndex)}
-              className="text-gray-900"
-              showDelete={true}
-              onDelete={() => handleDeleteFolder(folder.folderId)}
-            >
-              {folder?.documents?.length > 0 && (
-                <div className="border rounded-lg divide-y">
-                  {renderFileTable(
-                    folder.documents || [],
-                    true,
-                    deleteDocument
-                  )}
-                </div>
-              )}
+          {documents
+            .sort((a, b) => {
+              const yearA = extractStartingYear(a.folderName);
+              const yearB = extractStartingYear(b.folderName);
+              console.log(yearB, yearA);
+              return yearB - yearA;
+            })
+            .map((folder, mainIndex) => (
+              <Accordion
+                key={folder.folderId}
+                title={folder.folderName}
+                isOpen={openMainFolder === mainIndex}
+                onClick={() => toggleMainFolder(mainIndex)}
+                className="text-gray-900"
+                showDelete={true}
+                onDelete={() => handleDeleteFolder(folder.folderId)}
+              >
+                {folder?.documents?.length > 0 && (
+                  <div className="border rounded-lg divide-y">
+                    {renderFileTable(
+                      folder.documents || [],
+                      true,
+                      deleteDocument
+                    )}
+                  </div>
+                )}
 
-              {/* Display subfolders */}
-              {folder.subFolders?.map((subFolder, subIndex) => (
-                <div key={subFolder.folderId} className="mt-4">
-                  <Accordion
-                    title={subFolder.folderName}
-                    isOpen={openSubFolder === `${mainIndex}-${subIndex}`}
-                    onClick={() => toggleSubFolder(`${mainIndex}-${subIndex}`)}
-                    className="text-gray-900"
-                    showDelete={true}
-                    onDelete={() => handleDeleteFolder(subFolder.folderId)}
+                {/* Display subfolders */}
+                {folder.subFolders?.map((subFolder, subIndex) => (
+                  <div key={subFolder.folderId} className="mt-4">
+                    <Accordion
+                      title={subFolder.folderName}
+                      isOpen={openSubFolder === `${mainIndex}-${subIndex}`}
+                      onClick={() =>
+                        toggleSubFolder(`${mainIndex}-${subIndex}`)
+                      }
+                      className="text-gray-900"
+                      showDelete={true}
+                      onDelete={() => handleDeleteFolder(subFolder.folderId)}
+                    >
+                      <div className="border rounded-lg divide-y">
+                        {subFolder?.documents?.length > 0 &&
+                          renderFileTable(
+                            subFolder.documents || [],
+                            true,
+                            deleteDocument
+                          )}
+                      </div>
+                      <div className="flex flex-row justify-end">
+                        <button
+                          onClick={() => {
+                            setSelectedFolder(subFolder);
+                            setIsAddDocumentOpen(true);
+                          }}
+                          className="bg-primary text-white px-4 py-2 rounded-md m-2"
+                        >
+                          Add document
+                        </button>
+                      </div>
+                    </Accordion>
+                  </div>
+                ))}
+
+                <div className="flex flex-row justify-end">
+                  <button
+                    onClick={() => {
+                      setParentId(folder.folderId);
+                      setIsModalOpen(true);
+                    }}
+                    className="bg-primary text-white px-4 py-2 rounded-md m-2"
                   >
-                    <div className="border rounded-lg divide-y">
-                      {subFolder?.documents?.length > 0 &&
-                        renderFileTable(
-                          subFolder.documents || [],
-                          true,
-                          deleteDocument
-                        )}
-                    </div>
-                    <div className="flex flex-row justify-end">
-                      <button
-                        onClick={() => {
-                          setSelectedFolder(subFolder);
-                          setIsAddDocumentOpen(true);
-                        }}
-                        className="bg-primary text-white px-4 py-2 rounded-md m-2"
-                      >
-                        Add document
-                      </button>
-                    </div>
-                  </Accordion>
+                    Add subfolder
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedFolder(folder);
+                      setIsAddDocumentOpen(true);
+                    }}
+                    className="bg-primary text-white px-4 py-2 rounded-md m-2"
+                  >
+                    Add document
+                  </button>
                 </div>
-              ))}
-
-              <div className="flex flex-row justify-end">
-                <button
-                  onClick={() => {
-                    setParentId(folder.folderId);
-                    setIsModalOpen(true);
-                  }}
-                  className="bg-primary text-white px-4 py-2 rounded-md m-2"
-                >
-                  Add subfolder
-                </button>
-                <button
-                  onClick={() => {
-                    setSelectedFolder(folder);
-                    setIsAddDocumentOpen(true);
-                  }}
-                  className="bg-primary text-white px-4 py-2 rounded-md m-2"
-                >
-                  Add document
-                </button>
-              </div>
-            </Accordion>
-          ))}
+              </Accordion>
+            ))}
           <div className="flex flex-row justify-end">
             <button
               onClick={() => setIsModalOpen(true)}
