@@ -7,12 +7,8 @@ import { join } from "path";
 import { ADMIN_EMAIL } from "../../../constants";
 
 // Configure API route for larger file uploads
-export const config = {
-  api: {
-    bodyParser: false,
-    responseLimit: false,
-  },
-};
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 // GET /api/budgets/documents
 export async function GET(request) {
