@@ -9,6 +9,7 @@ const nextConfig = {
     // Exclude auth pages from static generation
     excludeDefaultMomentLocales: false,
     serverActions: true,
+    serverComponentsExternalPackages: ["sharp"],
   },
   // Add static file serving
   async rewrites() {
@@ -20,8 +21,10 @@ const nextConfig = {
     ];
   },
   // Increase body size limit for file uploads
-  experimental: {
-    serverComponentsExternalPackages: ["sharp"],
+  api: {
+    bodyParser: {
+      sizeLimit: "50mb",
+    },
   },
 };
 
