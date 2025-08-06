@@ -36,6 +36,10 @@ export default function AdminDashboard() {
     fetchDocuments: refetchBudgetDocuments,
   } = useBudgets();
 
+  const sortedBudgetFolders = budgetFolders.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   const handleEdit = (file) => {
     // TODO: Implement edit logic
     console.log("Edit file:", file);
@@ -146,7 +150,7 @@ export default function AdminDashboard() {
             ) : (
               <BudgetList
                 title="Budget Documents"
-                documents={budgetFolders}
+                documents={sortedBudgetFolders}
                 refetchDocuments={refetchBudgetDocuments}
                 onDelete={(id) => handleDelete(id, "budget")}
                 uploadDocument={uploadDocument}
