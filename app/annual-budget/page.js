@@ -115,7 +115,8 @@ const AnnualBudget = () => {
                         </Accordion>
                       ))}
                     </div>
-                    {renderFileTable(mainFolder.documents)}
+                    {mainFolder.documents.length > 0 &&
+                      renderFileTable(mainFolder.documents)}
                   </Accordion>
                 ))}
             </div>
