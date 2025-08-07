@@ -64,6 +64,14 @@ const AnnualBudget = () => {
     });
   };
 
+  function extractStartingYear(text) {
+    const match = text.match(/\b(\d{4})-(\d{4})\b/);
+    if (match) {
+      return parseInt(match[1], 10); // return the starting year
+    }
+    return null; // return null if no year range is found
+  }
+
   return (
     <div>
       <HeroSection
@@ -80,30 +88,36 @@ const AnnualBudget = () => {
         <section className="py-12 bg-gray-50">
           <div className="container mx-auto text-center px-4 md:px-8">
             <div className="max-w-6xl mx-auto">
-              {budgetFolders.map((mainFolder, mainIndex) => (
-                <Accordion
-                  key={mainIndex}
-                  title={mainFolder.folderName}
-                  isOpen={openMainFolder === mainIndex}
-                  onClick={() => toggleMainFolder(mainIndex)}
-                  className="text-gray-900"
-                >
-                  <div className="space-y-2">
-                    {mainFolder?.subFolders?.map((subFolder, subIndex) => (
-                      <Accordion
-                        key={subIndex}
-                        title={subFolder.folderName}
-                        isOpen={openSubFolders[`${mainIndex}-${subIndex}`]}
-                        onClick={() => toggleSubFolder(mainIndex, subIndex)}
-                        className="text-gray-900"
-                      >
-                        {renderFileTable(subFolder.documents)}
-                      </Accordion>
-                    ))}
-                  </div>
-                  {renderFileTable(mainFolder.documents)}
-                </Accordion>
-              ))}
+              {budgetFolders
+                .sort((a, b) => {
+                  const yearA = extractStartingYear(a.folderName);
+                  const yearB = extractStartingYear(b.folderName);
+                  return yearB - yearA;
+                })
+                .map((mainFolder, mainIndex) => (
+                  <Accordion
+                    key={mainIndex}
+                    title={mainFolder.folderName}
+                    isOpen={openMainFolder === mainIndex}
+                    onClick={() => toggleMainFolder(mainIndex)}
+                    className="text-gray-900"
+                  >
+                    <div className="space-y-2">
+                      {mainFolder?.subFolders?.map((subFolder, subIndex) => (
+                        <Accordion
+                          key={subIndex}
+                          title={subFolder.folderName}
+                          isOpen={openSubFolders[`${mainIndex}-${subIndex}`]}
+                          onClick={() => toggleSubFolder(mainIndex, subIndex)}
+                          className="text-gray-900"
+                        >
+                          {renderFileTable(subFolder.documents)}
+                        </Accordion>
+                      ))}
+                    </div>
+                    {renderFileTable(mainFolder.documents)}
+                  </Accordion>
+                ))}
             </div>
           </div>
         </section>
