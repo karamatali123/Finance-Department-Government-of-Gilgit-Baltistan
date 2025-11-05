@@ -17,6 +17,13 @@ const DownloadsTable = () => {
   const toggleSubFolder = (index) => {
     setOpenSubFolder(openSubFolder === index ? -1 : index);
   };
+  console.log(downloads, "downloads");
+
+  const sortedDocuments = (documents) => {
+    return documents.sort((a, b) => {
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
+    });
+  };
 
   return (
     <>
@@ -42,7 +49,9 @@ const DownloadsTable = () => {
                         >
                           {category?.documents?.length > 0 && (
                             <div className="border rounded-lg divide-y">
-                              {renderFileTable(category.documents || [])}
+                              {renderFileTable(
+                                sortedDocuments(category.documents) || []
+                              )}
                             </div>
                           )}
 
@@ -72,7 +81,9 @@ const DownloadsTable = () => {
                                   <div className="border rounded-lg divide-y">
                                     {subCategory?.documents?.length > 0 &&
                                       renderFileTable(
-                                        subCategory.documents || []
+                                        sortedDocuments(
+                                          subCategory.documents
+                                        ) || []
                                       )}
                                     {subCategory?.documents?.length === 0 && (
                                       <div className="p-4 text-center text-gray-500">
