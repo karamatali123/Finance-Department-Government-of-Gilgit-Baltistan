@@ -24,7 +24,7 @@ const MediaCard = ({
         />
       </div>
       <div className={`${bodyCls} absolute bottom-1`}>
-        <h3 className="text-lg font-bold text-white mb-2 text-center max-w-[170px]">{title}</h3>
+        <h3 className="text-lg font-bold text-white mb-2  max-w-[200px]">{title}</h3>
         <h2 className="text-sm font-bold text-white mb-2">{designation}</h2>
         <p className="text-gray-600 mb-4 text-justify">{description}</p>
         {cardAction}

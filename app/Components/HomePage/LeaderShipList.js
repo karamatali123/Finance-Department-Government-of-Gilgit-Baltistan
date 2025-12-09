@@ -12,7 +12,7 @@ import SectionHeader from "./SectionHeader";
 
 const leadership = [
   {
-    name: "Mr. Yar Muhammad ( Justice Retd.)",
+    name: "Mr. Yar Muhammad  Justice Retd.",
     // joinDate: "Nov 25 2020",
     toDate: "incumbent",
     designation: "Chief Minister",
