@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Divider from "../Common/Divider";
-import img1 from "../../../public/images/CM.png";
-import img2 from "../../../public/images/ministerFinance.png";
+import img1 from "../../../public/images/CM.jpeg";
+import img2 from "../../../public/images/noimage.jpg";
 import img3 from "../../../public/images/CS.png";
 import img4 from "../../../public/images/sf.jpg";
 import { motion } from "framer-motion";
@@ -12,14 +12,14 @@ import SectionHeader from "./SectionHeader";
 
 const leadership = [
   {
-    name: "Mr. Gulbar Khan",
+    name: "Mr. Yar Muhammad ( Justice Retd.)",
     // joinDate: "Nov 25 2020",
     toDate: "incumbent",
     designation: "Chief Minister",
     image: img1,
   },
   {
-    name: "Eng. Muhammad Ismail",
+    name: "",
     // joinDate: "July 18 2023",
     toDate: "incumbent",
     designation: "Senior Finance Minister",
