@@ -4,7 +4,7 @@ import Link from "next/link";
 import logo from "../../../public/images/govLogo.png";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { ADMIN_EMAIL } from "../../constants";
+import { ADMIN_EMAILS } from "../../constants";
 // Main header links with possible sub-items
 
 const Header = () => {
@@ -30,7 +30,7 @@ const Header = () => {
   const isActive = (link) => {
     return pathname?.includes(link);
   };
-  const isAdmin = session?.user?.email === ADMIN_EMAIL;
+  const isAdmin = ADMIN_EMAILS.includes(session?.user?.email);
 
   const headerLinks = [
     {

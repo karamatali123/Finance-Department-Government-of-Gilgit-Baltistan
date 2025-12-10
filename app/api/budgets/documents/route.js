@@ -4,7 +4,7 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 import prisma from "../../../../lib/prisma";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
-import { ADMIN_EMAIL } from "../../../constants";
+import { ADMIN_EMAILS } from "../../../constants";
 
 // Configure API route for larger file uploads
 export const dynamic = "force-dynamic";
@@ -71,7 +71,7 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user?.email !== ADMIN_EMAIL) {
+    if (!session || !ADMIN_EMAILS.includes(session.user.email)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

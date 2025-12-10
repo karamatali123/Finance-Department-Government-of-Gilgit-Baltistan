@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../../auth/[...nextauth]/options";
 import { PrismaClient } from "@prisma/client";
-import { ADMIN_EMAIL } from "../../../../constants";
+import { ADMIN_EMAILS } from "../../../../constants";
 import { rm } from "fs/promises";
 import path from "path";
 
@@ -55,7 +55,7 @@ async function deleteFolderRecursively(folderId) {
 export async function DELETE(request, { params }) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.email !== ADMIN_EMAIL) {
+    if (!session || !ADMIN_EMAILS.includes(session.user.email)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

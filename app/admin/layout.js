@@ -4,13 +4,13 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
-import { ADMIN_EMAIL } from "../constants";
+import { ADMIN_EMAILS } from "../constants";
 
 export default function AdminLayout({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const isAdmin = useMemo(
-    () => session?.user?.email === ADMIN_EMAIL,
+    () => ADMIN_EMAILS.includes(session?.user?.email),
     [session]
   );
 

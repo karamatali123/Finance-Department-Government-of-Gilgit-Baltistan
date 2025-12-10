@@ -3,7 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ADMIN_EMAIL } from "../../constants";
+import { ADMIN_EMAILS } from "../../constants";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState("");
@@ -16,7 +16,7 @@ export default function SignIn() {
   useEffect(() => {
     if (session?.user) {
       const route =
-        session.user.email == ADMIN_EMAIL ? "/admin/dashboard" : "/jobs";
+        ADMIN_EMAILS.includes(session.user.email) ? "/admin/dashboard" : "/jobs";
       router.push(route);
     }
   }, [session]);
@@ -36,7 +36,7 @@ export default function SignIn() {
             setSendingEmail(true);
             await signIn("email", {
               email: email,
-              callbackUrl: email == ADMIN_EMAIL ? "/admin/dashboard" : "/jobs",
+              callbackUrl: ADMIN_EMAILS.includes(email) ? "/admin/dashboard" : "/jobs",
             });
             setSendingEmail(false);
           }}

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { PrismaClient } from "@prisma/client";
-import { ADMIN_EMAIL } from "../../constants";
+import { ADMIN_EMAILS } from "../../constants";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +15,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (session.user.email !== ADMIN_EMAIL) {
+    if (!ADMIN_EMAILS.includes(session.user.email)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

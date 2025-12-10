@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Divider from "../Common/Divider";
-import img1 from "../../../public/images/CM.jpeg";
+import img1 from "../../../public/images/CheifMinester.jpeg";
 import img2 from "../../../public/images/noimage.jpg";
 import img3 from "../../../public/images/CS.png";
 import img4 from "../../../public/images/sf.jpg";

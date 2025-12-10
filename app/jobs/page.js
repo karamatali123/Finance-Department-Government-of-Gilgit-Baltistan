@@ -1,5 +1,5 @@
 "use client";
-import { ADMIN_EMAIL } from "../constants";
+import { ADMIN_EMAILS } from "../constants";
 import PageHeader from "../Components/Common/PageHeader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ const JobsList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const isAdmin = session?.user?.email === ADMIN_EMAIL;
+  const isAdmin = ADMIN_EMAILS.includes(session?.user?.email);
 
   useEffect(() => {
     fetchJobs();
