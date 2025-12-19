@@ -114,6 +114,8 @@ export async function POST(request) {
       ".png",
       ".gif",
       ".webp",
+      ".xlsx",
+      ".xls",
     ];
     const fileType = path.extname(file.name).toLowerCase();
     if (!allowedTypes.includes(fileType)) {
