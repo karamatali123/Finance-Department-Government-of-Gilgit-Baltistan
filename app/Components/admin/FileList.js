@@ -75,7 +75,7 @@ export default function FileList({
       label: "File",
       type: "file",
       props: {
-        accept: ".pdf,.doc,.docx",
+        accept: ".pdf,.jpg,.jpeg,.png,.gif,.webp,application/pdf,image/jpeg,image/png,image/gif,image/webp,.xlsx,.xls",
         required: true,
       },
     },
