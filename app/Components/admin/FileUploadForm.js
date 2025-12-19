@@ -87,7 +87,7 @@ export default function FileUploadForm({
                     name={field.id}
                     type={field.type || "text"}
                     placeholder={field.placeholder}
-                    accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,application/pdf,image/jpeg,image/png,image/gif,image/webp"
+                    accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,application/pdf,image/jpeg,image/png,image/gif,image/webp,.xlsx,.xls"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     {...field.props}
                   />
